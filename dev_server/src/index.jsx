@@ -13,7 +13,7 @@ import MainView from './views/mainView'
 //console.log(MainView.class, "test");
 
 ReactDOM.render(
-  <MainView/>,
+  <MainView text="Jonas"/>,
   document.getElementById('app')
 );
 
