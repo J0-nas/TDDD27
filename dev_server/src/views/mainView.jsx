@@ -6,6 +6,7 @@ import Content from './Content.jsx';
 import Footer from './Footer.jsx';
 
 export default class MainView extends React.Component {
+  
 
   render() {
     console.log("tesjhbt");
