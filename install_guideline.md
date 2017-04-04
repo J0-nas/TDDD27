@@ -13,6 +13,10 @@
 
 ​	http://jeremybellows.com/blog/How-to-Create-a-Minimal-Phoenix-Elixir-Server-Docker-Image
 
+###### 	Install on Linux Mint: 
+
+​		https://gist.github.com/sirkkalap/e87cd580a47b180a7d32	
+
 #### Openshift Centrale
 
 #### BackEnd
@@ -21,6 +25,10 @@
 
 ​	http://elixir-lang.org/install.html#unix-and-unix-like
 ​	http://unix.stackexchange.com/questions/164895/install-elixir-lang-on-linux-mint#198428
+
+###### 	Elexir Help Sites
+
+​		http://elixirschool.com
 
 ###### Install Phoenix
 
