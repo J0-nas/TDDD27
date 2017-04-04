@@ -1,2 +1,4 @@
 /dev_server/node_modules/*
 /dev_server/node_modules
+/openshift-origin-client-tools-v1.4.1/*
+.DS_Store
