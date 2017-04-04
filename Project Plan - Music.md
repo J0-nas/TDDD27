@@ -1,9 +1,14 @@
 ## Name suggestions
 
+* **Mousika**
 * music con(qu,t)est
 * DJ-battle
 * song slaughter (as the particular songs have been croped and you are fighting for the highterst score)
 * music encounter/fray
+
+
+
+## Features
 
 ## Possible differences to thesongclash_com
 
@@ -31,7 +36,7 @@
   * default is the 
 * reset the highscore once a week (so that everyone gets a chance)
 
-## Possible page layout
+## Page layout
 
 ### Footer (user information)
 
