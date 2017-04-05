@@ -15,12 +15,12 @@ The website includes an optional player profile, a live chat and optional (may h
 ## Technologic Description
 
 - We use **React** (and Phoenix.js) for the html code generation and client side logic used in our single page application (SPA)
-  - In addition to **React** we use Boostrap (v3) to make our website responsive
+  - In addition to React we use **React-Boostrap** to keep our code easy-readable and at the same time make our website responsive
   - The react code transpiled to javascript using a **webpack** setup
 - The server is implemented using the **Phoenix** framework - written in **Elixir**
   - Elixir has been chose due to its different - functional - programming paradigm and its excelent server capabilities (Error handling, concurrency performance/scalability)
   - Since we are SPA the server returns a static html file (+js files) and changes the client side state using JSON responses 
-  - We want to try to deploy our server to the new openshift 3 ida server
+  - We want to try to deploy our server to the new **openshift 3 ida server**
 - As a database we use the open source alternative to MySQL - **MariaDB**
   - We chose **MariaDB** because we already used SQLite in the previous course and want to focus more on new server and client technologies
 
