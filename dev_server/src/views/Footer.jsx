@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 export default class Footer extends React.Component {
   render() {
     return (
-      <nav className="navbar fixed-bottom navbar-light bg-faded">
+      <nav className="">
         <a>Footer</a>
       </nav>);
   }
