@@ -1,5 +1,9 @@
 body {
   font-family: 'Helvecia', sans-serif;
   font-size: 14pt;
-  background-color: red;
+  background-color: black;
+}
+
+.mainContainer {
+    background-color: yellow;
 }
