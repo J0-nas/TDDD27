@@ -9,6 +9,10 @@
 ​	https://www.npmjs.com/package/style-loader
 ​	https://www.npmjs.com/package/css-loader
 
+###### React Bootstrap
+
+​	https://react-bootstrap.github.io/introduction.html
+
 #### Docker
 
 ​	http://jeremybellows.com/blog/How-to-Create-a-Minimal-Phoenix-Elixir-Server-Docker-Image
