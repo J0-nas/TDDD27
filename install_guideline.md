@@ -31,8 +31,6 @@
 
 ###### Load CSS
 
-- ​
-
 ​	https://www.npmjs.com/package/style-loader
 ​	https://www.npmjs.com/package/css-loader
 
