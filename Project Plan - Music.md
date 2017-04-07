@@ -40,10 +40,12 @@ The website includes an optional player profile, a live chat and optional (may h
     - May or may not give full points
   - Scores to be updated client and server side
   - Live chat with the other players
+  - Remember Songs
 - Profile
   - Name, Email, etc.
   - Experience
   - Records
+  - List of favorite songs
 - Community
   - Overall records
 
