@@ -31,7 +31,7 @@ The website includes an optional player profile, a live chat and optional (may h
 #### Must Have
 
 - Game
-  - Synchonized playback of a 30s preview from the napster api 
+  - Synchonized playback of a 30s preview from the Napster API 
     - 10 rounds per game
   - Ability to guess the artist and title within the 30s
     - Gain points relative to the performance (artist, title, time)
