@@ -13,5 +13,5 @@ function processInput(solutionArray, input) {
 }
 
 var title = "Plastic, Beach"
-var sA = title.split(/[ ,]+/g)
+var synonyms = title.split(/[ ,]+/g)
 console.log(sA);
