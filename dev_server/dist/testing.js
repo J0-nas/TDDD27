@@ -1,15 +1,43 @@
-// Checks if words from the input match words of the solution.
-// Returns indexes of words that were solved
-function processInput(solutionArray, input) {
-  var inputWords = input.split(" ")
-  var res = []
-  for (word in inputWords) {
-    for (var i = 0; i < solutionArray.length(); i++) {
-      if (solutionArray[i] == word) {
-        res.append(i)
-      }
+// Checks if words from the input match words of the solution -
+// stored in the taArray of taElements.
+// Returns the altered taArray
+function processInput(taArray, input) {
+    var inputWords = input.split(" ");
+    var d = 0;
+    var allowedTypos = 0;
+    var s = false;
+    
+    for (i in inputWords) {
+	for (ta_i in taArray) {
+	    var ta = taArray[ta_i]
+	    if (ta.mustBeSolved && !ta.hasBeenSolved) {
+		if (ta.length > 3) { allowedTypos = Math.floor((ta.length-1) / 3);}
+		else { allowedTypos = 0; }
+
+		d = levenshteinDistance(inputWords[i], ta.word)
+		console.log("word ", ta.word, "d ", d, " typos ", allowedTypos);
+		if (d-allowedTypos <= 0) { ta.hasBeenSolved = true; s = true;
+					   console.log(inputWords[i], " solved ", ta.word, " with d ", d);
+					   break;
+					 }
+
+		for (synnonym in ta.synnonyms) {
+		    if (s.length > 3) { allowedTypos = Math.floor((s.length-1) / 3);}
+		    else { allowedTypos = 0; }
+
+		    d = levenshteinDistance(inputWords[i], s)
+		    if (d-allowedTypos <= 0) { ta.hasBeenSolved = true; s = true
+					       console.log(inputWords[i], " solved ", synnonym, " with d ", d);
+					       break;
+					     }
+		}
+	    }
+	    	    
+	}
     }
-  }
+    
+    
+    return { array: taArray, success: s }; 
 }
 
 //Todo build function that builds a list of synnonyms for a word
@@ -32,7 +60,10 @@ function toTAElement(s) {
 function buildLabelString(taArray) {
     var wordArray = taArray.map(
 	function(ta) {
-	    return ta.word
+	    if ((!ta.mustBeSolved) || ta.hasBeenSolved) {
+		return ta.word;
+	    }
+	    return "*".repeat(ta.length);
 	}
     );
     return wordArray.join(" ");
@@ -80,4 +111,5 @@ s = toTAElement("-")
 s.mustBeSolved = false
 ar = [toTAElement("gre"), s, toTAElement("dsfgljkn")]
 ar[0].hasBeenSolved = true
-ar[2].hasBeenSolved = true
+//ar[2].hasBeenSolved = true
+
