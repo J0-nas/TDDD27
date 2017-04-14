@@ -2,9 +2,9 @@
 
 ## Project Description
 
-Mousika is a music trivia quiz. Heavily inspired by https://www.thesongclash.com/de/quiz and similar games.
+Mousika is a music trivia quiz similar to https://www.thesongclash.com/de/quiz and other games.
 
-It's standard game mode is to guess the artist and title of 10 songs played consecutively (30 second  preview - obtained from the free napster api). Due to its nature it should be used with a keyboard (desktop PC/notebook). The players hear the same song at the same time and collect points based on how fast they solve the artist and title. A player can join the game at any point and is in sync with the song currently played.
+It's standard game mode is to guess the artist and title of 10 songs played consecutively (30 second  preview - obtained from the free napster API). Due to its nature it should be used with a keyboard (desktop PC/notebook). The players hear the same song at the same time and collect points based on how fast they solve the artist and title. A player can join the game at any point and is in sync with the song currently played.
 
 Besides the 10 round game, each song has a record - minimum time a player needed to solve it - such that players can try to break the existing record.
 
