@@ -1,0 +1,30 @@
+audio {
+    //visibility: hidden;
+}
+
+body {
+    Background-color: green;
+}
+
+.volumeBox {
+    height: 50px;
+    width: 200px;
+    Background-color: white;
+    //align-items: center;
+}
+
+.volumeIcon {
+    height: 50;
+    width: 50;
+    align: block;
+    Background-color: red;
+}
+
+i {
+    Background-color: blue;
+}
+
+.volumeBar {
+    width: 100ox;
+    height: 20px;    
+}

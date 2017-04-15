@@ -113,3 +113,15 @@ ar = [toTAElement("gre"), s, toTAElement("dsfgljkn")]
 ar[0].hasBeenSolved = true
 //ar[2].hasBeenSolved = true
 
+var player = document.getElementById("player");
+if (player != null) {
+    //player.autoplay = true;
+} else {
+    console.log("player is null")
+}
+
+
+//var audio = new Audio("http://listen.vo.llnwd.net/g3/4/1/9/1/5/1302051914.mp3")
+//player.play();
+player.volume = 0.5;
+player.currentTime = 10;

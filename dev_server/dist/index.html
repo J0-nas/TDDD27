@@ -5,11 +5,29 @@
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
       <script src="js/phoenix.js" rel="text/javascript"></script>
 
+      <!-- Icons -->
+      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+
+      <link rel="stylesheet" href="style.css">
     <title>Mousika</title>
   </head>
   <body>
     <div id="app"></div>
+    <audio id="player" controls="controls">
+      <source src="http://listen.vo.llnwd.net/g3/4/1/9/1/5/1302051914.mp3"/>
+    </audio>
+
+    <div class="volumeBox">
+      <div class="volumeIcon">
+	<i class="material-icons md-48">volume_up</i>
+      </div>
+      <div class="volumeBar"></div>
+    </div>
+    
     <script src="bundle.js"></script>
     <script src="testing.js"></script>
+
+    
   </body>
 </html>
