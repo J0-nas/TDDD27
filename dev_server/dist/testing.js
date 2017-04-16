@@ -121,7 +121,16 @@ if (player != null) {
 }
 
 
-//var audio = new Audio("http://listen.vo.llnwd.net/g3/4/1/9/1/5/1302051914.mp3")
-//player.play();
-player.volume = 0.5;
-player.currentTime = 10;
+var audio = new Audio("http://listen.vo.llnwd.net/g3/4/1/9/1/5/1302051914.mp3")
+audio.play();
+audio.volume = 0.5;
+audio.currentTime = 10;
+
+console.log(document.getElementById("pb"))
+
+audio.addEventListener("timeupdate", function() {
+    pb = document.getElementById("pb");
+    var newValue = this.currentTime/this.duration
+    pb.setAttribute("aria-valuenow", newValue);
+    pb.style.width =  newValue*100 + "%";
+});

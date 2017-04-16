@@ -18,11 +18,21 @@
       <source src="http://listen.vo.llnwd.net/g3/4/1/9/1/5/1302051914.mp3"/>
     </audio>
 
-    <div class="volumeBox">
-      <div class="volumeIcon">
-	<i class="material-icons md-48">volume_up</i>
+    <div class="container player">
+      <div class="row progressbar">
+	<div class="progress">
+	  <div id="pb" class="progress-bar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="1"></div>
+	</div>
       </div>
-      <div class="volumeBar"></div>
+      
+      <div class="row volumeBox">
+	<div class="col-md-2 col-sm-2 volumeIcon" >
+	  <i class="material-icons" style="font-size: 36px">volume_up</i>
+	  <!--<span class="glyphicon glyphicon-volume-up"></span> -->
+	</div>
+
+	<div class="col-md-5 col-sm-5 volumeBar"></div>
+      </div>
     </div>
     
     <script src="bundle.js"></script>
