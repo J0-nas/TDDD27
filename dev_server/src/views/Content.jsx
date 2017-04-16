@@ -5,6 +5,8 @@ import { Grid, Row, Col } from 'react-bootstrap';
 import Standings from './Standings'
 import GameView from './GameView'
 
+
+
 export default class Content extends React.Component {
   constructor() {
     super();
@@ -13,9 +15,11 @@ export default class Content extends React.Component {
     }
   }
 
+
   render() {
+    var s = {"backgroundColor": "yellow"};
     return (
-    <Grid className="mainContainer">
+    <Grid className="mainContainer" style={s}>
         <Row className="show-grid">
           <Col sm={12} md={6}>
             <GameView/>

@@ -18,7 +18,7 @@ export default class ProgressCounter extends React.Component {
   }
 
   tick() {
-    console.log(this.state);
+    //console.log(this.state);
     var s = this.state.counter;
     if (s <= 0) {
       /*this.setState({

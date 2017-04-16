@@ -1,9 +1,16 @@
 body {
   font-family: 'Helvecia', sans-serif;
   font-size: 14pt;
-  background-color: black;
+
+  background-image: "images/bg_2.jpg";
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+#app {
+    height:400px;
 }
 
 .mainContainer {
-    background-color: yellow;
+    //background-color: yellow;
 }
