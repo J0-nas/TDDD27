@@ -17,12 +17,14 @@ export default class GameView extends React.Component {
 	
     }
     
+    
     render () {
 	var s = {
 	    backgroundColor: "rgba(100,100,100,0.5)",
 	    marginRight: "0px",
 	    width: "100%"
 	}
+	
 	return (
 	<Grid style={s}>
 	  <ProgressBar/>
