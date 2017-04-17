@@ -17,11 +17,13 @@ export default class GameView extends React.Component {
 
 	this.state = {
 	    currentSong: {
-		active: false,
-		started: false,
-		url: "none",
-		artist: "defaultArtist",
-		title: "defaultTitle",
+		active: true,
+		started: true,
+		startDate: 0,
+		url: "http://listen.vo.llnwd.net/g3/7/8/8/1/2/1322321887.mp3",
+		songStart: 0,
+		artist: "Badbadnotgood",
+		title: "Time Moves Slow (feat. Sam Herring)",
 		record: {
 		    userName: "User",
 		    time: "15.32",
@@ -49,6 +51,14 @@ export default class GameView extends React.Component {
 	
 	this.inputSubmitCallback = this.inputSubmitCallback.bind(this);
 	this.processInput = this.processInput.bind(this);
+	this.checkInput = this.checkInput.bind(this);
+	this.levenshteinDistance = this.levenshteinDistance.bind(this);
+	this.startSong = this.startSong.bind(this);
+	this.getSynnonyms = this.getSynnonyms.bind(this);
+    }
+
+    componentDidMount() {
+	this.startSong();
     }
 
     /*
@@ -58,21 +68,32 @@ export default class GameView extends React.Component {
 	if (this.state.currentSong.started) {
 	    console.log("song had already started")
 	}
-	var aArray = this.state.currentSong.artist.split(/[ ,]+/g).map(toTAElement);
-	var tArray = this.state.currentSong.title.split(/[ ,]+/g).map(toTAElement);
+	var aArray = this.state.currentSong.artist.split(/[ ,]+/g).map(this.toTAElement);
+	var tArray = this.state.currentSong.title.split(/[ ,]+/g).map(this.toTAElement);
 
 	var oldCSState = this.state.currentSong;
 	oldCSState.artistElementArray = aArray;
 	oldCSState.titleElementArray = tArray;
-	this.setState(currentSong: oldCSState);
-
-	var newArtistLabel = buildLabelString(this.state.currentSong.artistElementArray);
-	var newTitleLabel = buildLabelString(this.state.currentSong.titleElementArray);
+	this.setState({currentSong: oldCSState});
+	
+	var newArtistLabel = this.buildLabelString(this.state.currentSong.artistElementArray);
+	var newTitleLabel = this.buildLabelString(this.state.currentSong.titleElementArray);
 
 	var oldTextBoxState = this.state.textBox;
 	oldTextBoxState.artist = newArtistLabel;
 	oldTextBoxState.title = newTitleLabel;
-	this.setState(textBox: oldTextBoxState);
+	this.setState({textBox: oldTextBoxState});
+
+
+	var oldCSState = this.state.currentSong;
+	oldCSState.startDate = Date.now();
+	this.setState({currentSong: oldCSState});
+
+	//TODO
+	var song = new Audio(this.state.currentSong.url);
+	song.currentTime = this.state.currentSong.songStart;
+	song.volume = 0.3;
+	song.play();
     }
     
     getSynnonyms(s) {
@@ -81,16 +102,31 @@ export default class GameView extends React.Component {
     
     toTAElement(s) {
 	//TODO function that determines if a word has to be solved
-	mbs = true;
+	var mbs = true;
+	//var synn = this.getSynnonyms(s)
 	return {
 	    word: s,
-	    synnonyms: getSynnonyms(s),
+	    synnonyms: [], //synn,
 	    length: s.length,
 	    mustBeSolved: mbs,
 	    hasBeenSolved: !mbs
 	};
     }
 
+    processInput(input) {
+	if (!this.state.currentSong.active) {
+	    return;
+	}
+	console.log("process input")
+	this.checkInput(input);
+	var a_s = checkIfSolved(this.state.currentSong.artistElementArray);
+	var t_s = checkIfSolved(this.state.currentSong.titleElementArray);
+	if (a_s && t_s) {
+	    const time = Date.now() - this.state.currentSong.startDate;
+	    console.log("Song was solved in: " + time +  " send time to server")
+	}
+    }
+    
     checkInput(input) {
 	console.log("GV processing input")
 	if (!this.state.currentSong.active) {
@@ -108,26 +144,26 @@ export default class GameView extends React.Component {
 	var a_s = false;
 	var t_s = false;
 	
-	for (i in inputWords) {
-	    for (a_i in aArray) {
+	for (var i in inputWords) {
+	    for (var a_i in aArray) {
 		var a = aArray[a_i];
 		if (a.mustBeSolved && !a.hasBeenSolved) {
 		    if (a.length > 3) { allowedTypos = Math.floor((a.length-1)/3); }
 		    else { allowedTypos = 0; }
 
-		    d = levenshteinDistance(inputWords[i], a.word);
+		    d = this.levenshteinDistance(inputWords[i], a.word);
 		    if (d-allowedTypos <= 0) {
 			//Success changes
 			a.hasBeenSolved = true;
 			a_s = true;
 			break;
 		    }
-		    for (s_i in a.synnonyms) {
+		    for (var s_i in a.synnonyms) {
 			var s = a.synnonyms[s_i];
 			if (a.length > 3) { allowedTypos = Math.floor((a.length-1)/3); }
 			else { allowedTypos = 0; }
 
-			d = levenshteinDistance(inputWords[i], s);
+			d = this.levenshteinDistance(inputWords[i], s);
 			if (d-allowedTypos <= 0) {
 			    //Success changes
 			    a.hasBeenSolved = true;
@@ -137,25 +173,25 @@ export default class GameView extends React.Component {
 		    }
 		}
 	    }
-	    for (t_i in tArray) {
+	    for (var t_i in tArray) {
 		var t = tArray[t_i];
 		if (t.mustBeSolved && !t.hasBeenSolved) {
 		    if (t.length > 3) { allowedTypos = Math.floor((t.length-1)/3); }
 		    else { allowedTypos = 0; }
 
-		    d = levenshteinDistance(inputWords[i], t.word);
+		    d = this.levenshteinDistance(inputWords[i], t.word);
 		    if (d-allowedTypos <= 0) {
 			//Success changes
 			t.hasBeenSolved = true;
 			t_s = true;
 			break;
 		    }
-		    for (s_i in t.synnonyms) {
+		    for (var s_i in t.synnonyms) {
 			var s = t.synnonyms[s_i];
 			if (a.length > 3) { allowedTypos = Math.floor((a.length-1)/3); }
 			else { allowedTypos = 0; }
 
-			d = levenshteinDistance(inputWords[i], s);
+			d = this.levenshteinDistance(inputWords[i], s);
 			if (d-allowedTypos <= 0) {
 			    //Success changes
 			    t.hasBeenSolved = true;
@@ -210,12 +246,14 @@ export default class GameView extends React.Component {
 	if (s[s.length -1] == t[t.length -1]) { cost = 0; }
 	else { cost = 0 }
 
+	console.log("in levenshtain...")
+	
 	var new_s = s.slice(0, -1);
 	var new_t = t.slice(0, -1);
 
-	return Math.min( levenshteinDistance(new_s, t) + 1,
-			 levenshteinDistance(s, new_t) + 1,
-			 levenshteinDistance(new_s, new_t) + cost
+	return Math.min( this.levenshteinDistance(new_s, t) + 1,
+			 this.levenshteinDistance(s, new_t) + 1,
+			 this.levenshteinDistance(new_s, new_t) + cost
 		       );
     }
     
