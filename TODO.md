@@ -12,7 +12,7 @@
       - [ ] Switch between different tabs
 - [ ] Game
       - [ ] Input box
-      - [ ] Solve box
+      - [x] Solve box
       - [ ] Remaining time counter
       - [ ] Custom Audio player
             - [ ] Hide/disable pause, jumping, downloading
@@ -21,7 +21,7 @@
       - [ ] Try overlay + Form
 
 
-- [ ] Solve logic - when and how many typos are allowed?
+- [x] Solve logic - when and how many typos are allowed?
 - [ ] Send request for future features...
       - Enable (game, chat) socket
 
@@ -39,5 +39,5 @@
 - [ ] Phoenix signUp/signIn
       - [ ] Define route(s)
       - [ ] Account management functions
-            - [ ] [ ] Unique username/email
+            - [ ] Unique username/email
 

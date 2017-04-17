@@ -16,6 +16,7 @@ export default class SolveInput extends React.Component {
     handleSubmit(e) {
 	console.log("submit input -", this.state.input);
 	e.preventDefault();
+	this.props.gvCB(this.state.input)
     }
 
     handleChange(e) {
