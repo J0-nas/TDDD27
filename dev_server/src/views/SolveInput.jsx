@@ -12,9 +12,10 @@ export default class SolveInput extends React.Component {
 	this.handleSubmit = this.handleSubmit.bind(this);
 	this.handleChange = this.handleChange.bind(this);
     }
-    
+
     handleSubmit(e) {
 	console.log("submit input -", this.state.input);
+  console.log("e ", e.target.value);
 	e.preventDefault();
 	this.props.gvCB(this.state.input)
     }
@@ -27,13 +28,14 @@ export default class SolveInput extends React.Component {
 
     render() {
 	const s = {
-	    textAlign: "center"
+	    textAlign: "center",
+      width: "70%"
 	}
-	
+
 	return (
 		<form onSubmit= { this.handleSubmit }>
 		<FormGroup controlId="userInputForm">
-		<FormControl style={s} placeholder="Enter Title and Artist" onChange={ this.handleChange }/>
+		<FormControl style={s} placeholder="Enter Title and Artist" onChange={ this.handleChange } autoComplete="off"/>
 		</FormGroup>
 		</form>
 	);

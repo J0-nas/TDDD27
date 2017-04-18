@@ -6,7 +6,7 @@ function processInput(taArray, input) {
     var d = 0;
     var allowedTypos = 0;
     var s = false;
-    
+
     for (i in inputWords) {
 	for (ta_i in taArray) {
 	    var ta = taArray[ta_i]
@@ -32,12 +32,69 @@ function processInput(taArray, input) {
 					     }
 		}
 	    }
-	    	    
+
 	}
     }
-    
-    
-    return { array: taArray, success: s }; 
+
+
+    return { array: taArray, success: s };
+}
+
+
+function dziemba_levenshtein(a, b){
+	var tmp;
+	if (a.length === 0) { return b.length; }
+	if (b.length === 0) { return a.length; }
+	if (a.length > b.length) { tmp = a; a = b; b = tmp; }
+
+	var i, j, res, alen = a.length, blen = b.length, row = Array(alen);
+	for (i = 0; i <= alen; i++) { row[i] = i; }
+
+	for (i = 1; i <= blen; i++) {
+		res = i;
+		for (j = 1; j <= alen; j++) {
+			tmp = row[j - 1];
+			row[j - 1] = res;
+			res = b[i - 1] === a[j - 1] ? tmp : Math.min(tmp + 1, Math.min(res + 1, row[j] + 1));
+		}
+	}
+	return res;
+}
+
+function _levenshtein (a, b) {
+  if (a.length === 0) return b.length
+  if (b.length === 0) return a.length
+  let tmp, i, j, prev, val
+  // swap to save some memory O(min(a,b)) instead of O(a)
+  if (a.length > b.length) {
+    tmp = a
+    a = b
+    b = tmp
+  }
+
+  row = Array(a.length + 1)
+  // init the row
+  for (i = 0; i <= a.length; i++) {
+    row[i] = i
+  }
+
+  // fill in the rest
+  for (i = 1; i <= b.length; i++) {
+    prev = i
+    for (j = 1; j <= a.length; j++) {
+      if (b[i-1] === a[j-1]) {
+        val = row[j-1] // match
+      } else {
+        val = Math.min(row[j-1] + 1, // substitution
+              Math.min(prev + 1,     // insertion
+                       row[j] + 1))  // deletion
+      }
+      row[j - 1] = prev
+      prev = val
+    }
+    row[a.length] = prev
+  }
+  return row[a.length]
 }
 
 //Todo build function that builds a list of synnonyms for a word
@@ -94,7 +151,7 @@ function levenshteinDistance(s, t) {
 
     var new_s = s.slice(0, -1);
     var new_t = t.slice(0, -1);
-    
+
     return Math.min( levenshteinDistance(new_s, t) + 1,
 		     levenshteinDistance(s, new_t) + 1,
 		     levenshteinDistance(new_s, new_t) + cost

@@ -11,11 +11,11 @@
       - [ ] Scores Table => change state
       - [ ] Switch between different tabs
 - [ ] Game
-      - [ ] Input box
+      - [x] Input box
       - [x] Solve box
       - [ ] Remaining time counter
       - [ ] Custom Audio player
-            - [ ] Hide/disable pause, jumping, downloading
+            - [x] Hide/disable pause, jumping, downloading
       - [ ] Previous Song Info
 - [ ] SignUp/SignIn
       - [ ] Try overlay + Form

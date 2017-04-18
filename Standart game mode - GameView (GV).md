@@ -3,16 +3,12 @@
 - Listen to/open Game socket
 
   - [ ] Requests to the server - may not use socket
-
         - [ ] GV can request current game id
-
-
         - [ ] GV can request current song (+ timer) of game id
-
-
         - [ ] GV can request current standings
 
-  - [ ] GV recieves new standing events
+
+- [ ] GV recieves new standing events -with socket
 
   - [ ] GV recieves new songs
 
