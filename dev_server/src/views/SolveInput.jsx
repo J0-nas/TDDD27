@@ -15,8 +15,12 @@ export default class SolveInput extends React.Component {
 
     handleSubmit(e) {
 	console.log("submit input -", this.state.input);
-  console.log("e ", e.target.value);
+  	console.log("e ", e.target.value);
 	e.preventDefault();
+
+	var inputField = ReactDOM.findDOMNode(this.refs.inputField);
+	inputField.value = "";
+
 	this.props.gvCB(this.state.input)
     }
 
@@ -35,7 +39,7 @@ export default class SolveInput extends React.Component {
 	return (
 		<form onSubmit= { this.handleSubmit }>
 		<FormGroup controlId="userInputForm">
-		<FormControl style={s} placeholder="Enter Title and Artist" onChange={ this.handleChange } autoComplete="off"/>
+		<FormControl style={s} placeholder="Enter Title and Artist" onChange={ this.handleChange } autoComplete="off" ref="inputField"/>
 		</FormGroup>
 		</form>
 	);

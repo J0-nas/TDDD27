@@ -89,6 +89,7 @@ export default class GameView extends React.Component {
 
     //TODO
     var song = new Audio(this.state.currentSong.url);
+    song.src = "http://listen.vo.llnwd.net/g3/5/4/8/1/7/1302071845.mp3";
     song.currentTime = this.state.currentSong.songStart;
     song.volume = 0.3;
     song.play();
