@@ -33,7 +33,9 @@ export default class SolveInput extends React.Component {
     render() {
 	const s = {
 	    textAlign: "center",
-      width: "70%"
+	    marginLeft: "auto",
+	    marginRight: "auto",
+	    width: "70%"
 	}
 
 	return (
