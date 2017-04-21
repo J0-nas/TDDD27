@@ -4,6 +4,10 @@ import ReactDOM from 'react-dom';
 import { Table } from 'react-bootstrap';
 
 export default class Standings extends React.Component {
+  constructor() {
+    super();
+  }
+  
   render() {
     return (
       <Table responsive>
