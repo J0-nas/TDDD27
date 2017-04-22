@@ -1,0 +1,66 @@
+body {
+    background-color: #222;
+}
+
+body .audio-player {
+    display: flex;
+    align-items: center;
+}
+
+body .audio-player button.mute {
+    display: block;
+    width: 80px;
+    height: 80px;
+    border: 0;
+    background-color: #0af;
+    color: white;
+    font-size: 30px;
+    border-radius: 100000px;
+    cursor: pointer;
+    text-align: center;
+    line-height: 80px;
+}
+
+body .audio-player button.mute .material-icons {
+    width: 24px;
+    position: relative;
+}
+
+button, button:focus, button:active {
+    border: 1px solid black;
+    background: none;
+    outline: none;
+    padding: 0;
+}
+
+body .audio-player .volume-bar {
+    margin: 30px;
+    width: 400px;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    border-radius: 100000px;
+    cursor: pointer;
+}
+
+body .audio-player .volume-bar .fill {
+    height: 10px;
+    background-color: #0af;
+    border-radius: 100000px;
+    width: 100%;
+}
+
+body .audio-player .volume-bar .handle {
+    width: 10px;
+    height: 10px;
+    background-color: #0af;
+    border-radius: 100000px;
+    margin-left: -5px;
+    transform: scale(2);
+    transition: all 0.1s;
+}
+
+body .audio-player .volume-bar .handle:hover {
+    background-color: lightblue;
+    transform: scale(3);
+}

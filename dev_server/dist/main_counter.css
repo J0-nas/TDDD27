@@ -1,0 +1,86 @@
+body{
+    background-color: grey;
+}
+
+#timerNInput {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#inputProgress {
+    background: lightgray;
+    overflow: hidden;
+    position: relative;
+    height: 35px;
+}
+
+.content {
+    z-index: 3;
+    position: relative;
+    background-color: white;
+    width: 100%;
+    height: 20px;
+    border: 0px;
+    font-size: 15px;
+    padding: 5px;
+}
+
+#progress {
+    z-index: 1;
+    width: 0px;
+    height: 100%;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+}
+
+.filling-bar {
+    animation: fill-bar 30s linear;
+    animation-timing-function: linear;
+}
+
+.filling-text {
+    animation: fill-text 30s linear;
+    animation-timing-function: linear;
+}
+
+#timer {
+    margin-left: auto;
+    margin-right: auto;
+    color: white;
+    text-align: center;
+    z-index: 2;
+    font-size: 75px;
+    font-family: sans serif;
+    font-style: normal;
+    font-variant: small-caps;
+    font-weight: 700;
+}
+
+@keyframes fill-bar {
+    100% {
+        background: lightcoral;
+        width: 100%;
+    }
+    50% {
+        background: #e8ed90;
+        width: 50%;
+    }
+    0% {
+        background: lightgreen;
+        width: 0%;
+    }
+}
+
+@keyframes fill-text {
+    100% {
+        color: lightcoral
+    }
+    50% {
+        color: #e8ed90
+    }
+    0% {
+        color: lightgreen
+    }
+}
