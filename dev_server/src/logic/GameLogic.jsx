@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import ServerConnection from './ServerConnection.jsx'
 import GameView from './../views/GameView.jsx'
 import levenshteinDistance from './LevenshteinDistance.jsx';
 
