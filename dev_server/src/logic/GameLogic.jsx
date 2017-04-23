@@ -37,12 +37,14 @@ export default class GameLogic extends React.Component {
       }
     }
 
+    this.toTAElement = this.toTAElement.bind(this);
     this.processInput = this.processInput.bind(this);
     this.checkInput = this.checkInput.bind(this);
     this.startSong = this.startSong.bind(this);
     this.getSynnonyms = this.getSynnonyms.bind(this);
     this.initViewConnection = this.initViewConnection.bind(this);
     this.setNextSong = this.setNextSong.bind(this);
+    this.loadNewSong = this.loadNewSong.bind(this);
 
     this.serverConnection = <ServerConnection nextSong={this.nextSong}/>
   }
@@ -92,16 +94,23 @@ export default class GameLogic extends React.Component {
     song.play();
   }
 
+  /*
+    Synnonyms explained in synnonyms.md
+   */
   getSynnonyms(s) {
+    var res = [];
+    var lowerCase = s.toLowerCase();
+    var alphaNum = s.replace(/[A-Z]/g, "");
     return [];
   }
 
   toTAElement(s) {
     //TODO function that determines if a word has to be solved
     var mbs = true;
-    //var synn = this.getSynnonyms(s)
+    var synn = this.getSynnonyms(s)
     return {
-      word: s, synnonyms: [], //synn,
+      word: s,
+      synnonyms: synn,
       length: s.length,
       mustBeSolved: mbs,
       hasBeenSolved: !mbs
@@ -249,8 +258,16 @@ export default class GameLogic extends React.Component {
     }, true);
   }
 
-  setNextSong(nextSong) {
+  setNextSong(nextSongState) {
+    this.setState({nextSong: nextSongState});
+  }
+  
+  loadNewSong() {
     var nextSongState = this.state.nextSong;
+    if (nextSongState == null) {
+      console.log("Next song couldn't be loaded.");
+      return;
+    }
     var currentSongState = {
       active: true,
       started: false,
@@ -263,7 +280,7 @@ export default class GameLogic extends React.Component {
       artistElementArray: [],
       titleElementArray: []
     }
-    nextSongState = nextSong;
+    nextSongState = null;
     this.setState({nextSong: nextSongState});
     this.setState({currentSong: currentSongState});
   }
