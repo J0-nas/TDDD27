@@ -41,7 +41,8 @@ export default class GameLogic extends React.Component {
     this.processInput = this.processInput.bind(this);
     this.checkInput = this.checkInput.bind(this);
     this.startSong = this.startSong.bind(this);
-    this.getSynnonyms = this.getSynnonyms.bind(this);
+    this.getSimpleSynonyms = this.getSimpleSynonyms.bind(this);
+    this.getSynonyms = this.getSynonyms.bind(this);
     this.initViewConnection = this.initViewConnection.bind(this);
     this.setNextSong = this.setNextSong.bind(this);
     this.loadNewSong = this.loadNewSong.bind(this);
@@ -94,20 +95,43 @@ export default class GameLogic extends React.Component {
     song.play();
   }
 
+  getSimpleSynonyms(s) {
+    var res = s.toLowerCase();
+    res = s.replace(/è/g, "e")
+    res = s.replace(/é/g, "e")
+    res = s.replace(/ê/g, "e")
+    res = s.replace(/à/g, "a")
+    res = s.replace(/á/g, "a")
+    res = s.replace(/â/g, "a")
+    res = s.replace(/ì/g, "i")
+    res = s.replace(/í/g, "i")
+    res = s.replace(/î/g, "i")
+    res = s.replace(/ù/g, "u")
+    res = s.replace(/ú/g, "u")
+    res = s.replace(/û/g, "u")
+    res = s.replace(/ò/g, "o")
+    res = s.replace(/ó/g, "o")
+    res = s.replace(/ô/g, "o")
+    res = s.replace(/ä/g, "ae")
+    res = s.replace(/ü/g, "ue")
+    res = s.replace(/ö/g, "oe")
+    res = s.replace(/[^A-Za-z0-9ß]/g, "")
+    const lower = s.toLowerCase().replace(/[^A-Za-z0-9äüöß]/g, "")
+    return [res, lower]
+  }
+  
   /*
     Synnonyms explained in synnonyms.md
    */
-  getSynnonyms(s) {
-    var res = [];
-    var lowerCase = s.toLowerCase();
+  getSynonyms(s) {
     var alphaNum = s.replace(/[A-Z]/g, "");
-    return [];
+    return this.getSimpleSynonyms(s);
   }
-
+  
   toTAElement(s) {
     //TODO function that determines if a word has to be solved
     var mbs = true;
-    var synn = this.getSynnonyms(s)
+    var synn = this.getSynonyms(s)
     return {
       word: s,
       synnonyms: synn,
@@ -176,7 +200,7 @@ export default class GameLogic extends React.Component {
           for (var s_i in a.synnonyms) {
             var s = a.synnonyms[s_i];
             if (a.length > 3) {
-              allowedTypos = Math.floor((a.length - 1) / 3);
+              allowedTypos = Math.floor((s.length - 1) / 3);
             } else {
               allowedTypos = 0;
             }
@@ -203,6 +227,7 @@ export default class GameLogic extends React.Component {
           d = levenshteinDistance(inputWords[i], t.word);
           if (d - allowedTypos <= 0) {
             //Success changes
+	    console.log("solved ", a.word, "with ", inputWords[i], " d", d, " at", allowedTypos);
             t.hasBeenSolved = true;
             t_s = true;
             break;
@@ -210,7 +235,7 @@ export default class GameLogic extends React.Component {
           for (var s_i in t.synnonyms) {
             var s = t.synnonyms[s_i];
             if (a.length > 3) {
-              allowedTypos = Math.floor((a.length - 1) / 3);
+              allowedTypos = Math.floor((s.length - 1) / 3);
             } else {
               allowedTypos = 0;
             }
@@ -218,6 +243,7 @@ export default class GameLogic extends React.Component {
             d = levenshteinDistance(inputWords[i], s);
             if (d - allowedTypos <= 0) {
               //Success changes
+	      console.log("solved syn ", s, "with ", inputWords[i], " d", d, " at", allowedTypos);
               t.hasBeenSolved = true;
               t_s = true;
               break;
