@@ -3,11 +3,10 @@ import ReactDOM from 'react-dom';
 
 import ProgressBar from './ProgressBar.jsx';
 import ProgressCounter from './ProgressCounter.jsx';
-import AudioPlayer from './AudioPlayer.jsx';
+import VolumeView from './VolumeView.jsx';
 import TextBox from './TextBox.jsx';
 import SolveInput from './SolveInput.jsx';
 import PreviouslyPlayed from './PreviouslyPlayed.jsx';
-
 import GameLogic from './../logic/GameLogic.jsx';
 
 import {Grid} from 'react-bootstrap';
@@ -81,7 +80,7 @@ export default class GameView extends React.Component {
 
     return (
       <Grid style={s}>
-        <AudioPlayer/>
+        <VolumeView/>
 
         <TextBox artist={this.state.textBox.artist} title={this.state.textBox.title}/>
         <SolveInput gvCB={this.inputSubmitCallback}/>

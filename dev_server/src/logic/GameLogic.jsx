@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 
 import ServerConnection from './ServerConnection.jsx';
 import GameView from './../views/GameView.jsx';
+import AudioPlayer from './AudioPlayer.jsx';
 import { toTAElement, checkInput, checkIfSolved } from './SolveLogic.jsx';
 
 export default class GameLogic extends React.Component {
@@ -43,7 +44,8 @@ export default class GameLogic extends React.Component {
     this.setNextSong = this.setNextSong.bind(this);
     this.loadNewSong = this.loadNewSong.bind(this);
 
-    this.serverConnection = <ServerConnection nextSong={this.nextSong}/>
+    this.serverConnection = <ServerConnection nextSong={this.nextSong}/>;
+    this.audioPlayer = <AudioPlayer/>;
   }
 
   componentDidMount() {
