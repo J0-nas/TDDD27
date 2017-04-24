@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import ServerConnection from './ServerConnection.jsx'
-import GameView from './../views/GameView.jsx'
-import levenshteinDistance from './LevenshteinDistance.jsx';
+import ServerConnection from './ServerConnection.jsx';
+import GameView from './../views/GameView.jsx';
+import { toTAElement, checkInput, checkIfSolved } from './SolveLogic.jsx';
 
 export default class GameLogic extends React.Component {
   constructor() {
@@ -37,12 +37,8 @@ export default class GameLogic extends React.Component {
       }
     }
 
-    this.toTAElement = this.toTAElement.bind(this);
-    this.processInput = this.processInput.bind(this);
-    this.checkInput = this.checkInput.bind(this);
     this.startSong = this.startSong.bind(this);
-    this.getSimpleSynonyms = this.getSimpleSynonyms.bind(this);
-    this.getSynonyms = this.getSynonyms.bind(this);
+    this.processInput = this.processInput.bind(this);
     this.initViewConnection = this.initViewConnection.bind(this);
     this.setNextSong = this.setNextSong.bind(this);
     this.loadNewSong = this.loadNewSong.bind(this);
@@ -52,7 +48,6 @@ export default class GameLogic extends React.Component {
 
   componentDidMount() {
     this.startSong();
-    console.log(levenshteinDistance);
   }
 
   initViewConnection(vC) {
@@ -72,8 +67,8 @@ export default class GameLogic extends React.Component {
     if (this.state.currentSong.started) {
       console.log("song had already started")
     }
-    var aArray = this.state.currentSong.artist.split(/[ ,]+/g).map(this.toTAElement);
-    var tArray = this.state.currentSong.title.split(/[ ,]+/g).map(this.toTAElement);
+    var aArray = this.state.currentSong.artist.split(/[ ,]+/g).map(toTAElement);
+    var tArray = this.state.currentSong.title.split(/[ ,]+/g).map(toTAElement);
 
     var oldCSState = this.state.currentSong;
     oldCSState.artistElementArray = aArray;
@@ -95,175 +90,41 @@ export default class GameLogic extends React.Component {
     song.play();
   }
 
-  getSimpleSynonyms(s) {
-    var res = s.toLowerCase();
-    res = s.replace(/è/g, "e")
-    res = s.replace(/é/g, "e")
-    res = s.replace(/ê/g, "e")
-    res = s.replace(/à/g, "a")
-    res = s.replace(/á/g, "a")
-    res = s.replace(/â/g, "a")
-    res = s.replace(/ì/g, "i")
-    res = s.replace(/í/g, "i")
-    res = s.replace(/î/g, "i")
-    res = s.replace(/ù/g, "u")
-    res = s.replace(/ú/g, "u")
-    res = s.replace(/û/g, "u")
-    res = s.replace(/ò/g, "o")
-    res = s.replace(/ó/g, "o")
-    res = s.replace(/ô/g, "o")
-    res = s.replace(/ä/g, "ae")
-    res = s.replace(/ü/g, "ue")
-    res = s.replace(/ö/g, "oe")
-    res = s.replace(/[^A-Za-z0-9ß]/g, "")
-    const lower = s.toLowerCase().replace(/[^A-Za-z0-9äüöß]/g, "")
-    return [res, lower]
-  }
-  
-  /*
-    Synnonyms explained in synnonyms.md
-   */
-  getSynonyms(s) {
-    var alphaNum = s.replace(/[A-Z]/g, "");
-    return this.getSimpleSynonyms(s);
-  }
-  
-  toTAElement(s) {
-    //TODO function that determines if a word has to be solved
-    var mbs = true;
-    var synn = this.getSynonyms(s)
-    return {
-      word: s,
-      synnonyms: synn,
-      length: s.length,
-      mustBeSolved: mbs,
-      hasBeenSolved: !mbs
-    };
-  }
-
   processInput(input) {
     if (!this.state.currentSong.active) {
       return;
     }
     console.log("process input")
-    var didTAChange = this.checkInput(input);
-    var a_s = this.checkIfSolved(this.state.currentSong.artistElementArray);
-    var t_s = this.checkIfSolved(this.state.currentSong.titleElementArray);
+    var t_c = false;
+    var a_c = false;
+    var check = checkInput(input, this.state.currentSong.artistElementArray);
+    if (check[0]) {
+      a_c = true;
+      var oldState = this.state.currentSong;
+      oldState.artistElementArray = check[1];
+      this.setState({currentSong: oldState});
+    }
+    var check = checkInput(input, this.state.currentSong.titleElementArray);
+    if (check[0]) {
+      t_c = true;
+      var oldState = this.state.currentSong;
+      oldState.titleElementArray = check[1];
+      this.setState({currentSong: oldState});
+    }
+
+    var a_s = checkIfSolved(this.state.currentSong.artistElementArray);
+    var t_s = checkIfSolved(this.state.currentSong.titleElementArray);
     if (a_s && t_s) {
       const time = Date.now() - this.state.currentSong.startDate;
       console.log("Song was solved in: " + time + " send time to server")
     }
     if (a_s) {}
     if (t_s) {}
-    if (didTAChange) {
+    if (t_c || a_c) {
       var newArtistLabel = this.buildLabelString(this.state.currentSong.artistElementArray);
       var newTitleLabel = this.buildLabelString(this.state.currentSong.titleElementArray);
       this.viewConnection.updateATLabels(newArtistLabel, newTitleLabel);
     }
-  }
-
-  checkInput(input) {
-    console.log("GV processing input")
-    if (!this.state.currentSong.active) {
-      return;
-    }
-
-    const inputWords = input.split(" ");
-    var d = 0;
-    var allowedTypos = 0;
-    //copy of state => single refresh of the state at the end instead of
-    //multiple changes during loop
-    var aArray = this.state.currentSong.artistElementArray;
-    var tArray = this.state.currentSong.titleElementArray;
-    //flags to recognize if state has to be updated
-    var a_s = false;
-    var t_s = false;
-
-    for (var i in inputWords) {
-      for (var a_i in aArray) {
-        var a = aArray[a_i];
-        if (a.mustBeSolved && !a.hasBeenSolved) {
-          if (a.length > 3) {
-            allowedTypos = Math.floor((a.length - 1) / 3);
-          } else {
-            allowedTypos = 0;
-          }
-
-          d = levenshteinDistance(inputWords[i], a.word);
-          if (d - allowedTypos <= 0) {
-            //Success changes
-            console.log("solved ", a.word, "with ", inputWords[i], " d", d, " at", allowedTypos);
-            a.hasBeenSolved = true;
-            a_s = true;
-            continue;
-          }
-          for (var s_i in a.synnonyms) {
-            var s = a.synnonyms[s_i];
-            if (a.length > 3) {
-              allowedTypos = Math.floor((s.length - 1) / 3);
-            } else {
-              allowedTypos = 0;
-            }
-
-            d = levenshteinDistance(inputWords[i], s);
-            if (d - allowedTypos <= 0) {
-              //Success changes
-              a.hasBeenSolved = true;
-              a_s = true;
-              break;
-            }
-          }
-        }
-      }
-      for (var t_i in tArray) {
-        var t = tArray[t_i];
-        if (t.mustBeSolved && !t.hasBeenSolved) {
-          if (t.length > 3) {
-            allowedTypos = Math.floor((t.length - 1) / 3);
-          } else {
-            allowedTypos = 0;
-          }
-
-          d = levenshteinDistance(inputWords[i], t.word);
-          if (d - allowedTypos <= 0) {
-            //Success changes
-	    console.log("solved ", a.word, "with ", inputWords[i], " d", d, " at", allowedTypos);
-            t.hasBeenSolved = true;
-            t_s = true;
-            break;
-          }
-          for (var s_i in t.synnonyms) {
-            var s = t.synnonyms[s_i];
-            if (a.length > 3) {
-              allowedTypos = Math.floor((s.length - 1) / 3);
-            } else {
-              allowedTypos = 0;
-            }
-
-            d = levenshteinDistance(inputWords[i], s);
-            if (d - allowedTypos <= 0) {
-              //Success changes
-	      console.log("solved syn ", s, "with ", inputWords[i], " d", d, " at", allowedTypos);
-              t.hasBeenSolved = true;
-              t_s = true;
-              break;
-            }
-          }
-        }
-      }
-    }
-    if (a_s) {
-      var cs = this.state.currentSong;
-      cs.artistElementArray = aArray;
-      console.log(aArray);
-      this.setState({currentSong: cs});
-    }
-    if (t_s) {
-      var cs = this.state.currentSong;
-      cs.titleElementArray = tArray;
-      this.setState({currentSong: cs});
-    }
-    return (a_s || t_s);
   }
 
   buildLabelString(taArray) {
@@ -276,18 +137,10 @@ export default class GameLogic extends React.Component {
     return wordArray.join(" ");
   }
 
-  checkIfSolved(taArray) {
-    return taArray.filter(function(ta) {
-      return ta.mustBeSolved
-    }).reduce(function(acc, ta) {
-      return acc && ta.hasBeenSolved;
-    }, true);
-  }
-
   setNextSong(nextSongState) {
     this.setState({nextSong: nextSongState});
   }
-  
+
   loadNewSong() {
     var nextSongState = this.state.nextSong;
     if (nextSongState == null) {
