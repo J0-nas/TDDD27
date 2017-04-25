@@ -5,6 +5,7 @@ export default class ProgressBar extends React.Component {
   constructor() {
     super();
     this.state = {
+      className: "nix",
       progress: 0
     }
 
@@ -16,7 +17,11 @@ export default class ProgressBar extends React.Component {
   }
 
   startAt(time) {
-    this.setState({progress: time-30});
+    var state = this.state;
+    state.className = "nix";
+    state.progress = -time;
+    this.setState(state);
+    this.setState({className: "filling-bar"});
     console.log("Progressbar started, ", this.state.progress);
   }
 
@@ -28,7 +33,7 @@ export default class ProgressBar extends React.Component {
 
     return (
       <div id="progressWrapper">
-        <div id="progress" className="filling-bar" style={s}> </div>
+        <div id="progress" className={ this.state.className } style={s}> </div>
       </div>
     );
   }
