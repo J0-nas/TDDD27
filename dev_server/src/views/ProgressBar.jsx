@@ -21,6 +21,7 @@ export default class ProgressBar extends React.Component {
     state.className = "nix";
     state.progress = -time;
     this.setState(state);
+    this.forceUpdate();
     this.setState({className: "filling-bar"});
     console.log("Progressbar started, ", this.state.progress);
   }
