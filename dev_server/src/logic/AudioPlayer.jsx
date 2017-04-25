@@ -6,13 +6,18 @@ export default class AudioPlayer extends React.Component{
     this.state = {
       startHandles: []
     }
+
+    this.audio = new Audio();
+
     this.setVolume = this.setVolume.bind(this);
     this.pushStart = this.pushStart.bind(this);
     this.addHandle = this.addHandle.bind(this);
+    this.playSongFrom = this.playSongFrom.bind(this);
   }
 
   setVolume(volume) {
     console.log("set volume to ", volume);
+    this.audio.volume = volume;
   }
 
   pushStart(start) {
@@ -25,8 +30,12 @@ export default class AudioPlayer extends React.Component{
   addHandle(handle) {
     var state = this.state;
     state.startHandles.push(handle);
-    console.log("oldState", this.state);
     //this.setState(state);
-    console.log("newState", this.state);
+  }
+
+  playSongFrom(songURL, time) {
+    this.audio.src = songURL;
+    this.audio.currentTime = time;
+    this.audio.play();
   }
 }

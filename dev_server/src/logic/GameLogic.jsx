@@ -52,7 +52,7 @@ export default class GameLogic extends React.Component {
 
   componentDidMount() {
     this.startSong();
-    this.audioPlayer.pushStart(30);
+    this.audioPlayer.pushStart(10);
   }
 
   initViewConnection(vC) {
@@ -88,11 +88,7 @@ export default class GameLogic extends React.Component {
     this.viewConnection.updateATLabels(newArtistLabel, newTitleLabel);
 
     //TODO
-    var song = new Audio(this.state.currentSong.url);
-    song.src = "http://listen.vo.llnwd.net/g3/5/4/8/1/7/1302071845.mp3";
-    song.currentTime = this.state.currentSong.songStart;
-    song.volume = 0.3;
-    song.play();
+    this.audioPlayer.playSongFrom(this.state.currentSong.url, 20);
   }
 
   processInput(input) {

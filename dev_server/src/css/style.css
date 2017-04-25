@@ -11,10 +11,6 @@ body {
     height:400px;
 }
 
-.mainContainer {
-    //background-color: yellow;
-}
-
 /*
   Audio-player
 */
@@ -79,4 +75,86 @@ button, button:focus, button:active {
 .audio-player .volume-bar .handle:hover {
     background-color: lightblue;
     transform: scale(3);
+}
+
+/*
+  ProgressCounter
+*/
+#timer {
+    margin-left: auto;
+    margin-right: auto;
+    color: lightcoral;
+    text-align: center;
+    z-index: 2;
+    font-size: 75px;
+    /*font-family: helvetica!important;*/
+    font-family: sans-serif!important;
+    font-style: normal;
+    font-variant: small-caps;
+    font-weight: 700;
+}
+
+.filling-text {
+    animation: fill-text 30s linear;
+    animation-timing-function: linear;
+}
+
+@keyframes fill-text {
+    100% {
+        color: lightcoral
+    }
+    50% {
+        color: #e8ed90
+    }
+    0% {
+        color: lightgreen
+    }
+}
+
+/*
+  ProgressBar
+*/
+
+.form-group {
+  margin-bottom: 0px;
+}
+
+.form-group * {
+  border: 0px;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+
+#progressWrapper {
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#progress {
+  background-color: lightcoral;
+  height: 5px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  padding: 0px;
+}
+
+.filling-bar {
+    animation: fill-bar 30s linear;
+    animation-timing-function: linear;
+}
+
+@keyframes fill-bar {
+    100% {
+        background: lightcoral;
+        width: 100%;
+    }
+    50% {
+        background: #e8ed90;
+        width: 50%;
+    }
+    0% {
+        background: lightgreen;
+        width: 0%;
+    }
 }

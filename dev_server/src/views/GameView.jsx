@@ -73,7 +73,8 @@ export default class GameView extends React.Component {
 
   render() {
     var s = {
-      backgroundColor: "rgba(100,100,100,0.5)",
+      //backgroundColor: "rgba(100,100,100,0.5)",
+      backgroundColor: "grey",
       marginRight: "0px",
       width: "100%"
     }
@@ -81,10 +82,11 @@ export default class GameView extends React.Component {
     return (
       <Grid style={s}>
         <VolumeView callback={ this.props.volumeCallback }/>
-        <ProgressCounter setStartAtHandle={ this.props.addStartHandle } name="PC"/>
+        <ProgressCounter setStartAtHandle={ this.props.addStartHandle }/>
 
         <TextBox artist={this.state.textBox.artist} title={this.state.textBox.title}/>
         <SolveInput gvCB={this.inputSubmitCallback}/>
+        <ProgressBar setStartAtHandle= { this.props.addStartHandle }/>
         <PreviouslyPlayed artist={this.state.previouslyPlayed.artist} title={this.state.previouslyPlayed.title} rUser={this.state.previouslyPlayed.record.userName} rTime={this.state.previouslyPlayed.record.time} rDate={this.state.previouslyPlayed.record.date}/>
       </Grid>
     );

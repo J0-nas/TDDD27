@@ -41,7 +41,7 @@ export default class Page extends React.Component {
 
   render() {
     var s = {
-      "backgroundColor": "green"
+      //"backgroundColor": "green"
     };
     return (
       <div id="Page">
