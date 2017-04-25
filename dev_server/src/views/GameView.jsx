@@ -80,7 +80,8 @@ export default class GameView extends React.Component {
 
     return (
       <Grid style={s}>
-        <VolumeView/>
+        <VolumeView callback={ this.props.volumeCallback }/>
+        <ProgressCounter setStartAtHandle={ this.props.addStartHandle } name="PC"/>
 
         <TextBox artist={this.state.textBox.artist} title={this.state.textBox.title}/>
         <SolveInput gvCB={this.inputSubmitCallback}/>

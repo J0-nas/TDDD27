@@ -45,11 +45,14 @@ export default class GameLogic extends React.Component {
     this.loadNewSong = this.loadNewSong.bind(this);
 
     this.serverConnection = <ServerConnection nextSong={this.nextSong}/>;
-    this.audioPlayer = <AudioPlayer/>;
+    this.audioPlayer = new AudioPlayer();
+    console.log(this.audioPlayer.addHandle);
+    console.log(this.audioPlayer);
   }
 
   componentDidMount() {
     this.startSong();
+    this.audioPlayer.pushStart(30);
   }
 
   initViewConnection(vC) {
@@ -167,6 +170,11 @@ export default class GameLogic extends React.Component {
   }
 
   render() {
-    return <GameView processInputHandle={this.processInput} initHande={this.initViewConnection}/>
+    return <GameView
+      processInputHandle={this.processInput}
+      initHande={this.initViewConnection}
+      volumeCallback = { this.audioPlayer.setVolume }
+      addStartHandle = { this.audioPlayer.addHandle }
+      />
   }
 }

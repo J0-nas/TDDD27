@@ -5,16 +5,24 @@ export default class ProgressCounter extends React.Component {
   constructor() {
     super();
     this.state = {
-      counter: 30*10
+      counter: 30
     };
+    this.startAt = this.startAt.bind(this);
   }
 
   componentDidMount() {
-    this.timer = setInterval(() => this.tick(), 100);
+    this.timer = null;
+    this.props.setStartAtHandle(this.startAt)
   }
 
   componentWillUnmount() {
     clearInterval(this.timer);
+  }
+
+  startAt(time) {
+    console.log("Counter started");
+    this.setState({counter: time});
+    this.timer = setInterval(() => this.tick(), 100);
   }
 
   tick() {
@@ -28,17 +36,16 @@ export default class ProgressCounter extends React.Component {
       this.timer = null
     } else {
       this.setState({
-        counter: this.state.counter - 1
+        counter: this.state.counter - 0.1
       });
     }
   }
 
 
+
   render() {
     return (
-      <div>
-        ProgressCountersssss + {this.state.counter}
-      </div>
+      <div id="timer"> { this.state.counter } </div>
     );
   }
 }
