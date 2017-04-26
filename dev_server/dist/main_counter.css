@@ -38,11 +38,13 @@ body{
 .filling-bar {
     animation: fill-bar 30s linear;
     animation-timing-function: linear;
+    animation-delay: -10s;
 }
 
 .filling-text {
     animation: fill-text 30s linear;
     animation-timing-function: linear;
+    animation-delay: -10s;
 }
 
 #timer {

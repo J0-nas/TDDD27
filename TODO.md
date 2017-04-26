@@ -22,6 +22,7 @@
       - [ ] Break overlay
             - [ ] After song
             - [ ] After game
+      - [ ] replace nav-footer with tab-footer
       - [x] Volume mute => set bar to 0
             - [x] When muted click on bar unmutes
 - [ ] SignUp/SignIn

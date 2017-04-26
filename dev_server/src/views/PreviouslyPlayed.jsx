@@ -19,10 +19,10 @@ export default class PreviouslyPlayed extends React.Component {
 	    textAlign: "center",
 	    width: "100%"
 	}
-	
+
     return (
 	    <Grid style = {s}>
-        <Row className="show-grid">
+        <Row id="previouslyPlayed" className="show-grid">
           <Col>
             <div>
               {this.props.title} by {this.props.artist}

@@ -6,7 +6,7 @@ import {Navbar, Nav, NavItem, MenuItem, NavDropdown} from 'react-bootstrap';
 export default class Header extends React.Component {
     render() {
         return (
-            <Navbar fixedTop inverse>
+            <Navbar fixedTop inverse id="header">
                 <Navbar.Header>
                     <Navbar.Brand>
                         <a href="#">Mousika</a>
