@@ -4,7 +4,7 @@
 
 - [ ] Header
       - [ ] Brand
-      - [ ] Login (maybe in the footer)
+      - [ ] Login (maybe in the footer
 - [ ] Footer
       - [ ] Profile (default - random - ID, save in localStorage)
 - [ ] Menue
@@ -19,7 +19,7 @@
       - [x] Previous Song Info
       - [ ] Fix animation
       - [ ] Add animation for user input
-      - [ ] Beak overlay
+      - [ ] Break overlay
             - [ ] After song
             - [ ] After game
       - [x] Volume mute => set bar to 0
@@ -48,3 +48,15 @@
       - [ ] Account management functions
             - [ ] Unique username/email
 
+
+### Next
+
+- [ ] Decise on HTTP library (XMLHTTP…, fetch(), etc.)
+- [ ] Manage current game state on server (+ next game)
+      - [ ] Manage current song state on server
+      - [ ] Manage previous song state on server
+- [ ] Client requests all songs/game
+- [ ] Client request current + remaining songs
+- [ ] *Client request next game*
+- [ ] Websocket established
+      - [ ] Client react on new record
