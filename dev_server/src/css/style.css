@@ -140,11 +140,11 @@ button, button:focus, button:active {
   margin-top: 0px;
   margin-bottom: 0px;
   padding: 0px;
+  animation: fill-bar 30s linear;
+  animation-timing-function: linear;
 }
 
 .filling-bar {
-    animation: fill-bar 30s linear;
-    animation-timing-function: linear;
 }
 
 @keyframes fill-bar {

@@ -13,10 +13,17 @@
 - [ ] Game
       - [x] Input box
       - [x] Solve box
-      - [ ] Remaining time counter
-      - [ ] Custom Audio player
+      - [x] Remaining time counter
+      - [x] Custom Audio player
             - [x] Hide/disable pause, jumping, downloading
-      - [ ] Previous Song Info
+      - [x] Previous Song Info
+      - [ ] Fix animation
+      - [ ] Add animation for user input
+      - [ ] Beak overlay
+            - [ ] After song
+            - [ ] After game
+      - [x] Volume mute => set bar to 0
+            - [x] When muted click on bar unmutes
 - [ ] SignUp/SignIn
       - [ ] Try overlay + Form
 
@@ -31,10 +38,10 @@
 - [ ] Krotos - Napster API
       - [x] finish up API to get the preview URL (+information) for the 10 songs
       - [ ] extend the api ~ not needed in the beginning
-- [ ] Database helper
-      - [ ] Define an intermediate API to manage the mariaDB
-      - [ ] User table management
-      - [ ] Records/Title table
+- [ ] Hermes - Database helper
+      - [x] Define an intermediate API to manage the mariaDB
+      - [x] User table management
+      - [x] Records/Title table
       - [ ] Deploy DB helper to Phoenix
 - [ ] Phoenix signUp/signIn
       - [ ] Define route(s)

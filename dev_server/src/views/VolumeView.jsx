@@ -11,9 +11,14 @@ export default class VolumeView extends React.Component {
       down: "volume_down",
       muted: "volume_muted"
     }
+    this.colors = {
+      muted: "#21688c",
+      unmuted: "#0af"
+    }
     this.state = {
       volumeIcon: this.volumeIcons.up,
       volume: 0.5,
+      volume_color : this.colors.unmuted,
       muted: false,
       mouseDown: false
     }
@@ -77,9 +82,11 @@ export default class VolumeView extends React.Component {
     if (state.muted) {
       state.muted = false;
       state.volumeIcon = this.chooseIcon(state.volume);
+      state.volume_color = this.colors.unmuted;
     } else {
       state.muted = true;
       state.volumeIcon = this.volumeIcons.muted;
+      state.volume_color = this.colors.muted;
     }
     this.setState(state);
     this.volumeCallback();
@@ -104,13 +111,18 @@ export default class VolumeView extends React.Component {
     const p = this.getP(e.clientX, volumeBarPosX, volumeBarWidth);
     state.volume = p;
     state.volumeIcon = this.chooseIcon(p);
+    if (this.state.muted) {
+      state.muted = false;
+      state.volume_color = this.colors.unmuted;
+    }
     this.setState(state);
     this.volumeCallback();
   }
 
   render() {
     var s = {
-      width: String(this.state.volume * 100) +"%"
+      width: String(this.state.volume * 100) + "%",
+      backgroundColor: this.state.volume_color
     }
     return (
       <div className="audio-player">
