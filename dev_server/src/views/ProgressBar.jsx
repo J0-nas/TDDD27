@@ -34,7 +34,7 @@ export default class ProgressBar extends React.Component {
 
     return (
       <div id="progressWrapper">
-        <div id="progress" className={ this.state.className } style={s}> </div>
+        <div id="progress" style={s}> </div>
       </div>
     );
   }

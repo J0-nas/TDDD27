@@ -10,6 +10,8 @@ export default class GameLogic extends React.Component {
   constructor() {
     super();
     this.state = {
+      round: 0,
+      breakDuration: 2,
       currentSong: {
         active: true,
         started: true,
@@ -25,17 +27,29 @@ export default class GameLogic extends React.Component {
         },
         artistElementArray: [],
         titleElementArray: []
+      },
+      previouslyPlayed: {
+        artist: "Artist",
+        title: "Title",
+        record: {
+          userName: "User",
+          time: "5.145",
+          date: "1.1.2015 : 21:13"
+        }
       }
     }
 
+    this.sleep = this.sleep.bind(this);
     this.startSong = this.startSong.bind(this);
     this.onSongEnd = this.onSongEnd.bind(this);
     this.processInput = this.processInput.bind(this);
     this.initViewConnection = this.initViewConnection.bind(this);
     this.loadNewSong = this.loadNewSong.bind(this);
+    this.songBreak = this.songBreak.bind(this);
 
     this.serverConnection = new ServerConnection();
     this.audioPlayer = new AudioPlayer(this.onSongEnd);
+
     console.log(this.audioPlayer.addHandle);
     console.log(this.audioPlayer);
   }
@@ -52,6 +66,10 @@ export default class GameLogic extends React.Component {
   initServerConnection(sC) {
     this.serverConnection = cS;
     return;
+  }
+
+  sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 
   /*
@@ -76,8 +94,7 @@ export default class GameLogic extends React.Component {
     //update the labels using the viewConnection
     this.viewConnection.updateATLabels(newArtistLabel, newTitleLabel);
 
-    //TODO
-    this.audioPlayer.playSongFrom(this.state.currentSong.url, 0);
+    this.audioPlayer.playSongFrom(this.state.currentSong.url, 25);
   }
 
   onSongEnd() {
@@ -85,9 +102,22 @@ export default class GameLogic extends React.Component {
     var currentSongState = this.state.currentSong;
     currentSongState.active = false;
 
+    var previouslyPlayedState = this.state.previouslyPlayed;
+    previouslyPlayedState.artist = currentSongState.artist;
+    previouslyPlayedState.title = currentSongState.title;
+    previouslyPlayedState.record = currentSongState.record;
+    this.setState({previouslyPlayed: previouslyPlayedState})
+
+    this.songBreak();
+    setTimeout(this.startSong, 1000*this.state.breakDuration);
+
+    //await sleep(1000*this.state.breakDuration);
     //expects the next song to be available
     this.loadNewSong();
-    this.startSong();
+  }
+
+  songBreak() {
+    this.viewConnection.songBreak(this.state.breakDuration, 0);
   }
 
   processInput(input) {
@@ -155,6 +185,6 @@ export default class GameLogic extends React.Component {
   }
 
   render() {
-    return <GameView processInputHandle={this.processInput} initHande={this.initViewConnection} volumeCallback={this.audioPlayer.setVolume} addStartHandle={this.audioPlayer.addHandle}/>
+    return <GameView previouslyPlayed={ this.state.previouslyPlayed } processInputHandle={this.processInput} initHande={this.initViewConnection} volumeCallback={this.audioPlayer.setVolume} addStartHandle={this.audioPlayer.addHandle}/>
   }
 }
