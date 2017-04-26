@@ -15,6 +15,10 @@ body {
 	padding: 0px !important;
 }
 
+#Page {
+  margin-top: 80px;
+}
+
 /*
   Audio-player
 */

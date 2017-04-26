@@ -48,15 +48,17 @@ export default class Page extends React.Component {
         <Header/>
         <Grid className="mainContainer" style={s}>
           <Row className="show-grid">
-            <Col sm={12} md={6}>
+            <Col sm={12} md={5}>
               <GameLogic/>
             </Col>
             <Col sm={12} md={6}>
               {this.state.content}
             </Col>
+            <Col sm={12} md={1}>
+                <Footer/>
+            </Col>
           </Row>
         </Grid>
-        <Footer/>
       </div>
     );
     /*
