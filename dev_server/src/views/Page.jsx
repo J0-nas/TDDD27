@@ -7,9 +7,9 @@ import Header from './Header.jsx';
 import Footer from './Footer.jsx';
 import GameLogic from './../logic/GameLogic.jsx'
 import Standings from './Standings.jsx'
-import my_image from './../images/bg_2.jpg'; //relative path to image
 
-//var background = require('url-loader?mimetype=image/jpg!./../images/bg_2.jpg')
+import Background from './../images/bg_2.jpg'; //relative path to image
+
 
 export default class Page extends React.Component {
   constructor() {
@@ -42,7 +42,9 @@ export default class Page extends React.Component {
 
   render() {
     var s = {
-        // backgroundImage : url("my_image");
+        width: "100vw",
+        height: "100vh",
+        backgroundImage: 'url(' +  Background  + ')'
     };
     return (
       <div id="Page" style={ s }>
