@@ -8,7 +8,7 @@ import Footer from './Footer.jsx';
 import GameLogic from './../logic/GameLogic.jsx'
 import Standings from './Standings.jsx'
 
-import Background from './../images/bg_2.jpg'; //relative path to image
+import Background from './../images/background.jpg'; //relative path to image
 
 
 export default class Page extends React.Component {
@@ -42,9 +42,10 @@ export default class Page extends React.Component {
 
   render() {
     var s = {
-        width: "100vw",
-        height: "100vh",
-        backgroundImage: 'url(' +  Background  + ')'
+        width: "100%",
+        backgroundImage: 'url(' +  Background  + ')',
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover"
     };
     return (
       <div id="Page" style={ s }>

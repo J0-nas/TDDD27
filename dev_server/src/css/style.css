@@ -1,7 +1,7 @@
 body {
     font-family: 'Helvecia', sans-serif;
     font-size: 14pt;
-    /*!background-image: url("/images/bg_3.jpg");*/
+    background-image: url("/../images/bg_3.jpg");
     /*
      * Glass-effect: http://codepen.io/anon/pen/jmyerq
      *
