@@ -147,13 +147,14 @@ button, button:focus, button:active {
     margin-top: 0px;
     margin-bottom: 0px;
     padding: 0px;
-    animation: fill-bar 30s linear;
+}
+
+.filling-bar {
+    animation: fillBar 30s linear;
     animation-timing-function: linear;
 }
 
-.filling-bar {}
-
-@keyframes fill-bar {
+@keyframes fillBar {
     100% {
         background: lightcoral;
         width: 100%;
@@ -166,6 +167,37 @@ button, button:focus, button:active {
         background: lightgreen;
         width: 0%;
     }
+}
+
+
+
+
+
+.filling-error-odd {
+    animation: fill-error-odd 3s cubic-bezier(.08,.82,.17,1);
+}
+
+.filling-error-even {
+    animation: fill-error-even 3s cubic-bezier(.08,.82,.17,1);
+}
+
+@keyframes fill-error-odd {
+    from {background-color: lightcoral;}
+    to {background-color: white;}
+}
+
+@keyframes fill-error-even {
+    from {background-color: lightcoral;}
+    to {background-color: white;}
+}
+
+.filling-correct {
+    animation: fill-correct 3s cubic-bezier(.08,.82,.17,1);
+}
+
+@keyframes fill-correct {
+    from {background-color: lightgreen;}
+    to {background-color: white;}
 }
 
 

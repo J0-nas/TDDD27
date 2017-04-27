@@ -10,6 +10,9 @@ export default class GameLogic extends React.Component {
   constructor() {
     super();
     this.state = {
+      cssClassNameBar: "nix",
+      cssClassNameCounter: "nix",
+      cssClassNameInput: "nix",
       round: 0,
       breakDuration: 2,
       currentSong: {
@@ -79,6 +82,9 @@ export default class GameLogic extends React.Component {
     if (this.state.currentSong.started) {
       console.log("song had already started")
     }
+    this.setState( {cssClassNameBar: "filling-bar"} )
+    this.setState( {cssClassNameCounter: "filling-text"} )
+    this.setState( {cssClassNameInput: "nix"} )
     var aArray = this.state.currentSong.artist.split(/[ ,]+/g).map(toTAElement);
     var tArray = this.state.currentSong.title.split(/[ ,]+/g).map(toTAElement);
 
@@ -94,7 +100,7 @@ export default class GameLogic extends React.Component {
     //update the labels using the viewConnection
     this.viewConnection.updateATLabels(newArtistLabel, newTitleLabel);
 
-    this.audioPlayer.playSongFrom(this.state.currentSong.url, 25);
+    this.audioPlayer.playSongFrom(this.state.currentSong.url, 0);
   }
 
   onSongEnd() {
@@ -107,6 +113,8 @@ export default class GameLogic extends React.Component {
     previouslyPlayedState.title = currentSongState.title;
     previouslyPlayedState.record = currentSongState.record;
     this.setState({previouslyPlayed: previouslyPlayedState})
+    this.setState( {cssClassNameBar: "nix"} )
+    this.setState( {cssClassNameCounter: "nix"} )
 
     this.songBreak();
     setTimeout(this.startSong, 1000*this.state.breakDuration);
@@ -121,6 +129,7 @@ export default class GameLogic extends React.Component {
   }
 
   processInput(input) {
+      this.setState( {cssClassNameInput: "nix"} )
     if (!this.state.currentSong.active) {
       return;
     }
@@ -154,6 +163,13 @@ export default class GameLogic extends React.Component {
       var newArtistLabel = this.buildLabelString(this.state.currentSong.artistElementArray);
       var newTitleLabel = this.buildLabelString(this.state.currentSong.titleElementArray);
       this.viewConnection.updateATLabels(newArtistLabel, newTitleLabel);
+      this.setState( {cssClassNameInput: "filling-correct"} )
+    } else {
+        if (this.state.cssClassNameInput == "filling-error-even") {
+            this.setState( {cssClassNameInput: "filling-error-odd"} )
+        } else {
+            this.setState( {cssClassNameInput: "filling-error-even"} )
+        }
     }
   }
 
@@ -185,6 +201,15 @@ export default class GameLogic extends React.Component {
   }
 
   render() {
-    return <GameView previouslyPlayed={ this.state.previouslyPlayed } processInputHandle={this.processInput} initHande={this.initViewConnection} volumeCallback={this.audioPlayer.setVolume} addStartHandle={this.audioPlayer.addHandle}/>
+    return <GameView
+        previouslyPlayed={ this.state.previouslyPlayed }
+        processInputHandle={this.processInput}
+        initHande={this.initViewConnection}
+        volumeCallback={this.audioPlayer.setVolume}
+        addStartHandle={this.audioPlayer.addHandle}
+        AnimationBarHandle = { this.state.cssClassNameBar }
+        AnimationCounterHandle = { this.state.cssClassNameCounter }
+        AnimationInputHandle = { this.state.cssClassNameInput }
+        />
   }
 }

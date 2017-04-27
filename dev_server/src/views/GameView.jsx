@@ -61,11 +61,14 @@ export default class GameView extends React.Component {
     return (
       <Grid style={s}>
         <VolumeView callback={ this.props.volumeCallback }/>
-        <ProgressCounter setStartAtHandle={ this.props.addStartHandle }/>
+        <ProgressCounter onAnimationCounterHandle = { this.props.AnimationCounterHandle }
+                         setStartAtHandle={ this.props.addStartHandle }/>
 
         <TextBox artist={this.state.textBox.artist} title={this.state.textBox.title}/>
-        <SolveInput gvCB={this.inputSubmitCallback}/>
-        <ProgressBar setStartAtHandle= { this.props.addStartHandle }/>
+        <SolveInput     onAnimationInputHandle = { this.props.AnimationInputHandle }
+                        gvCB={this.inputSubmitCallback}/>
+        <ProgressBar    onAnimationBarHandle = { this.props.AnimationBarHandle }
+                        setStartAtHandle= { this.props.addStartHandle }/>
         <PreviouslyPlayed artist={this.props.previouslyPlayed.artist} title={this.props.previouslyPlayed.title} rUser={this.props.previouslyPlayed.record.userName} rTime={this.props.previouslyPlayed.record.time} rDate={this.props.previouslyPlayed.record.date}/>
       </Grid>
     );

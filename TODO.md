@@ -17,8 +17,8 @@
       - [x] Custom Audio player
             - [x] Hide/disable pause, jumping, downloading
       - [x] Previous Song Info
-      - [ ] Fix animation
-      - [ ] Add animation for user input
+      - [x] Fix animation
+      - [x] Add animation for user input
       - [ ] Break overlay
             - [ ] After song
             - [ ] After game

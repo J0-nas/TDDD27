@@ -41,7 +41,7 @@ export default class SolveInput extends React.Component {
     return (
       <form onSubmit={this.handleSubmit}>
         <FormGroup controlId="userInputForm">
-          <FormControl style={s} placeholder="Enter Title and Artist" onChange={this.handleChange} autoComplete="off" ref="inputField"/>
+          <FormControl className = { this.props.onAnimationInputHandle } style={s} placeholder="Enter Title and Artist" onChange={this.handleChange} autoComplete="off" ref="inputField"/>
         </FormGroup>
       </form>
     );
