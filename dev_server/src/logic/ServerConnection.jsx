@@ -10,7 +10,7 @@ export default class ServerConnection extends React.Component {
         artist: "nextArtist",
         title: "nextTitle",
         record: {
-          username: "next_r_userName",
+          userName: "next_r_userName",
           time: "next_t_19.56",
           date: "next_d_2132 : 12:49"
         },
@@ -21,7 +21,7 @@ export default class ServerConnection extends React.Component {
         artist: "Drake",
         title: "Fireworks featuring Alicia Keys (Album Version (Edited))",
         record: {
-          username: "MaxMustermann",
+          userName: "MaxMustermann",
           time: "00.01",
           date: "32.02.2018"
         },

@@ -12,65 +12,71 @@ import GameLogic from './../logic/GameLogic.jsx';
 import {Grid} from 'react-bootstrap';
 
 export default class GameView extends React.Component {
-  constructor() {
-    super();
+    constructor() {
+        super();
 
-    this.state = {
-      textBox: {
-        artist: "***",
-        title: "*****"
-      }
-    };
+        this.state = {
+            textBox: {
+                artist: "***",
+                title: "*****"
+            }
+        };
 
-    this.inputSubmitCallback = this.inputSubmitCallback.bind(this);
-    this.updateATLabels = this.updateATLabels.bind(this);
-    this.songBreak = this.songBreak.bind(this);
-  }
-
-  componentDidMount() {
-    this.props.initHande({
-      updateATLabels: this.updateATLabels,
-      songBreak: this.songBreak
-    })
-  }
-
-  songBreak(duration, type) {
-    console.log("break of type ", type, " for ", duration);
-  }
-
-  inputSubmitCallback(input) {
-    console.log("GV recieved: ", input);
-    this.props.processInputHandle(input);
-  }
-
-  updateATLabels(newArtistLabel, newTitleLabel) {
-    var labelState = this.state.textBox;
-    labelState.artist = newArtistLabel;
-    labelState.title = newTitleLabel;
-    this.setState({textBox: labelState});
-  }
-
-  render() {
-    var s = {
-      //backgroundColor: "rgba(100,100,100,0.5)",
-      backgroundColor: "grey",
-      marginRight: "0px",
-      width: "100%"
+        this.inputSubmitCallback = this.inputSubmitCallback.bind(this);
+        this.updateATLabels = this.updateATLabels.bind(this);
+        this.songBreak = this.songBreak.bind(this);
     }
 
-    return (
-      <Grid style={s}>
-        <VolumeView callback={ this.props.volumeCallback }/>
-        <ProgressCounter onAnimationCounterHandle = { this.props.AnimationCounterHandle }
-                         setStartAtHandle={ this.props.addStartHandle }/>
+    componentDidMount() {
+        this.props.initHande({updateATLabels: this.updateATLabels, songBreak: this.songBreak})
+    }
 
-        <TextBox artist={this.state.textBox.artist} title={this.state.textBox.title}/>
-        <SolveInput     onAnimationInputHandle = { this.props.AnimationInputHandle }
-                        gvCB={this.inputSubmitCallback}/>
-        <ProgressBar    onAnimationBarHandle = { this.props.AnimationBarHandle }
-                        setStartAtHandle= { this.props.addStartHandle }/>
-        <PreviouslyPlayed artist={this.props.previouslyPlayed.artist} title={this.props.previouslyPlayed.title} rUser={this.props.previouslyPlayed.record.userName} rTime={this.props.previouslyPlayed.record.time} rDate={this.props.previouslyPlayed.record.date}/>
-      </Grid>
-    );
-  }
+    songBreak(duration, type) {
+        console.log("break of type ", type, " for ", duration);
+    }
+
+    inputSubmitCallback(input) {
+        console.log("GV recieved: ", input);
+        this.props.processInputHandle(input);
+    }
+
+    updateATLabels(newArtistLabel, newTitleLabel) {
+        var labelState = this.state.textBox;
+        labelState.artist = newArtistLabel;
+        labelState.title = newTitleLabel;
+        this.setState({textBox: labelState});
+    }
+
+    render() {
+        return (
+            <Grid id="GameView">
+                <VolumeView
+                    callback={this.props.volumeCallback}/>
+                <div id="GameMechanic">
+                    <ProgressCounter
+                        onAnimationCounterHandle={this.props.AnimationCounterHandle}
+                        setStartAtHandle={this.props.addStartHandle}
+                    />
+                    <TextBox
+                        artist={this.state.textBox.artist}
+                        title={this.state.textBox.title}
+                    />
+                    <SolveInput
+                        onAnimationInputHandle={this.props.AnimationInputHandle}
+                        gvCB={this.inputSubmitCallback}
+                    />
+                    <ProgressBar
+                        onAnimationBarHandle={this.props.AnimationBarHandle}
+                        setStartAtHandle={this.props.addStartHandle}
+                    />
+                </div>
+                <PreviouslyPlayed
+                    artist={this.props.previouslyPlayed.artist}
+                    title={this.props.previouslyPlayed.title}
+                    rUser={this.props.previouslyPlayed.record.userName}
+                    rTime={this.props.previouslyPlayed.record.time}
+                    rDate={this.props.previouslyPlayed.record.date}/>
+            </Grid>
+        );
+    }
 }

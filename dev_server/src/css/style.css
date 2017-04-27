@@ -1,7 +1,11 @@
 body {
     font-family: 'Helvecia', sans-serif;
     font-size: 14pt;
-    background-image: "images/bg_2.jpg";
+    /*!background-image: url("/images/bg_3.jpg");*/
+    /*
+     * Glass-effect: http://codepen.io/anon/pen/jmyerq
+     *
+     */
     background-size: cover;
     background-repeat: no-repeat;
 }
@@ -96,10 +100,8 @@ button, button:focus, button:active {
     text-align: center;
     z-index: 2;
     font-size: 75px;
-    /*font-family: helvetica!important;*/
     font-family: sans-serif!important;
     font-style: normal;
-    font-variant: small-caps;
     font-weight: 700;
 }
 
@@ -145,7 +147,6 @@ button, button:focus, button:active {
     background-color: lightcoral;
     height: 5px;
     margin-top: 0px;
-    margin-bottom: 0px;
     padding: 0px;
 }
 
@@ -170,34 +171,49 @@ button, button:focus, button:active {
 }
 
 
-
-
+/*
+ *
+ * user input feedback
+ *
+ */
 
 .filling-error-odd {
-    animation: fill-error-odd 3s cubic-bezier(.08,.82,.17,1);
+    animation: fill-error-odd 3s cubic-bezier(.08, .82, .17, 1);
 }
 
 .filling-error-even {
-    animation: fill-error-even 3s cubic-bezier(.08,.82,.17,1);
+    animation: fill-error-even 3s cubic-bezier(.08, .82, .17, 1);
 }
 
 @keyframes fill-error-odd {
-    from {background-color: lightcoral;}
-    to {background-color: white;}
+    from {
+        background-color: lightcoral;
+    }
+    to {
+        background-color: white;
+    }
 }
 
 @keyframes fill-error-even {
-    from {background-color: lightcoral;}
-    to {background-color: white;}
+    from {
+        background-color: lightcoral;
+    }
+    to {
+        background-color: white;
+    }
 }
 
 .filling-correct {
-    animation: fill-correct 3s cubic-bezier(.08,.82,.17,1);
+    animation: fill-correct 3s cubic-bezier(.08, .82, .17, 1);
 }
 
 @keyframes fill-correct {
-    from {background-color: lightgreen;}
-    to {background-color: white;}
+    from {
+        background-color: lightgreen;
+    }
+    to {
+        background-color: white;
+    }
 }
 
 
@@ -206,41 +222,53 @@ button, button:focus, button:active {
  * Menu bar
  *
  */
-#footer {
-}
-
-.navbar-collapse.collapse {
-  display: block!important;
-}
-
-.navbar-nav>li, .navbar-nav {
-  float: left !important;
-}
-
-.navbar-nav.navbar-right:last-child {
-  margin-right: -15px !important;
-}
-
-.navbar-right {
-  float: right!important;
-}
-
 
 @media (min-width:992px) {
-    #footer {
-        width: 100px;
-        left: calc(100vw - 100px);
-        background-color: #808080;
-        height: calc(100vh - 50px);
+    #GameMechanic {
+        margin-bottom: 20px;
+        margin-top: 20px;
     }
-    .panel {
-        width: calc(100vw - 100px);
+    #footer {
+        width: 54px;
+        background-color: #808080;
+        position: absolute;
+        left: calc(100% - 54px);
+        top: 0px;
+        float: none;
+        padding-top: 75px;
+        height: 100%;
+    }
+    #GameView {
+        height: calc(100vh - 150px);
+        /* height: calc(100vh - 150px);*/
     }
 }
 
-.panel {
-    margin: 0px;
-    padding: 0px;
+#footer>li+li {
+    margin: 0px !important;
+}
+
+#footer>li>a {
+    border-radius: 0px;
+}
+
+#footer>li>a>i {
+    color: white;
+}
+
+@media (max-width: 991px) {
+    #footer {
+        float: left;
+        position: fixed;
+        right: 0;
+        left: 0;
+        z-index: 1030;
+        background-color: red;
+        bottom: 0;
+    }
+    #Page {
+        margin-bottom: 50px;
+    }
 }
 
 
@@ -249,6 +277,79 @@ button, button:focus, button:active {
  * Header
  *
  */
+
 #header {
-  box-shadow: 0px 0px 10px 5px #888888;
+    box-shadow: 0px 0px 10px 5px #888888;
+}
+
+.navbar-collapse.collapse {
+    display: block!important;
+}
+
+.navbar-nav>li, .navbar-nav {
+    float: left !important;
+}
+
+.navbar-nav.navbar-right:last-child {
+    margin-right: -15px !important;
+}
+
+.navbar-right {
+    float: right!important;
+}
+
+.navbar-header {
+    width: 150px !important;
+    float: left;
+}
+
+
+/*
+ *
+ * Previously Played
+ *
+ */
+
+#previouslyPlayed {
+    margin: 0px;
+    padding: 5px;
+    background: darkgray;
+    height: 160px;
+}
+
+#albumCover {
+    float: left;
+    background: red;
+    height: 150px;
+    width: 150px;
+    position: relative;
+}
+
+.prevPlayed {
+    font-family: Arial;
+    font-size: 20px;
+    font-style: bold;
+    font-weight: bold;
+}
+
+#prevArtistTitle {
+    margin-bottom: 15px;
+}
+
+#Record {
+    font-size: 15px;
+    color: lightgreen;
+}
+
+
+/*
+ *
+ * Game View
+ *
+ */
+
+#GameView {
+    background-color: grey;
+    margin-right: 0px;
+    width: 100%;
 }

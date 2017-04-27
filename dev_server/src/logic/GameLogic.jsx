@@ -100,7 +100,7 @@ export default class GameLogic extends React.Component {
     //update the labels using the viewConnection
     this.viewConnection.updateATLabels(newArtistLabel, newTitleLabel);
 
-    this.audioPlayer.playSongFrom(this.state.currentSong.url, 0);
+    this.audioPlayer.playSongFrom(this.state.currentSong.url, 25);
   }
 
   onSongEnd() {

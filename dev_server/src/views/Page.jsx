@@ -7,6 +7,7 @@ import Header from './Header.jsx';
 import Footer from './Footer.jsx';
 import GameLogic from './../logic/GameLogic.jsx'
 import Standings from './Standings.jsx'
+import my_image from './../images/bg_2.jpg'; //relative path to image
 
 //var background = require('url-loader?mimetype=image/jpg!./../images/bg_2.jpg')
 
@@ -41,12 +42,12 @@ export default class Page extends React.Component {
 
   render() {
     var s = {
-      //"backgroundColor": "green"
+        // backgroundImage : url("my_image");
     };
     return (
-      <div id="Page">
+      <div id="Page" style={ s }>
         <Header/>
-        <Grid className="mainContainer" style={s}>
+        <Grid className="mainContainer" >
           <Row className="show-grid">
             <Col sm={12} md={6}>
               <GameLogic/>
@@ -54,11 +55,9 @@ export default class Page extends React.Component {
             <Col sm={12} md={6}>
               {this.state.content}
             </Col>
-            <Col sm={12} md={1}>
-                <Footer/>
-            </Col>
           </Row>
         </Grid>
+        <Footer/>
       </div>
     );
     /*

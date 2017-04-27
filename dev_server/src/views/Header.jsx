@@ -13,8 +13,9 @@ export default class Header extends React.Component {
                     </Navbar.Brand>
                 </Navbar.Header>
                 <Nav>
-                    <NavItem eventKey={1} href="#">Sign In</NavItem>
-                    <NavItem eventKey={2} href="#">Sing Up</NavItem>
+                    <NavItem eventKey={1} href="#">
+                        <i className="material-icons">input</i>
+                    </NavItem>
                     <NavItem eventKey={3} href="#">user</NavItem>
                 </Nav>
             </Navbar>
