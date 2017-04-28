@@ -22,7 +22,7 @@
       - [ ] Break overlay
             - [ ] After song
             - [ ] After game
-      - [ ] replace nav-footer with tab-footer
+      - [x] replace nav-footer with tab-footer
       - [x] Volume mute => set bar to 0
             - [x] When muted click on bar unmutes
 - [ ] SignUp/SignIn
@@ -35,7 +35,7 @@
 
 ### Backend
 
-- [ ] Define logic to determine (10) songs for a game
+- [x] Define logic to determine (10) songs for a game
 - [ ] Krotos - Napster API
       - [x] finish up API to get the preview URL (+information) for the 10 songs
       - [ ] extend the api ~ not needed in the beginning
