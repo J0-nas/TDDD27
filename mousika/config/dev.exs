@@ -33,10 +33,10 @@ config :logger, :console, format: "[$level] $message\n"
 config :phoenix, :stacktrace_depth, 20
 
 # Configure your database
-config :mousika, Mousika.Repo,
-  adapter: Ecto.Adapters.MySQL,
-  username: "root",
-  password: "",
-  database: "mousika_dev",
-  hostname: "localhost",
-  pool_size: 10
+#config :mousika, Mousika.Repo,
+#  adapter: Ecto.Adapters.MySQL,
+#  username: "root",
+#  password: "",
+#  database: "mousika_dev",
+#  hostname: "localhost",
+#  pool_size: 10

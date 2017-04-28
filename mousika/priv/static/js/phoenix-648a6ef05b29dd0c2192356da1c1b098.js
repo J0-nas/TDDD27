@@ -151,9 +151,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 //     let onlineUsers = Presence.list(state, listBy)
 //
 //
-// ### Example detect
+// ### Example Usage
 //
-//     // Usage if user has joined for the 1st time or from another tab/device
+//     // detect if user has joined for the 1st time or from another tab/device
 //     let onJoin = (id, current, newPres) => {
 //       if(!current){
 //         console.log("user has entered for the first time", newPres)

@@ -1,11 +1,14 @@
 defmodule Mousika.PageController do
   use Mousika.Web, :controller
 
-  @static_file File.read!("priv/static/index.html")
+  #@static_file File.read!("priv/static/index.html")
+  @index "/index.html"
 
   def index(conn, _params) do
-    #render conn, "index.html"
-    IO.puts("Conn Path info:\t#{conn.path_info}")
-    html(conn, @static_file)
+    #IO.puts("Conn Path info:\t#{conn.path_info}")
+    #IO.puts("in PC")
+    #html(conn, @static_file)
+    #html(conn, "test")
+    redirect(conn, to: @index)
   end
 end
