@@ -9,7 +9,7 @@ defmodule Mousika.PageController do
   def index(conn, _params) do
     #IO.puts System.cwd()
     #IO.puts __DIR__
-#IO.puts("Conn Path info:\t#{conn.path_info}")
+    #IO.puts("Conn Path info:\t#{conn.path_info}")
     #IO.puts("in PC")
     #html(conn, @static_file)
     #html(conn, "test")
