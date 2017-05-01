@@ -60,6 +60,7 @@ export default class GameLogic extends React.Component {
 
   componentDidMount() {
     this.startSong();
+    this.serverConnection.getCurrentGameState();
   }
 
   initViewConnection(vC) {
@@ -101,7 +102,7 @@ export default class GameLogic extends React.Component {
     //update the labels using the viewConnection
     this.viewConnection.updateATLabels(newArtistLabel, newTitleLabel);
 
-    this.audioPlayer.playSongFrom(this.state.currentSong.url, 25);
+    this.audioPlayer.playSongFrom(this.state.currentSong.url, 0);
   }
 
   onSongEnd() {

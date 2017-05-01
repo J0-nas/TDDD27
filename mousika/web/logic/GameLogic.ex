@@ -41,7 +41,7 @@ defmodule GameLogic do
     StateStore.putTimeStamp(ts)
     IO.inspect(cs)
     #push ts, (cs) to clients
-    Process.sleep(1000*2)
+    Process.sleep(1000*32)
     main(:loop)
   end
 

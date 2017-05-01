@@ -6,9 +6,10 @@ defmodule Mousika.CurrentGameController do
     cs = StateStore.getCurrentSong()
     ts = StateStore.getTimeStamp()
     res = %{:currentGame => currentGame, :currentSong => cs, :timeStamp => ts}
-    IO.inspect(Poison.encode(res))
+
+
     case Poison.encode(res) do
-      {:ok, json} -> send_resp(conn, 200, json)
+      {:ok, json} -> update_resp_header(conn, "Access-Control-Allow-Origin", "cors", fn v -> "cors" end) |> send_resp(200, json)
       {:error, err} -> send_resp(conn, 500, err)
     end
   end
