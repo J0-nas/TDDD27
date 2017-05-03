@@ -11,10 +11,10 @@ defmodule Mousika.PageController do
     #IO.puts __DIR__
     #IO.puts("Conn Path info:\t#{conn.path_info}")
     #IO.puts("in PC")
-    #html(conn, @static_file)
+    html(conn, @static_file)
     #html(conn, "test")
     #redirect(conn, to: @index)
-    send_resp(conn, 200, @static_file)
+    #send_resp(conn, 200, @static_file)
     #Plug.Conn.send_file(conn, 200, @f_name)
   end
 end
