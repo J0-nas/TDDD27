@@ -13,7 +13,7 @@ use Mix.Config
 # which you typically run after static files are built.
 # {:system, "PORT"}
 config :mousika, Mousika.Endpoint,
-  http: [port: 4000],
+  http: [port: {:system, "PORT"}],
   url: [host: "example.com", port: 80],
   cache_static_manifest: "priv/static/manifest.json"
 
