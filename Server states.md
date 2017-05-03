@@ -5,5 +5,6 @@
     - Next Game
   - Current Song number (0..9)
   - Timestamp of last song started
+  - Current Standings
 - Server (game) logic loops between change/update states and sleep for game/song duration
   - New process to change the next song while main logic sleeps => no delay for the next game due to slow API requests

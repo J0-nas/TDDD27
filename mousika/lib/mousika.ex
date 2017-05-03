@@ -14,10 +14,12 @@ defmodule Mousika do
       supervisor(Mousika.Endpoint, []),
       # Start your own worker by calling: Mousika.Worker.start_link(arg1, arg2, arg3)
       # worker(Mousika.Worker, [arg1, arg2, arg3]),
+      supervisor(GameLogic.SV, [])
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
     # for other strategies and supported options
+    #IO.inspect children
     opts = [strategy: :one_for_one, name: Mousika.Supervisor]
     Supervisor.start_link(children, opts)
   end

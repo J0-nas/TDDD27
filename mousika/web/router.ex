@@ -18,6 +18,7 @@ defmodule Mousika.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/hello", HelloController, :index
+    get "/currentGame", CurrentGameController, :index
     get "/*path", PageController, :index
   end
 
