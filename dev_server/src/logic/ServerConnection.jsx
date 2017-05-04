@@ -73,7 +73,7 @@ export default class ServerConnection extends React.Component {
       headers: myHeaders
     };
 
-    var myRequest = new Request('http://localhost:4000/currentGame', myInit);
+    var myRequest = new Request('https://localhost:4000/currentGame', myInit);
 
     fetch(myRequest).then(this.handleRequestResponse);
   }
