@@ -1,5 +1,7 @@
 # App artifacts
 #/_build
+/_build/dev/*
+Dockerfile
 /db
 /deps
 /*.ez
