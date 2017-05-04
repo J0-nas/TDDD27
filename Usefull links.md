@@ -11,7 +11,7 @@ http://elixir-lang.org/getting-started/mix-otp/agent.html#the-trouble-with-state
 https://medium.com/@brien/deploying-elixir-and-phoenix-applications-using-docker-and-exrm-35f90800b895
 https://semaphoreci.com/community/tutorials/dockerizing-elixir-and-phoenix-applications
 
-
+Docker + Heroku https://www.youtube.com/watch?v=a8M08e67iTM
 
 
 
