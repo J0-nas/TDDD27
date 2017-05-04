@@ -43,9 +43,6 @@ export default class Page extends React.Component {
   render() {
     var s = {
         width: "100%",
-        backgroundImage: 'url(' +  Background  + ')',
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "cover"
     };
     return (
       <div id="Page" style={ s }>

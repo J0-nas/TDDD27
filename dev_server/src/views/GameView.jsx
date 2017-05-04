@@ -49,7 +49,7 @@ export default class GameView extends React.Component {
 
     render() {
         return (
-            <Grid id="GameView">
+            <Grid className="glass" id="GameView">
                 <VolumeView
                     callback={this.props.volumeCallback}/>
                 <div id="GameMechanic">
