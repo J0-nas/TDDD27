@@ -30,6 +30,9 @@ export default class ServerConnection extends React.Component {
         songStart: 0
       }
     }
+    this.baseUrl = "https://damp-ridge-15871.herokuapp.com"
+    //this.baseUrl = "localhost:4000"
+
 
     this.pullSong = this.pullSong.bind(this);
     this.getCurrentGameState = this.getCurrentGameState.bind(this);
@@ -73,7 +76,7 @@ export default class ServerConnection extends React.Component {
       headers: myHeaders
     };
 
-    var myRequest = new Request('http://localhost:4000/currentGame', myInit);
+    var myRequest = new Request(this.baseUrl + '/currentGame', myInit);
 
     fetch(myRequest).then(this.handleRequestResponse);
   }
