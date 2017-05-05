@@ -59,6 +59,7 @@ export default class GameLogic extends React.Component {
   }
 
   componentDidMount() {
+    this.loadNewSong() {
     this.startSong();
     this.serverConnection.getCurrentGameState();
   }
@@ -87,8 +88,15 @@ export default class GameLogic extends React.Component {
     this.setState( {cssClassNameBar: "filling-bar"} )
     this.setState( {cssClassNameCounter: "filling-text"} )
     this.setState( {cssClassNameInput: "nix"} )
-    var aArray = this.state.currentSong.artist.split(/[ ,]+/g).map(toTAElement);
-    var tArray = this.state.currentSong.title.split(/[ ,]+/g).map(toTAElement);
+
+    //Many songs of Napster have the alternativ name or collaboration/album in the name of
+    //artist or title. We remove them to make the game more simple
+    simpleArtist = this.state.currentSong.artist.replace(/(\[(.)+\])+/g, '');
+    simpleTitle = this.state.currentSong.title.replace(/(\[(.)+\])+/g, '');
+    //var aArray = this.state.currentSong.artist.split(/[ ,]+/g).map(toTAElement);
+    //var tArray = this.state.currentSong.title.split(/[ ,]+/g).map(toTAElement);
+    var aArray = simpleArtist.split(/[ ,]+/g).map(toTAElement);
+    var tArray = simpleTitle.split(/[ ,]+/g).map(toTAElement);
 
     var oldCSState = this.state.currentSong;
     oldCSState.artistElementArray = aArray;
@@ -118,10 +126,13 @@ export default class GameLogic extends React.Component {
     this.setState( {cssClassNameBar: "nix"} )
     this.setState( {cssClassNameCounter: "nix"} )
 
+    //Set Gameview to break view
     this.songBreak();
+    //Start next song after the break
     setTimeout(this.startSong, 1000*this.state.breakDuration);
 
     //await sleep(1000*this.state.breakDuration);
+
     //expects the next song to be available
     this.loadNewSong();
   }
