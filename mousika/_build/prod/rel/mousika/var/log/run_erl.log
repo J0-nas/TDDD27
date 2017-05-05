@@ -1,0 +1,8 @@
+run_erl [25340] Wed May  3 14:02:55 2017
+Args before exec of shell:
+run_erl [25340] Wed May  3 14:02:55 2017
+argv[0] = sh
+run_erl [25340] Wed May  3 14:02:55 2017
+argv[1] = -c
+run_erl [25340] Wed May  3 14:02:55 2017
+argv[2] = exec "/Users/jonashalstrup/Dev/TDDD27/mousika/_build/prod/rel/mousika/bin/mousika" "console" --  

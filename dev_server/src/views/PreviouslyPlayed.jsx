@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import {Grid, Row, Col} from 'react-bootstrap';
+import {Grid, Row, Col, Button, Glyphicon} from 'react-bootstrap';
 
 export default class PreviouslyPlayed extends React.Component {
     constructor() {
@@ -12,7 +12,25 @@ export default class PreviouslyPlayed extends React.Component {
       record_time: "Record_time",
       record_user: "Record_user"
     };*/
+    this.state = {
+        active: false,
+        glyph: "star-empty"
     }
+        this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleClick() {
+        var buttonActive = this.state.active;
+        console.log(buttonActive);
+        if (buttonActive == true) {
+            this.setState({active: false});
+            this.setState({glyph: "star-empty"});
+        } else {
+            this.setState({active: true});
+            this.setState({glyph: "star"});
+        }
+    }
+
 
     render() {
         var s = {
@@ -22,28 +40,22 @@ export default class PreviouslyPlayed extends React.Component {
         // images are available: http://api.napster.com/v2.1/albums/Alb.54719066/images?apikey=YTkxZTRhNzAtODdlNy00ZjMzLTg0MWItOTc0NmZmNjU4Yzk4
         return (
             <Grid style={s}>
-                <Row id="previouslyPlayed" className="show-grid">
+                <Row id="previouslyPlayed" className="show-grid glass">
                     <Col id="albumCover" className="hidden-xs">
                     </Col>
                     <Col id="prevArtistTitle">
+                        <Button id="LikeButton" bsSize="large" onClick={ this.handleClick } active={this.state.active}><Glyphicon glyph={ this.state.glyph } /></Button>
+
                         <span className="prevPlayed">{this.props.artist}
                         </span><br/>
                         <span className="prevPlayed">{this.props.title}</span>
                     </Col>
-                    <Col id="Like">
-                        <i className="material-icons">star</i>
-                            <i className="material-icons">star_border</i>
-
-                    </Col>
                     <Col id="Record">
                         <span>
-                            Record: {this.props.rTime} ms
+                            Record: {this.props.rTime} ms by {this.props.rUser}
                         </span> <br/>
                         <span>
-                            by {this.props.rUser}
-                        </span> <br/>
-                        <span>
-                            on {this.props.rDate}
+                            Unbroken since {this.props.rDate}.
                         </span>
                     </Col>
                 </Row>
