@@ -59,7 +59,7 @@ export default class GameLogic extends React.Component {
   }
 
   componentDidMount() {
-    this.loadNewSong() {
+    this.loadNewSong()
     this.startSong();
     this.serverConnection.getCurrentGameState();
   }
