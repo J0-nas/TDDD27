@@ -74,6 +74,7 @@ export default class ServerConnection extends React.Component {
 
     var myInit = {
       method: 'GET',
+      synchronous: true,
       headers: myHeaders
     };
 
