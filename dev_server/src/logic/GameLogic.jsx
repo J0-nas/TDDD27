@@ -54,8 +54,8 @@ export default class GameLogic extends React.Component {
     this.serverConnection = new ServerConnection();
     this.audioPlayer = new AudioPlayer(this.onSongEnd);
 
-    console.log(this.audioPlayer.addHandle);
-    console.log(this.audioPlayer);
+    //console.log(this.audioPlayer.addHandle);
+    //console.log(this.audioPlayer);
   }
 
   componentDidMount() {

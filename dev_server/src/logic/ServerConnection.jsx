@@ -30,7 +30,7 @@ export default class ServerConnection extends React.Component {
         songStart: 0
       }
     }
-    this.baseUrl = "https://damp-ridge-15871.herokuapp.com"
+    this.baseUrl = "https://mousika.herokuapp.com"
     //this.baseUrl = "localhost:4000"
 
 
@@ -51,6 +51,7 @@ export default class ServerConnection extends React.Component {
   handleRequestResponse(response) {
     console.log("resp", response);
     if (response.status == 200) {
+      console.log("Response:", response);
       response.json().then(this.fetchResponseBody);
     } else {
       console.log("Request error ", response);
