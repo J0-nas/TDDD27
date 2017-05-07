@@ -1,7 +1,5 @@
 {application,distillery,
-             [{registered,[]},
-              {description,"Build releases of your Mix projects with ease!\n"},
-              {vsn,"1.3.5"},
+             [{description,"Build releases of your Mix projects with ease!\n"},
               {modules,['Elixir.Distillery.IO','Elixir.Mix.Releases.App',
                         'Elixir.Mix.Releases.Appup',
                         'Elixir.Mix.Releases.Archiver',
@@ -19,4 +17,6 @@
                         'Elixir.Mix.Tasks.Release',
                         'Elixir.Mix.Tasks.Release.Clean',
                         'Elixir.Mix.Tasks.Release.Init']},
+              {registered,[]},
+              {vsn,"1.3.5"},
               {applications,[kernel,stdlib,elixir]}]}.

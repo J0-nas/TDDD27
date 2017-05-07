@@ -1,7 +1,5 @@
 {application,mariaex,
-             [{registered,[]},
-              {description,"Pure elixir database driver for MariaDB / MySQL."},
-              {vsn,"0.8.2"},
+             [{description,"Pure elixir database driver for MariaDB / MySQL."},
               {modules,['Elixir.DBConnection.Query.Mariaex.Query',
                         'Elixir.Mariaex','Elixir.Mariaex.Cache',
                         'Elixir.Mariaex.Coder','Elixir.Mariaex.Coder.Utils',
@@ -15,5 +13,7 @@
                         'Elixir.Mariaex.Query','Elixir.Mariaex.Result',
                         'Elixir.Mariaex.RowParser',
                         'Elixir.String.Chars.Mariaex.Query']},
+              {registered,[]},
+              {vsn,"0.8.2"},
               {applications,[kernel,stdlib,elixir,logger,crypto,decimal,
                              db_connection]}]}.

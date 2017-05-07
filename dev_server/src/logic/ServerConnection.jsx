@@ -30,45 +30,52 @@ export default class ServerConnection extends React.Component {
         songStart: 0
       }
     }
-    this.baseUrl = "https://mousika.herokuapp.com"
-    //this.baseUrl = "localhost:4000"
+    //this.baseUrl = "https://mousika.herokuapp.com"
+    this.baseUrl = "http://localhost:4000"
 
 
     this.pullSong = this.pullSong.bind(this);
     this.getCurrentGameState = this.getCurrentGameState.bind(this);
-    this.fetchResponseBody = this.fetchResponseBody.bind(this);
-    this.handleRequestResponse = this.handleRequestResponse.bind(this);
+    this.asyncGetCurrentGameState = this.asyncGetCurrentGameState.bind(this);
+    this.syncGetCurrentGameState = this.syncGetCurrentGameState.bind(this);
+    
+    this.fetchAsyncGCGS_ResponseBody = this.fetchAsyncGCGS_ResponseBody.bind(this);
+    this.handleAsyncGCGS_Response = this.handleAsyncGCGS_Response.bind(this);
   }
 
   componentDidMount() {}
 
   pullSong() {
+    console.log("Pull state", this.state.game);
     var gs = this.state.game[this.state.currentSongNumber % 10];
     this.state.currentSongNumber += 1;
     return {url: gs.songUrl, artist: gs.artist, title: gs.title, record: this.state.dummy.record, songStart: 0}
   }
 
-  handleRequestResponse(response) {
-    console.log("resp", response);
+  handleAsyncGCGS_Response(response) {
+    //console.log("resp", response);
     if (response.status == 200) {
-      console.log("Response:", response);
-      response.json().then(this.fetchResponseBody);
+      return response.json().then(this.fetchAsyncGCGS_ResponseBody);
     } else {
       console.log("Request error ", response);
+      return Promise.reject(response);
     }
   }
 
-  fetchResponseBody(blob) {
-    console.log("JSON: ", blob);
+  fetchAsyncGCGS_ResponseBody(blob) {
+    console.log("blob", blob);
     this.state.game = blob.currentGame;
     this.state.currentSongNumber = blob.currentSong;
     this.state.timeStamp = blob.timeStamp;
+    console.log("Response set to state:", this.state);
+    
+    return Promise.resolve("Done");
     /*this.setState({game: blob.currentGame});
     this.setState({currentSongNumber: blob.currentSong});
     this.setState({timeStamp: blob.timeStamp});*/
   }
 
-  getCurrentGameState() {
+  asyncGetCurrentGameState() {
     var myHeaders = new Headers();
     myHeaders.append("Access-Control-Allow-Origin", "*");
 
@@ -80,6 +87,21 @@ export default class ServerConnection extends React.Component {
 
     var myRequest = new Request(this.baseUrl + '/currentGame', myInit);
 
-    fetch(myRequest).then(this.handleRequestResponse);
+    return fetch(myRequest).then(this.handleAsyncGCGS_Response);
+  }
+  
+  syncGetCurrentGameState() {
+    var req = new XMLHttpRequest();
+    req.onreadystatechange = handleSyncGCGS;
+    
+    req.open("GET", this.baseUrl + "/currentGame", false)
+  }
+  
+  getCurrentGameState(async=true) {
+    if(async) {
+      var r = this.asyncGetCurrentGameState();
+    }
+    console.log("Requested new game songs...");
+    return r;
   }
 }

@@ -59,9 +59,11 @@ export default class GameLogic extends React.Component {
   }
 
   componentDidMount() {
-      this.serverConnection.getCurrentGameState();
-      this.loadNewSong()
-      this.startSong();
+    Promise.resolve(this.serverConnection.getCurrentGameState()).
+      then((this.loadNewSong)).
+      then((this.startSong));
+    //this.loadNewSong();
+    //this.startSong();
   }
 
   initViewConnection(vC) {
@@ -84,15 +86,18 @@ export default class GameLogic extends React.Component {
   startSong() {
     if (this.state.currentSong.started) {
       console.log("song had already started")
+    } else {
+      console.log("Starting new song...")
     }
+    
     this.setState( {cssClassNameBar: "filling-bar"} )
     this.setState( {cssClassNameCounter: "filling-text"} )
     this.setState( {cssClassNameInput: "nix"} )
 
     //Many songs of Napster have the alternativ name or collaboration/album in the name of
     //artist or title. We remove them to make the game more simple
-    simpleArtist = this.state.currentSong.artist.replace(/(\[(.)+\])+/g, '');
-    simpleTitle = this.state.currentSong.title.replace(/(\[(.)+\])+/g, '');
+    var simpleArtist = this.state.currentSong.artist.replace(/(\[(.)+\])+/g, '');
+    var simpleTitle = this.state.currentSong.title.replace(/(\[(.)+\])+/g, '');
     //var aArray = this.state.currentSong.artist.split(/[ ,]+/g).map(toTAElement);
     //var tArray = this.state.currentSong.title.split(/[ ,]+/g).map(toTAElement);
     var aArray = simpleArtist.split(/[ ,]+/g).map(toTAElement);
@@ -211,6 +216,7 @@ export default class GameLogic extends React.Component {
       titleElementArray: []
     }
     this.setState({currentSong: currentSongState});
+    console.log("loaded new song...");
   }
 
   render() {

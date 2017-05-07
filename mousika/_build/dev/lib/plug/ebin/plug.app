@@ -1,7 +1,5 @@
 {application,plug,
-             [{registered,[]},
-              {description,"A specification and conveniences for composable modules between web applications"},
-              {vsn,"1.3.5"},
+             [{description,"A specification and conveniences for composable modules between web applications"},
               {modules,['Elixir.Collectable.Plug.Conn',
                         'Elixir.Inspect.Plug.Conn','Elixir.Plug',
                         'Elixir.Plug.Adapters.Cowboy',
@@ -48,5 +46,7 @@
                         'Elixir.Plug.Supervisor','Elixir.Plug.Test',
                         'Elixir.Plug.TimeoutError','Elixir.Plug.Upload',
                         'Elixir.Plug.UploadError']},
+              {registered,[]},
+              {vsn,"1.3.5"},
               {applications,[kernel,stdlib,elixir,crypto,logger,mime]},
               {mod,{'Elixir.Plug',[]}}]}.

@@ -3,3 +3,7 @@
 /openshift-origin-client-tools-v1.4.1/*
 .DS_Store
 Install-Docker-on-Linux-Mint.sh
+/mousika/_build/*
+/mosuika/_build
+/mousika/deps/*
+/mousika/deps

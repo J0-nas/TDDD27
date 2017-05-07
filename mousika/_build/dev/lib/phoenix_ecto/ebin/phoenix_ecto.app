@@ -1,7 +1,5 @@
 {application,phoenix_ecto,
-             [{registered,[]},
-              {description,"Integration between Phoenix & Ecto"},
-              {vsn,"3.2.3"},
+             [{description,"Integration between Phoenix & Ecto"},
               {modules,['Elixir.Phoenix.Ecto',
                         'Elixir.Phoenix.Ecto.SQL.Sandbox',
                         'Elixir.Phoenix.HTML.FormData.Ecto.Changeset',
@@ -13,4 +11,6 @@
                         'Elixir.Plug.Exception.Ecto.InvalidChangesetError',
                         'Elixir.Plug.Exception.Ecto.NoResultsError',
                         'Elixir.Plug.Exception.Ecto.Query.CastError']},
+              {registered,[]},
+              {vsn,"3.2.3"},
               {applications,[kernel,stdlib,elixir,logger,ecto,plug]}]}.
