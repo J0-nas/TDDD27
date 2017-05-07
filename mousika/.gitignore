@@ -1,6 +1,9 @@
 # App artifacts
-/_build
+/_build/*
 /_build/dev/*
+/_build/dev
+/_build/prod/
+/_build/prod/*
 Dockerfile
 /db
 /deps
