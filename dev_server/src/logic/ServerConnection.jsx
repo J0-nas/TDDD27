@@ -30,8 +30,8 @@ export default class ServerConnection extends React.Component {
         songStart: 0
       }
     }
-    //this.baseUrl = "https://mousika.herokuapp.com"
-    this.baseUrl = "http://localhost:4000"
+    this.baseUrl = "https://mousika.herokuapp.com"
+    //this.baseUrl = "http://localhost:4000"
 
 
     this.pullSong = this.pullSong.bind(this);
