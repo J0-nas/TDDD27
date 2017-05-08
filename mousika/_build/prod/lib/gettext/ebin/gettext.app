@@ -1,5 +1,7 @@
 {application,gettext,
-             [{description,"Internationalization and localization through gettext"},
+             [{registered,[]},
+              {description,"Internationalization and localization through gettext"},
+              {vsn,"0.13.1"},
               {modules,['Elixir.Gettext','Elixir.Gettext.Application',
                         'Elixir.Gettext.Backend','Elixir.Gettext.Compiler',
                         'Elixir.Gettext.Error','Elixir.Gettext.Extractor',
@@ -18,8 +20,6 @@
                         'Elixir.Mix.Tasks.Compile.Gettext',
                         'Elixir.Mix.Tasks.Gettext.Extract',
                         'Elixir.Mix.Tasks.Gettext.Merge',gettext_po_parser]},
-              {registered,[]},
-              {vsn,"0.13.1"},
               {applications,[kernel,stdlib,elixir,logger]},
               {env,[{default_locale,<<"en">>}]},
               {mod,{'Elixir.Gettext.Application',[]}}]}.

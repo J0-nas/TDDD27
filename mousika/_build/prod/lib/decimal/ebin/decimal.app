@@ -1,8 +1,8 @@
 {application,decimal,
-             [{applications,[kernel,stdlib,elixir]},
+             [{registered,[]},
               {description,"Arbitrary precision decimal arithmetic for Elixir."},
+              {vsn,"1.3.1"},
               {modules,['Elixir.Decimal','Elixir.Decimal.Context',
                         'Elixir.Decimal.Error','Elixir.Inspect.Decimal',
                         'Elixir.String.Chars.Decimal']},
-              {registered,[]},
-              {vsn,"1.3.1"}]}.
+              {applications,[kernel,stdlib,elixir]}]}.
