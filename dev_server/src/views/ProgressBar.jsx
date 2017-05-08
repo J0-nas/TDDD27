@@ -18,7 +18,8 @@ export default class ProgressBar extends React.Component {
   startAt(time) {
     var state = this.state;
     state.progress = -time;
-    console.log("Progressbar started, ", this.state.progress);
+    this.setState(state);
+    console.log("Progressbar started, ", state.progress);
   }
 
   render() {

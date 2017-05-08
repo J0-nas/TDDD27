@@ -37,8 +37,7 @@ export default class ServerConnection extends React.Component {
     this.pullSong = this.pullSong.bind(this);
     this.getCurrentGameState = this.getCurrentGameState.bind(this);
     this.asyncGetCurrentGameState = this.asyncGetCurrentGameState.bind(this);
-    this.syncGetCurrentGameState = this.syncGetCurrentGameState.bind(this);
-    
+
     this.fetchAsyncGCGS_ResponseBody = this.fetchAsyncGCGS_ResponseBody.bind(this);
     this.handleAsyncGCGS_Response = this.handleAsyncGCGS_Response.bind(this);
   }
@@ -50,6 +49,10 @@ export default class ServerConnection extends React.Component {
     var gs = this.state.game[this.state.currentSongNumber % 10];
     this.state.currentSongNumber += 1;
     return {url: gs.songUrl, artist: gs.artist, title: gs.title, record: this.state.dummy.record, songStart: 0}
+  }
+
+  getTimeStamp() {
+    return this.state.timeStamp;
   }
 
   handleAsyncGCGS_Response(response) {
@@ -68,7 +71,7 @@ export default class ServerConnection extends React.Component {
     this.state.currentSongNumber = blob.currentSong;
     this.state.timeStamp = blob.timeStamp;
     console.log("Response set to state:", this.state);
-    
+
     return Promise.resolve("Done");
     /*this.setState({game: blob.currentGame});
     this.setState({currentSongNumber: blob.currentSong});
@@ -89,14 +92,7 @@ export default class ServerConnection extends React.Component {
 
     return fetch(myRequest).then(this.handleAsyncGCGS_Response);
   }
-  
-  syncGetCurrentGameState() {
-    var req = new XMLHttpRequest();
-    req.onreadystatechange = handleSyncGCGS;
-    
-    req.open("GET", this.baseUrl + "/currentGame", false)
-  }
-  
+
   getCurrentGameState(async=true) {
     if(async) {
       var r = this.asyncGetCurrentGameState();

@@ -39,7 +39,10 @@ defmodule GameLogic do
 
     ts = :os.system_time(:millisecond)
     StateStore.putTimeStamp(ts)
-    IO.inspect(cs)
+
+    IO.inspect ts
+    IO.inspect cs
+
     #push ts, (cs) to clients
     Process.sleep(1000*32)
     main(:loop)

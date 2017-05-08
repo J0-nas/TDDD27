@@ -7,6 +7,8 @@ defmodule Mousika.CurrentGameController do
     ts = StateStore.getTimeStamp()
     res = %{:currentGame => currentGame, :currentSong => cs, :timeStamp => ts}
 
+    IO.puts "new request at: "
+    IO.inspect :os.system_time(:millisecond)
 
     case Poison.encode(res) do
       {:ok, json} -> update_resp_header(conn, "Access-Control-Allow-Origin", "cors", fn v -> "cors" end) |> send_resp(200, json)
