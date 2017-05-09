@@ -17,7 +17,7 @@ export default class Header extends React.Component {
             <Navbar fixedTop inverse id="header">
                 <Navbar.Header>
                     <Navbar.Brand>
-                        <a href="#">Mousika</a>
+                        <img src="https://mousika.herokuapp.com/images/Logo_re_plain.svg" onerror="this.src='https://mousika.herokuapp.com/images/Logo_4.png'"></img>
                     </Navbar.Brand>
                 </Navbar.Header>
                 <Nav>
