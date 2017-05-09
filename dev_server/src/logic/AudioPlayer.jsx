@@ -18,7 +18,7 @@ export default class AudioPlayer extends React.Component{
   }
 
   setVolume(volume) {
-    console.log("set volume to ", volume);
+    //console.log("set volume to ", volume);
     this.audio.volume = volume;
   }
 

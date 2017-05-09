@@ -1,9 +1,8 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+// import React from 'react';
+// import ReactDOM from 'react-dom';
 
-export default class ServerConnection extends React.Component {
+export default class ServerConnection {
   constructor() {
-    super();
     this.state = {
       game: [],
       nextSong: {
@@ -30,8 +29,8 @@ export default class ServerConnection extends React.Component {
         songStart: 0
       }
     }
-    this.baseUrl = "https://mousika.herokuapp.com"
-    //this.baseUrl = "http://localhost:4000"
+    //this.baseUrl = "https://mousika.herokuapp.com"
+    this.baseUrl = "http://localhost:4000"
 
 
     this.pullSong = this.pullSong.bind(this);
@@ -42,20 +41,20 @@ export default class ServerConnection extends React.Component {
     this.handleAsyncGCGS_Response = this.handleAsyncGCGS_Response.bind(this);
   }
 
-  componentDidMount() {}
+  //componentDidMount() {}
 
-  pullSong() {
+   pullSong() {
     console.log("Pull state", this.state.game);
     var gs = this.state.game[this.state.currentSongNumber % 10];
     this.state.currentSongNumber += 1;
     return {url: gs.songUrl, artist: gs.artist, title: gs.title, record: this.state.dummy.record, songStart: 0}
   }
 
-  getTimeStamp() {
+   getTimeStamp() {
     return this.state.timeStamp;
   }
 
-  handleAsyncGCGS_Response(response) {
+   handleAsyncGCGS_Response(response) {
     //console.log("resp", response);
     if (response.status == 200) {
       return response.json().then(this.fetchAsyncGCGS_ResponseBody);
@@ -65,7 +64,7 @@ export default class ServerConnection extends React.Component {
     }
   }
 
-  fetchAsyncGCGS_ResponseBody(blob) {
+   fetchAsyncGCGS_ResponseBody(blob) {
     console.log("blob", blob);
     this.state.game = blob.currentGame;
     this.state.currentSongNumber = blob.currentSong;
@@ -78,13 +77,12 @@ export default class ServerConnection extends React.Component {
     this.setState({timeStamp: blob.timeStamp});*/
   }
 
-  asyncGetCurrentGameState() {
+   asyncGetCurrentGameState() {
     var myHeaders = new Headers();
     myHeaders.append("Access-Control-Allow-Origin", "*");
 
     var myInit = {
       method: 'GET',
-      synchronous: true,
       headers: myHeaders
     };
 
@@ -93,11 +91,46 @@ export default class ServerConnection extends React.Component {
     return fetch(myRequest).then(this.handleAsyncGCGS_Response);
   }
 
-  getCurrentGameState(async=true) {
-    if(async) {
-      var r = this.asyncGetCurrentGameState();
-    }
+   getCurrentGameState() {
+    var r = this.asyncGetCurrentGameState();
+
     console.log("Requested new game songs...");
     return r;
+  }
+
+  postArtistSolved(id, time) {
+    var myHeaders = new Headers();
+    myHeaders.append("Access-Control-Allow-Origin", "*");
+
+    var body = new FormData();
+    body.append("id", id);
+    body.append("time", time);
+
+    var myInit = {
+      method: 'POST',
+      headers: myHeaders,
+      body: body
+    };
+    var myRequest = new Request(this.baseUrl + '/artistSolved', myInit);
+
+    return fetch(myRequest);
+  }
+
+  postTitleSolved(id, time) {
+    var myHeaders = new Headers();
+    myHeaders.append("Access-Control-Allow-Origin", "*");
+
+    var body = new FormData();
+    body.append("id", id);
+    body.append("time", time);
+
+    var myInit = {
+      method: 'POST',
+      headers: myHeaders,
+      body: body
+    };
+    var myRequest = new Request(this.baseUrl + '/titleSolved', myInit);
+
+    return fetch(myRequest);
   }
 }

@@ -104,7 +104,7 @@ export default class GameLogic extends React.Component {
     if (!simpleArtist.includes("feath")) {
       simpleArtist = simpleArtist.replace(/(feat(.)*)/g, '');
     }
-    
+
     if (!simpleTitle.includes("feath")) {
       simpleTitle = simpleTitle.replace(/(feat(.)*)/g, '');
     }
@@ -185,12 +185,16 @@ export default class GameLogic extends React.Component {
 
     var a_s = checkIfSolved(this.state.currentSong.artistElementArray);
     var t_s = checkIfSolved(this.state.currentSong.titleElementArray);
+    const time = Date.now() - this.state.currentSong.startTime;
     if (a_s && t_s) {
-      const time = Date.now() - this.state.currentSong.startTime;
       console.log("Song was solved in: " + time + " send time to server")
     }
-    if (a_s) {}
-    if (t_s) {}
+    if (a_s) {
+      this.serverConnection.postArtistSolved("dummyID", time);
+    }
+    if (t_s) {
+      this.serverConnection.postTitleSolved("dummyID", time);
+    }
     if (t_c || a_c) {
       var newArtistLabel = this.buildLabelString(this.state.currentSong.artistElementArray);
       var newTitleLabel = this.buildLabelString(this.state.currentSong.titleElementArray);
@@ -220,9 +224,9 @@ export default class GameLogic extends React.Component {
     var songState = this.state.currentSong;
     var songStart = this.serverConnection.getTimeStamp();
     const date = Date.now();
-    console.log("date ", date);
+    //console.log("date ", date);
     const diff = date - songStart;
-    console.log("diff: ", diff)
+    //console.log("diff: ", diff)
     if (diff < 30*1000) {
       songState.songStart = diff/1000;
       this.setState({currentSong: songState});

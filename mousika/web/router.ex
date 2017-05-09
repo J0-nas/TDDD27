@@ -19,6 +19,8 @@ defmodule Mousika.Router do
 
     get "/hello", HelloController, :index
     get "/currentGame", CurrentGameController, :index
+    post "/artistSolved", SolvedController, :artist
+    post "/titleSolved", SolvedController, :title
     get "/*path", PageController, :index
   end
 
