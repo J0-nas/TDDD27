@@ -9,7 +9,7 @@ defmodule Mousika.Endpoint do
   # when deploying your static files in production.
   plug Plug.Static,
     at: "/", from: :mousika,
-    only: ~w(js index.html robots.txt)
+    only: ~w(js images index.html robots.txt)
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.
