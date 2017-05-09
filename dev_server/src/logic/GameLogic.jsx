@@ -97,10 +97,22 @@ export default class GameLogic extends React.Component {
     //artist or title. We remove them to make the game more simple
     var simpleArtist = this.state.currentSong.artist.replace(/(\[(.)+\])+/g, '');
     var simpleTitle = this.state.currentSong.title.replace(/(\[(.)+\])+/g, '');
+
+    simpleArtist = simpleArtist.replace(/(\((.)*\))/g, '');
+    simpleTitle = simpleTitle.replace(/(\((.)*\))/g, '');
+
+    if (!simpleArtist.includes("feath")) {
+      simpleArtist = simpleArtist.replace(/(feat(.)*)/g, '');
+    }
+    
+    if (!simpleTitle.includes("feath")) {
+      simpleTitle = simpleTitle.replace(/(feat(.)*)/g, '');
+    }
+
     //var aArray = this.state.currentSong.artist.split(/[ ,]+/g).map(toTAElement);
     //var tArray = this.state.currentSong.title.split(/[ ,]+/g).map(toTAElement);
-    var aArray = simpleArtist.split(/[ ,]+/g).map(toTAElement);
-    var tArray = simpleTitle.split(/[ ,]+/g).map(toTAElement);
+    var aArray = simpleArtist.split(/[ ,]+/g).filter(w => w != "").map(toTAElement);
+    var tArray = simpleTitle.split(/[ ,]+/g).filter(w => w != "").map(toTAElement);
 
     var oldCSState = this.state.currentSong;
     oldCSState.artistElementArray = aArray;
