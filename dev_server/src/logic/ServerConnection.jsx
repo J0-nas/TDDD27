@@ -31,17 +31,44 @@ export default class ServerConnection {
     }
     //this.baseUrl = "https://mousika.herokuapp.com"
     this.baseUrl = "http://localhost:4000"
-
+    this.csrf_token = ""
 
     this.pullSong = this.pullSong.bind(this);
     this.getCurrentGameState = this.getCurrentGameState.bind(this);
     this.asyncGetCurrentGameState = this.asyncGetCurrentGameState.bind(this);
+
+    this.set_csrf_token = this.set_csrf_token.bind(this);
+    this.handle_set_csrf_token_Response = this.handle_set_csrf_token_Response.bind(this);
+    this.fetch_set_csrf_token_ResponseBody = this.fetch_set_csrf_token_ResponseBody.bind(this);
 
     this.fetchAsyncGCGS_ResponseBody = this.fetchAsyncGCGS_ResponseBody.bind(this);
     this.handleAsyncGCGS_Response = this.handleAsyncGCGS_Response.bind(this);
   }
 
   //componentDidMount() {}
+  handle_set_csrf_token_Response(response) {
+    if (response.status == 200) {
+      return response.text().then(this.fetch_set_csrf_token_ResponseBody);
+    } else {
+      console.log("Error in handle init response: ", response);
+      return Promise.reject(response);
+    }
+  }
+
+  fetch_set_csrf_token_ResponseBody(blob) {
+    this.csrf_token = blob;
+    console.log(this.csrf_token)
+    return Promise.resolve(true);
+  }
+
+  set_csrf_token() {
+    var myInit = {
+      method: 'GET'
+    };
+    var myRequest = new Request(this.baseUrl + '/get_csrf_token', myInit);
+
+    return fetch(myRequest).then(this.handle_set_csrf_token_Response);
+  }
 
    pullSong() {
     console.log("Pull state", this.state.game);
@@ -71,7 +98,7 @@ export default class ServerConnection {
     this.state.timeStamp = blob.timeStamp;
     console.log("Response set to state:", this.state);
 
-    return Promise.resolve("Done");
+    return Promise.resolve(true);
     /*this.setState({game: blob.currentGame});
     this.setState({currentSongNumber: blob.currentSong});
     this.setState({timeStamp: blob.timeStamp});*/
@@ -98,9 +125,22 @@ export default class ServerConnection {
     return r;
   }
 
+  handlePostRequest(response) {
+    if (response.status == 403) {
+      return this.set_csrf_token().then(x => Promise.reject(false));
+    } else if (response.status == 200) {
+      return Promise.resolve(true);
+    } else {
+      return Promise.resolve(response);
+    }
+  }
+
   postArtistSolved(id, time) {
     var myHeaders = new Headers();
     myHeaders.append("Access-Control-Allow-Origin", "*");
+    myHeaders.append("x-csrf-token", this.csrf_token);
+
+    console.log("send request with header ", myHeaders);
 
     var body = new FormData();
     body.append("id", id);
@@ -113,12 +153,16 @@ export default class ServerConnection {
     };
     var myRequest = new Request(this.baseUrl + '/artistSolved', myInit);
 
-    return fetch(myRequest);
+    return fetch(myRequest).then(this.handlePostRequest)
+      .then(null, this.postArtistSolved(id, time));
   }
 
   postTitleSolved(id, time) {
     var myHeaders = new Headers();
     myHeaders.append("Access-Control-Allow-Origin", "*");
+    myHeaders.append("x-csrf-token", this.csrf_token);
+
+    console.log("send request with header ", myHeaders);
 
     var body = new FormData();
     body.append("id", id);
@@ -131,6 +175,7 @@ export default class ServerConnection {
     };
     var myRequest = new Request(this.baseUrl + '/titleSolved', myInit);
 
-    return fetch(myRequest);
+    return fetch(myRequest).then(this.handlePostRequest)
+      .then(null, this.postTitleSolved(id, time));
   }
 }

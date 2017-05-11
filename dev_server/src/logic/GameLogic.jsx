@@ -62,8 +62,11 @@ export default class GameLogic extends React.Component {
   }
 
   componentDidMount() {
-    Promise.resolve(this.serverConnection.getCurrentGameState()).
-      then(this.loadFirstSong);
+    Promise.resolve(
+      this.serverConnection.set_csrf_token()
+        .then(this.serverConnection.getCurrentGameState)
+        .then(this.loadFirstSong)
+    );
     //this.loadNewSong();
     //this.startSong();
   }

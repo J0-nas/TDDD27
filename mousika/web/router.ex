@@ -17,6 +17,7 @@ defmodule Mousika.Router do
   scope "/", Mousika do
     pipe_through :browser # Use the default browser stack
 
+    get "/get_csrf_token", UtilityController, :get_csrf_token
     get "/hello", HelloController, :index
     get "/currentGame", CurrentGameController, :index
     post "/artistSolved", SolvedController, :artist
