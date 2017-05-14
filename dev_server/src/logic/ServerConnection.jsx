@@ -33,6 +33,8 @@ export default class ServerConnection {
     this.baseUrl = "http://localhost:4000"
     this.csrf_token = ""
 
+    this.state.attempts = 0;
+
     this.pullSong = this.pullSong.bind(this);
     this.getCurrentGameState = this.getCurrentGameState.bind(this);
     this.asyncGetCurrentGameState = this.asyncGetCurrentGameState.bind(this);
@@ -126,8 +128,14 @@ export default class ServerConnection {
   }
 
   handlePostRequest(response) {
-    if (response.status == 403) {
-      return this.set_csrf_token().then(x => Promise.reject(false));
+    console.log(response)
+    if (response.status == 403) {      
+      this.state.attempts = this.state.attempts+1;
+      if (this.state.attempts < 10) {
+	//console.log(Response);
+	return this.set_csrf_token().then(x => Promise.reject(false));
+      }
+      return Promise.resolve(true);
     } else if (response.status == 200) {
       return Promise.resolve(true);
     } else {
@@ -140,7 +148,7 @@ export default class ServerConnection {
     myHeaders.append("Access-Control-Allow-Origin", "*");
     myHeaders.append("x-csrf-token", this.csrf_token);
 
-    console.log("send request with header ", myHeaders);
+    //console.log("send request with header ", myHeaders, myHeaders.get('x-csrf-token'));
 
     var body = new FormData();
     body.append("id", id);
@@ -152,9 +160,10 @@ export default class ServerConnection {
       body: body
     };
     var myRequest = new Request(this.baseUrl + '/artistSolved', myInit);
-
+    console.log(myRequest);
+    
     return fetch(myRequest).then(this.handlePostRequest)
-      .then(null, this.postArtistSolved(id, time));
+      .then(x => console.log(x));//, this.postArtistSolved(id, time));
   }
 
   postTitleSolved(id, time) {
@@ -162,7 +171,7 @@ export default class ServerConnection {
     myHeaders.append("Access-Control-Allow-Origin", "*");
     myHeaders.append("x-csrf-token", this.csrf_token);
 
-    console.log("send request with header ", myHeaders);
+    //console.log("send request with header ", myHeaders, myHeaders.get("x-csrf-token"));
 
     var body = new FormData();
     body.append("id", id);
@@ -174,8 +183,9 @@ export default class ServerConnection {
       body: body
     };
     var myRequest = new Request(this.baseUrl + '/titleSolved', myInit);
-
+    console.log(myRequest);
+    
     return fetch(myRequest).then(this.handlePostRequest)
-      .then(null, this.postTitleSolved(id, time));
+      .then(x => console.log(x));//, this.postTitleSolved(id, time));
   }
 }
