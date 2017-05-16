@@ -27,7 +27,6 @@ export default class SolveInput extends React.Component {
   handleChange(e) {
     console.log("change input - ", e.target.value);
     this.setState({input: e.target.value})
-    //console.log(this.state);
   }
 
   render() {
@@ -41,7 +40,12 @@ export default class SolveInput extends React.Component {
     return (
       <form onSubmit={this.handleSubmit}>
         <FormGroup controlId="userInputForm">
-          <FormControl className = { this.props.onAnimationInputHandle } style={s} placeholder="Enter Title and Artist" onChange={this.handleChange} autoComplete="off" ref="inputField"/>
+          <FormControl
+            className = { this.props.onAnimationInputHandle }
+            style={s} placeholder="Enter Title and Artist"
+            onChange={this.handleChange}
+            autoComplete="off"
+            ref="inputField"/>
         </FormGroup>
       </form>
     );

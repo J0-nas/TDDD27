@@ -1,37 +1,55 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import LoginView from './LoginView.jsx';
+
 import {
-    Navbar,
-    Nav,
-    NavItem,
-    MenuItem,
-    NavDropdown,
-    Button,
-    ButtonGroup
+  Navbar,
+  Nav,
+  NavItem,
+  MenuItem,
+  NavDropdown,
+  Button,
+  ButtonGroup
 } from 'react-bootstrap';
 
 export default class Header extends React.Component {
-    render() {
-        return (
-            <Navbar fixedTop inverse id="header">
-                <Navbar.Header>
-                    <Navbar.Brand>
-                        <img src="https://mousika.herokuapp.com/images/Logo_re_plain.svg" onerror="this.src='https://mousika.herokuapp.com/images/Logo_4.png'"></img>
-                    </Navbar.Brand>
-                </Navbar.Header>
-                <Nav>
-                    <NavItem>
-                        user
-                    </NavItem>
-                    <NavItem eventKey={1} href="#">
-                        <ButtonGroup id="SignUpSignIn">
-                            <Button bsStyle="primary">Sign up</Button>
-                            <Button bsStyle="info">Sign in</Button>
-                        </ButtonGroup>
-                    </NavItem>
-                </Nav>
-            </Navbar>
-        );
+  constructor() {
+    super();
+    this.state = {
+      showRegister: false,
+      showLogin: false
     }
+
+    this.openLogin = this.openLogin.bind(this);
+
+  }
+
+  openLogin() {
+    this.setState({showLogin: true});
+  }
+
+  render() {
+    return (
+      <div>
+        <LoginView opened={this.state.showLogin}/>
+        <Navbar fixedTop inverse id="header">
+          <Navbar.Header>
+            <Navbar.Brand>
+              <img src="https://mousika.herokuapp.com/images/Logo_re_plain.svg" onError={(x => "this.src='https://mousika.herokuapp.com/images/Logo_4.png'")}></img>
+            </Navbar.Brand>
+          </Navbar.Header>
+          <Nav>
+            <NavItem>
+              user
+            </NavItem>
+            <NavItem eventKey={1} href="#">
+              <Button bsStyle="primary">Sign up</Button>
+              <Button bsStyle="info" onClick={this.openLogin}>Sign in</Button>
+            </NavItem>
+          </Nav>
+        </Navbar>
+      </div>
+    );
+  }
 }
