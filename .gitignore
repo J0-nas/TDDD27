@@ -7,3 +7,5 @@ Install-Docker-on-Linux-Mint.sh
 /mosuika/_build
 /mousika/deps/*
 /mousika/deps
+hermes/*
+Presentation.*
