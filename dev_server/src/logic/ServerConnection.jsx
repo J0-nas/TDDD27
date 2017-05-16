@@ -1,9 +1,8 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+// import React from 'react';
+// import ReactDOM from 'react-dom';
 
-export default class ServerConnection extends React.Component {
+export default class ServerConnection {
   constructor() {
-    super();
     this.state = {
       game: [],
       nextSong: {
@@ -30,32 +29,61 @@ export default class ServerConnection extends React.Component {
         songStart: 0
       }
     }
-    this.baseUrl = "https://mousika.herokuapp.com"
-    //this.baseUrl = "http://localhost:4000"
+    //this.baseUrl = "https://mousika.herokuapp.com"
+    this.baseUrl = "http://localhost:4000"
+    this.csrf_token = ""
 
+    this.state.attempts = 0;
 
     this.pullSong = this.pullSong.bind(this);
     this.getCurrentGameState = this.getCurrentGameState.bind(this);
     this.asyncGetCurrentGameState = this.asyncGetCurrentGameState.bind(this);
 
+    this.set_csrf_token = this.set_csrf_token.bind(this);
+    this.handle_set_csrf_token_Response = this.handle_set_csrf_token_Response.bind(this);
+    this.fetch_set_csrf_token_ResponseBody = this.fetch_set_csrf_token_ResponseBody.bind(this);
+
     this.fetchAsyncGCGS_ResponseBody = this.fetchAsyncGCGS_ResponseBody.bind(this);
     this.handleAsyncGCGS_Response = this.handleAsyncGCGS_Response.bind(this);
   }
 
-  componentDidMount() {}
+  //componentDidMount() {}
+  handle_set_csrf_token_Response(response) {
+    if (response.status == 200) {
+      return response.text().then(this.fetch_set_csrf_token_ResponseBody);
+    } else {
+      console.log("Error in handle init response: ", response);
+      return Promise.reject(response);
+    }
+  }
 
-  pullSong() {
+  fetch_set_csrf_token_ResponseBody(blob) {
+    this.csrf_token = blob;
+    console.log(this.csrf_token)
+    return Promise.resolve(true);
+  }
+
+  set_csrf_token() {
+    var myInit = {
+      method: 'GET'
+    };
+    var myRequest = new Request(this.baseUrl + '/get_csrf_token', myInit);
+
+    return fetch(myRequest).then(this.handle_set_csrf_token_Response);
+  }
+
+   pullSong() {
     console.log("Pull state", this.state.game);
     var gs = this.state.game[this.state.currentSongNumber % 10];
     this.state.currentSongNumber += 1;
     return {url: gs.songUrl, artist: gs.artist, title: gs.title, record: this.state.dummy.record, songStart: 0}
   }
 
-  getTimeStamp() {
+   getTimeStamp() {
     return this.state.timeStamp;
   }
 
-  handleAsyncGCGS_Response(response) {
+   handleAsyncGCGS_Response(response) {
     //console.log("resp", response);
     if (response.status == 200) {
       return response.json().then(this.fetchAsyncGCGS_ResponseBody);
@@ -65,26 +93,25 @@ export default class ServerConnection extends React.Component {
     }
   }
 
-  fetchAsyncGCGS_ResponseBody(blob) {
+   fetchAsyncGCGS_ResponseBody(blob) {
     console.log("blob", blob);
     this.state.game = blob.currentGame;
     this.state.currentSongNumber = blob.currentSong;
     this.state.timeStamp = blob.timeStamp;
     console.log("Response set to state:", this.state);
 
-    return Promise.resolve("Done");
+    return Promise.resolve(true);
     /*this.setState({game: blob.currentGame});
     this.setState({currentSongNumber: blob.currentSong});
     this.setState({timeStamp: blob.timeStamp});*/
   }
 
-  asyncGetCurrentGameState() {
+   asyncGetCurrentGameState() {
     var myHeaders = new Headers();
     myHeaders.append("Access-Control-Allow-Origin", "*");
 
     var myInit = {
       method: 'GET',
-      synchronous: true,
       headers: myHeaders
     };
 
@@ -93,11 +120,72 @@ export default class ServerConnection extends React.Component {
     return fetch(myRequest).then(this.handleAsyncGCGS_Response);
   }
 
-  getCurrentGameState(async=true) {
-    if(async) {
-      var r = this.asyncGetCurrentGameState();
-    }
+   getCurrentGameState() {
+    var r = this.asyncGetCurrentGameState();
+
     console.log("Requested new game songs...");
     return r;
+  }
+
+  handlePostRequest(response) {
+    console.log(response)
+    if (response.status == 403) {      
+      this.state.attempts = this.state.attempts+1;
+      if (this.state.attempts < 10) {
+	//console.log(Response);
+	return this.set_csrf_token().then(x => Promise.reject(false));
+      }
+      return Promise.resolve(true);
+    } else if (response.status == 200) {
+      return Promise.resolve(true);
+    } else {
+      return Promise.resolve(response);
+    }
+  }
+
+  postArtistSolved(id, time) {
+    var myHeaders = new Headers();
+    myHeaders.append("Access-Control-Allow-Origin", "*");
+    myHeaders.append("x-csrf-token", this.csrf_token);
+
+    //console.log("send request with header ", myHeaders, myHeaders.get('x-csrf-token'));
+
+    var body = new FormData();
+    body.append("id", id);
+    body.append("time", time);
+
+    var myInit = {
+      method: 'POST',
+      headers: myHeaders,
+      body: body
+    };
+    var myRequest = new Request(this.baseUrl + '/artistSolved', myInit);
+    console.log(myRequest);
+    
+    return fetch(myRequest).then(this.handlePostRequest)
+      .then(x => console.log(x));//, this.postArtistSolved(id, time));
+  }
+
+  postTitleSolved(id, time) {
+    var myHeaders = new Headers();
+    myHeaders.append("Access-Control-Allow-Origin", "*");
+    myHeaders.append("x-csrf-token", this.csrf_token);
+
+    //console.log("send request with header ", myHeaders, myHeaders.get("x-csrf-token"));
+
+    var body = new FormData();
+    body.append("id", id);
+    body.append("time", time);
+
+    var myInit = {
+      method: 'POST',
+      headers: myHeaders,
+      body: body
+    };
+    var myRequest = new Request(this.baseUrl + '/titleSolved', myInit);
+    console.log(myRequest);
+    
+    return fetch(myRequest).then(this.handlePostRequest)
+      .then(x => console.log(x));//, this.postTitleSolved(id, time));
   }
 }

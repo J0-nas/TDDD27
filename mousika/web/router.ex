@@ -5,7 +5,7 @@ defmodule Mousika.Router do
     plug :accepts, ["html"]
     plug :fetch_session
     plug :fetch_flash
-    plug :protect_from_forgery
+    #plug :protect_from_forgery
     plug :put_secure_browser_headers
   end
 
@@ -17,8 +17,11 @@ defmodule Mousika.Router do
   scope "/", Mousika do
     pipe_through :browser # Use the default browser stack
 
+    get "/get_csrf_token", UtilityController, :get_csrf_token
     get "/hello", HelloController, :index
     get "/currentGame", CurrentGameController, :index
+    post "/artistSolved", SolvedController, :artist
+    post "/titleSolved", SolvedController, :title
     get "/*path", PageController, :index
   end
 

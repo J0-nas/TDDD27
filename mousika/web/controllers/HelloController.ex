@@ -1,7 +1,5 @@
 defmodule Mousika.HelloController do
   use Mousika.Web, :controller
-  import Krotos
-
   #@static_file File.read!("priv/static/hello.html")
 
   def index(conn, _params) do
