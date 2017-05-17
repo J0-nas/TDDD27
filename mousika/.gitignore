@@ -1,13 +1,13 @@
 # App artifacts
-/_build/*
-/_build/dev/*
-/_build/dev
-/_build/prod/
-/_build/prod/*
+_build/*
+_build/dev/*
+_build/dev
+_build/prod/
+_build/prod/*
 Dockerfile
-/db
-/deps
-/*.ez
+db
+deps
+*.ez
 
 # Generated on crash by the VM
 erl_crash.dump
