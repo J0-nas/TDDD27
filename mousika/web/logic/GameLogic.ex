@@ -8,7 +8,8 @@ defmodule GameLogic do
 
     def init(:ok) do
       children = [
-        worker(StateStore.Store, [:ok]),
+        worker(GameState.Store, [:ok]),
+        worker(DatabaseState.Store, [:ok]),
         worker(Task, [GameLogic, :main, [:start]])
       ]
       #IO.inspect(children)
@@ -18,27 +19,27 @@ defmodule GameLogic do
 
   def main(:start) do
     IO.puts "Main of GameLogic"
+    r = DatabaseState.initDBConnection(:default)
+    IO.inspect r
     Process.sleep(1000)
     songs = Krotos.getGameSongs()
-    StateStore.putNextGame(songs)
-    #StateStore.increaseCurrentSong()
-    #StateStore.putTimeStamp(:os.system_time(:millisecond))
+    GameState.putNextGame(songs)
     #spawn setNextGame
     main(:loop)
   end
 
   def main(:loop) do
-    cs = StateStore.increaseCurrentSong()
+    cs = GameState.increaseCurrentSong()
     if cs == 0 do
-      nextGame = StateStore.getNextGame()
-      StateStore.putCurrentGame(nextGame)
+      nextGame = GameState.getNextGame()
+      GameState.putCurrentGame(nextGame)
       #push currentGame to clients
-      spawn fn -> setNextGame end
+      spawn fn -> setNextGame() end
       Process.sleep(1000*2)
     end
 
     ts = :os.system_time(:millisecond)
-    StateStore.putTimeStamp(ts)
+    GameState.putTimeStamp(ts)
 
     IO.inspect ts
     IO.inspect cs
@@ -50,6 +51,6 @@ defmodule GameLogic do
 
   def setNextGame() do
     nextGame = Krotos.getGameSongs()
-    StateStore.putNextGame(nextGame)
+    GameState.putNextGame(nextGame)
   end
 end

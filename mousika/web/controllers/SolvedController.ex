@@ -8,7 +8,7 @@ defmodule Mousika.SolvedController do
   end
 
   def title(conn, _params) do
-    IO.puts("artist solved")
+    IO.puts("title solved")
     IO.inspect(conn)
     send_resp(conn, 200, "")
   end

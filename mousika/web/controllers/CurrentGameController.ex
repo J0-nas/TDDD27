@@ -2,9 +2,9 @@ defmodule Mousika.CurrentGameController do
   use Mousika.Web, :controller
 
   def index(conn, _params) do
-    currentGame = StateStore.getCurrentGame()
-    cs = StateStore.getCurrentSong()
-    ts = StateStore.getTimeStamp()
+    currentGame = GameState.getCurrentGame()
+    cs = GameState.getCurrentSong()
+    ts = GameState.getTimeStamp()
     res = %{:currentGame => currentGame, :currentSong => cs, :timeStamp => ts}
 
     IO.puts "new request at: "
