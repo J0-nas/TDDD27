@@ -272,29 +272,8 @@ button, button:focus, button:active {
  *
  */
 
-@media (min-width:992px) {
-    #GameMechanic {
-        margin-bottom: 20px;
-        margin-top: 20px;
-    }
-    #footer {
-        width: 54px;
-        background-color: #808080;
-        position: absolute;
-        left: calc(100% - 54px);
-        top: 0px;
-        float: none;
-        height: 100%;
-        box-shadow: 0px 0px 10px 5px #363636;
-        margin-top: 54px;
-        padding-top: 25px;
-        position: absolute;
-        right: 0;
-        height: 100vh;
-    }
-    #GameView {
-        /* height: calc(100vh - 150px);*/
-    }
+.nav-pills > li.active > a, .nav-pills > li.active > a:focus, .nav-pills > li.active > a:hover{
+	background-color: #fff3;
 }
 
 #footer>li+li {
@@ -309,33 +288,6 @@ button, button:focus, button:active {
     color: white;
 }
 
-@media (max-width: 991px) {
-	#GameMechanic{
-		padding: 20px;
-	}
-	#timer {
-		line-height: 1;
-	}
-    #footer {
-        float: left;
-        position: fixed;
-        right: 0;
-        left: 0;
-        z-index: 1030;
-        background-color: #808080;
-        bottom: 0;
-    }
-    #Page {
-        margin-bottom: 50px;
-    }
-    #footer>li>a {
-        padding-top: 15px;
-    }
-    .navbar-brand {
-        margin-left: 20px;
-    }
-}
-
 
 /*
  *
@@ -343,9 +295,27 @@ button, button:focus, button:active {
  *
  */
 
+#Name{
+	line-height: 2.3;
+	font-size: 20px;
+	font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+	font-style: normal;
+}
+
+#ButtonSignInSignUp {
+	padding-top: 23px;
+	float: right;
+	right: 0px;
+	position: fixed;
+}
+
+#ButtonSignInSignUp > button{
+	margin-left: 11px !important;
+	margin-right: 11px !important;	
+}
+
 #header {
     box-shadow: 0px 0px 10px 5px #080808;
-    ;
 }
 
 .navbar-collapse.collapse {
@@ -365,7 +335,7 @@ button, button:focus, button:active {
 }
 
 .navbar-header {
-    width: 150px !important;
+    /*width: 150px !important;*/
     float: left;
 }
 
@@ -430,4 +400,132 @@ button, button:focus, button:active {
 
 #LikeButton:hover {
     background-color: #fff3;
+}
+
+
+/* 
+ *
+ * Window Sizes
+ *
+ */
+
+/*
+ * small
+ */
+
+@media (max-width: 991px) {
+	/*
+	 * Header
+	 */
+	.navbar-brand{
+		height: 20px;
+        margin-left: 20px;
+
+	}
+	#Name{
+        line-height: 1;
+	}
+
+    .navbar-brand {
+    }
+
+    #ButtonSignInSignUp {
+    	padding-top: 0px;
+	}
+
+	#ButtonSignInSignUp > button {
+		margin-right: 2px !important;
+	}
+
+    /*
+     * Game View
+     */
+	#GameMechanic{
+		padding: 20px;
+	}
+
+	#timer {
+		line-height: 1;
+		float: left;
+	}
+
+    #Page {
+        margin-bottom: 50px;
+    }
+
+    /*
+     * Footer
+     */
+    #footer {
+        float: left;
+        position: fixed;
+        right: 0;
+        left: 0;
+        z-index: 1030;
+        background-color: #808080;
+        bottom: 0;
+    }
+
+    #footer>li>a {
+        padding-top: 15px;
+    }
+}
+
+
+/*
+ * Middle
+ */
+@media () {
+
+}
+
+/*
+ * LARGE
+ */
+
+@media (min-width:992px) {
+	/*
+	 * General
+	 */
+	body {
+		overflow: hidden;
+	}
+
+	/*
+	 * Game View
+	 */
+    #GameMechanic {
+        margin-bottom: 20px;
+        margin-top: 20px;
+    }
+    #GameView {
+        margin-left: -20px;
+		margin-top: 50px;
+    }
+
+    /*
+     * Standings
+     */
+    #Standings{
+		height: calc(100vh - 118px);
+	}
+
+    /*
+     * Footer
+     */ 
+    #footer {
+        width: 54px;
+        background-color: #808080;
+        position: absolute;
+        left: calc(100% - 54px);
+        top: 0px;
+        float: none;
+        height: 100%;
+        box-shadow: 0px 0px 10px 5px #363636;
+        margin-top: 65px;
+        padding-top: 25px;
+        position: absolute;
+        right: 0;
+        height:calc(100vh - 65px);
+    }
 }

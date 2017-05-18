@@ -52,7 +52,7 @@ export default class Page extends React.Component {
             <Col sm={12} md={6}>
               <GameLogic/>
             </Col>
-            <Col sm={12} md={6}>
+            <Col id="Standings" className="glass" sm={12} md={6}>
               {this.state.content}
             </Col>
           </Row>

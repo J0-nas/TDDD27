@@ -35,15 +35,15 @@ export default class Header extends React.Component {
         <LoginView opened={this.state.showLogin}/>
         <Navbar fixedTop inverse id="header">
           <Navbar.Header>
-            <Navbar.Brand>
+            <Navbar.Brand id="Logo" className="hidden-xs">
               <img src="https://mousika.herokuapp.com/images/Logo_re_plain.svg" onError={(x => "this.src='https://mousika.herokuapp.com/images/Logo_4.png'")}></img>
+            </Navbar.Brand>
+            <Navbar.Brand id="Name">
+              Mousika
             </Navbar.Brand>
           </Navbar.Header>
           <Nav>
-            <NavItem>
-              user
-            </NavItem>
-            <NavItem eventKey={1} href="#">
+            <NavItem id="ButtonSignInSignUp" href="#">
               <Button bsStyle="primary">Sign up</Button>
               <Button bsStyle="info" onClick={this.openLogin}>Sign in</Button>
             </NavItem>

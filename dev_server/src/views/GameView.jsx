@@ -57,18 +57,20 @@ export default class GameView extends React.Component {
                         onAnimationCounterHandle={this.props.AnimationCounterHandle}
                         setStartAtHandle={this.props.addStartHandle}
                     />
-                    <TextBox
-                        artist={this.state.textBox.artist}
-                        title={this.state.textBox.title}
-                    />
-                    <SolveInput
-                        onAnimationInputHandle={this.props.AnimationInputHandle}
-                        gvCB={this.inputSubmitCallback}
-                    />
-                    <ProgressBar
-                        onAnimationBarHandle={this.props.AnimationBarHandle}
-                        setStartAtHandle={this.props.addStartHandle}
-                    />
+                    <div id="subpart">
+                        <TextBox
+                            artist={this.state.textBox.artist}
+                            title={this.state.textBox.title}
+                        />
+                        <SolveInput
+                            onAnimationInputHandle={this.props.AnimationInputHandle}
+                            gvCB={this.inputSubmitCallback}
+                        />
+                        <ProgressBar
+                            onAnimationBarHandle={this.props.AnimationBarHandle}
+                            setStartAtHandle={this.props.addStartHandle}
+                        />
+                    </div>
                 </div>
                 <PreviouslyPlayed
                     artist={this.props.previouslyPlayed.artist}

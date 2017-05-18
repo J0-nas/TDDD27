@@ -4,16 +4,30 @@ import ReactDOM from 'react-dom';
 import {Navbar, Nav, NavItem, MenuItem, NavDropdown} from 'react-bootstrap';
 
 export default class Footer extends React.Component {
+    constructor() {
+        super();
+
+        this.state = {
+            activeSelection: 1
+        };
+
+        this.handleSelect = this.handleSelect.bind(this);
+    }
+
+    handleSelect(selectedKey) {
+        this.setState({activeSelection: selectedKey});
+    }
+
     render() {
         return (
-            <Nav id="footer" bsStyle="pills">
-                <NavItem eventKey={2} href="#">
+            <Nav id="footer" activeKey={this.state.activeSelection} bsStyle="pills" onSelect={this.handleSelect}>
+                <NavItem eventKey={1} href="#">
                     <i className="material-icons">whatshot</i>
                 </NavItem>
-                <NavItem eventKey={1} href="#">
+                <NavItem eventKey={2} href="#">
                     <i className="material-icons">person</i>
                 </NavItem>
-                <NavItem eventKey={5} href="#">
+                <NavItem eventKey={3} href="#">
                     <i className="material-icons">assessment</i>
                 </NavItem>
             </Nav>
