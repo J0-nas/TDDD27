@@ -46,7 +46,7 @@ body {
     border-bottom-color: rgba(255, 255, 255, 0.2);
     background-color: rgba(255, 255, 255, 0.2);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-    height: 300px;
+/*    height: 300px;*/
 }
 
 .glass::before {
@@ -291,6 +291,10 @@ button, button:focus, button:active {
  * Header
  *
  */
+
+button, button:focus, button:active{
+	padding: 6px 12px;
+}
 
 #Name{
 	line-height: 2.3;
@@ -728,3 +732,23 @@ button, button:focus, button:active {
 }
 
 
+/*
+ *
+ * Login
+ *
+ */
+.modal-content {
+	border-radius: 0px;
+	background-color: #9a9a9a;
+}
+
+.form-contril {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.form-control {
+	margin: 5px 15px 5px 15px;
+	width: calc(100% - 30px);
+
+}

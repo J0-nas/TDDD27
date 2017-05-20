@@ -43,7 +43,7 @@ export default class Header extends React.Component {
             </Navbar.Brand>
           </Navbar.Header>
           <Nav>
-            <NavItem id="ButtonSignInSignUp" href="#">
+            <NavItem id="ButtonSignInSignUp">
               <Button bsStyle="primary">Sign up</Button>
               <Button bsStyle="info" onClick={this.openLogin}>Sign in</Button>
             </NavItem>

@@ -64,22 +64,12 @@ export default class LoginView extends React.Component {
         <Modal.Body>
           <Form horizontal onSubmit={this.login}>
             <FormGroup controlId="formHorizontalUsername">
-              <Col componentClass={ControlLabel} sm={2}>
-                Username
-              </Col>
-              <Col sm={10}>
                 <FormControl type="text" placeholder="Username" ref="usernameInput"/>
-              </Col>
             </FormGroup>
 
             <FormGroup controlId="formHorizontalPassword" validationState = {this.getValidationState()}>
-              <Col componentClass={ControlLabel} sm={2}>
-                Password
-              </Col>
-              <Col sm={10}>
                 <FormControl type="password" placeholder="Password" ref="passwdInput" onChange={this.handlePASSWDChange}/>
                 <FormControl.Feedback/>
-              </Col>
             </FormGroup>
 
           </Form>
