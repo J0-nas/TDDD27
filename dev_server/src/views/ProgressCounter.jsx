@@ -57,7 +57,7 @@ export default class ProgressCounter extends React.Component {
       animationDelay: String(this.state.interval) + "s"
     }
     return (
-      <div id="timer" className= { this.props.onAnimationCounterHandle } style={s}> { Math.ceil(this.state.counter) } </div>
+      <div id="timer" className= { this.props.onAnimationCounterHandle } style={s} className="hidden-xs"> { Math.ceil(this.state.counter) } </div>
     );
   }
 }

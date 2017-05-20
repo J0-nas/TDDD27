@@ -29,7 +29,6 @@ body {
 
 #GameView {
     margin-right: 0px;
-    height: 449px;
     width: 100%
 }
 
@@ -42,7 +41,6 @@ body {
 
 .glass {
     position: relative;
-    padding: 10px 0;
     border-bottom: 1px solid;
     border-bottom-color: #ccc;
     border-bottom-color: rgba(255, 255, 255, 0.2);
@@ -187,7 +185,6 @@ button, button:focus, button:active {
 }
 
 #progressWrapper {
-    width: 70%;
     margin-left: auto;
     margin-right: auto;
 }
@@ -315,7 +312,8 @@ button, button:focus, button:active {
 }
 
 #header {
-    box-shadow: 0px 0px 10px 5px #080808;
+    box-shadow: 0px 0px 10px 5px #181818;
+    border: 0px;
 }
 
 .navbar-collapse.collapse {
@@ -353,7 +351,6 @@ button, button:focus, button:active {
 #previouslyPlayed {
     margin: 0px;
     padding: 5px;
-    height: 160px;
 }
 
 #albumCover {
@@ -369,22 +366,20 @@ button, button:focus, button:active {
     font-size: 20px;
     font-style: bold;
     font-weight: bold;
+    margin-left: 5px;
 }
 
 #prevArtistTitle {
-    margin-bottom: 15px;
     text-align: left;
-    width: 600px;
-    padding-bottom: 16px;
-    padding-top: 17px;
 }
 
 #Record {
     font-size: 15px;
-    color: lightgreen;
+    color: #0f660f;
     float: left;
     padding-left: 10px;
     text-align: left;
+    height:	43px;
 }
 
 #LikeButton {
@@ -402,6 +397,15 @@ button, button:focus, button:active {
     background-color: #fff3;
 }
 
+/*
+ *
+ * Standings
+ *
+ */
+
+.table-responsive{
+	border: 0px solid #ddd;
+}
 
 /* 
  *
@@ -413,20 +417,65 @@ button, button:focus, button:active {
  * small
  */
 
-@media (max-width: 991px) {
+@media (max-width: 767px) {
+	#Page{
+		margin-top: 65px;
+	}
+
+	#progressWrapper{
+		width: 100% !important;
+	}
+
+    #userInputForm{
+    	width: 100% !important;
+    }
+
+    #GameView {
+    	height: 280px;
+		width: 100%;
+		margin-bottom: 15px;
+    }
+
+    #prevArtistTitle{
+    	float: left;
+    	margin: 15px;
+		text-align: left;
+		height: 58px;
+		padding-bottom: 0px;
+		padding-top: 0px;
+    }
+
+    #Record{
+    	float: right !important;
+    	margin: 22.5px;
+    }
+
+    #previouslyPlayed{
+    	height: 98px;
+    }
+
+	.row{
+		margin-left: 0px;
+		margin-right: 0px;
+	}
+
 	/*
 	 * Header
 	 */
 	.navbar-brand{
 		height: 20px;
         margin-left: 20px;
-
 	}
+
 	#Name{
         line-height: 1;
 	}
 
     .navbar-brand {
+    }
+
+    .navbar-nav {
+    	margin: 7.5px -15px;
     }
 
     #ButtonSignInSignUp {
@@ -453,9 +502,18 @@ button, button:focus, button:active {
         margin-bottom: 50px;
     }
 
+    #progressWrapper{
+    	width: 70%;
+    }
+
+    #userInputForm{
+    	width: 70%;
+    }
+
     /*
      * Footer
      */
+
     #footer {
         float: left;
         position: fixed;
@@ -469,15 +527,125 @@ button, button:focus, button:active {
     #footer>li>a {
         padding-top: 15px;
     }
-}
 
+}
 
 /*
  * Middle
  */
-@media () {
 
+@media (min-width: 768px) and (max-width: 991px) {
+	#Page{
+		margin-top: 80px;
+	}
+
+	.row{
+		margin-left: 0px;
+		margin-right: 0px;
+	}
+
+	/*
+	 * Header
+	 */
+	.navbar-brand{
+		height: 20px;
+        margin-left: 20px;
+	}
+
+	#Name{
+        line-height: 1;
+	}
+
+    .navbar-brand {
+    }
+
+    .navbar-nav {
+    	margin: 7.5px -15px;
+    }
+
+    #ButtonSignInSignUp {
+    	padding-top: 0px;
+	}
+
+	#ButtonSignInSignUp > button {
+		margin-right: 2px !important;
+	}
+
+    /*
+     * Game View
+     */
+	#GameMechanic {
+		padding: 20px;
+		height: 140px;
+	}
+
+	#GameView {
+		height: 290px;
+		margin-bottom: 30px;
+	}
+
+	#subpart {
+		float: right;
+		width: calc(100% - 140px);
+	}
+
+	#timer {
+		line-height: 1;
+		float: left;
+		height: 100px;
+		font-size: 100px;
+	}
+
+    #Page {
+        margin-bottom: 50px;
+    }
+
+    #progressWrapper{
+    	width: 90%;
+    }
+
+    #userInputForm{
+    	width: 90%;
+    }
+
+    /*
+     * Footer
+     */
+
+    #footer {
+        float: left;
+        position: fixed;
+        right: 0;
+        left: 0;
+        z-index: 1030;
+        background-color: #808080;
+        bottom: 0;
+    }
+
+    #footer>li>a {
+        padding-top: 15px;
+    }
+	#previouslyPlayed{
+		height: 100px;
+	}
+
+	#Record {
+		float: right;
+		margin: 23.5px;
+	}
+
+	#LikeButton{
+		margin: 0px 10px 0px 10px;
+	}
+
+	#prevArtistTitle{
+		float: left;
+		margin-top: 15px;
+		margin-bottom: 15px;
+	}
 }
+
+
 
 /*
  * LARGE
@@ -491,16 +659,45 @@ button, button:focus, button:active {
 		overflow: hidden;
 	}
 
+	#prevArtistTitle{
+		height: 60px;
+	}
+
+	#previouslyPlayed {
+		height: 160px;
+	}
+
+	#Record{
+		margin-top: 23.5px;
+		margin-bottom: 23.5px;
+		margin-left: 13.5px;
+	}
 	/*
 	 * Game View
 	 */
     #GameMechanic {
-        margin-bottom: 20px;
-        margin-top: 20px;
+    	margin-top: 30px;
+    	margin-bottom: 30px;
     }
+
     #GameView {
-        margin-left: -20px;
-		margin-top: 50px;
+    	height: 470px;
+    }
+
+    #timer {
+    	height: 100px;
+    }
+
+    #progressWrapper{
+    	width: 80%;
+    }
+
+    #userInputForm{
+    	width: 80%;
+    }
+
+    #subpart {
+    	height: 100px;
     }
 
     /*
@@ -529,3 +726,5 @@ button, button:focus, button:active {
         height:calc(100vh - 65px);
     }
 }
+
+

@@ -19,6 +19,7 @@ export default class Standings extends React.Component {
         <th>Artist</th>
         <th>Title</th>
         <th>Time</th>
+        <th className="hidden-md hidden-ms hidden-xs"></th>
       </tr>
     </thead>
     <tbody>
@@ -29,6 +30,7 @@ export default class Standings extends React.Component {
         <td>Table cell</td>
         <td>Table cell</td>
         <td>Table cell</td>
+        <th className="hidden-md hidden-ms hidden-xs"></th>
       </tr>
       <tr>
         <td>2</td>
@@ -37,6 +39,7 @@ export default class Standings extends React.Component {
         <td>Table cell</td>
         <td>Table cell</td>
         <td>Table cell</td>
+        <th className="hidden-md hidden-ms hidden-xs"></th>
       </tr>
     </tbody>
   </Table>

@@ -20,17 +20,19 @@ export default class Footer extends React.Component {
 
     render() {
         return (
-            <Nav id="footer" activeKey={this.state.activeSelection} bsStyle="pills" onSelect={this.handleSelect}>
-                <NavItem eventKey={1} href="#">
-                    <i className="material-icons">whatshot</i>
-                </NavItem>
-                <NavItem eventKey={2} href="#">
-                    <i className="material-icons">person</i>
-                </NavItem>
-                <NavItem eventKey={3} href="#">
-                    <i className="material-icons">assessment</i>
-                </NavItem>
-            </Nav>
+            <div>
+                <Nav id="footer" activeKey={this.state.activeSelection} bsStyle="pills" onSelect={this.handleSelect}>
+                    <NavItem eventKey={1} href="#">
+                        <i className="material-icons">whatshot</i>
+                    </NavItem>
+                    <NavItem eventKey={2} href="#">
+                        <i className="material-icons">person</i>
+                    </NavItem>
+                    <NavItem eventKey={3} href="#">
+                        <i className="material-icons">assessment</i>
+                    </NavItem>
+                </Nav>
+            </div>
         );
     }
 }

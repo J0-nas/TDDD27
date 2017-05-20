@@ -41,10 +41,10 @@ export default class PreviouslyPlayed extends React.Component {
         return (
             <Grid style={s}>
                 <Row id="previouslyPlayed" className="show-grid glass">
-                    <Col id="albumCover" className="hidden-xs">
+                    <Col id="albumCover" className="hidden-sm hidden-xs">
                     </Col>
                     <Col id="prevArtistTitle">
-                        <Button id="LikeButton" bsSize="large" onClick={ this.handleClick } active={this.state.active}><Glyphicon glyph={ this.state.glyph } /></Button>
+                        <Button className="hidden-xs" id="LikeButton" bsSize="large" onClick={ this.handleClick } active={this.state.active}><Glyphicon glyph={ this.state.glyph } /></Button>
 
                         <span className="prevPlayed">{this.props.artist}
                         </span><br/>
