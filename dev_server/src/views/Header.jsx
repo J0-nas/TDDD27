@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import LoginView from './LoginView.jsx';
+import RegisterView from './RegisterView.jsx';
 
 import {
   Navbar,
@@ -22,6 +23,7 @@ export default class Header extends React.Component {
     }
 
     this.openLogin = this.openLogin.bind(this);
+    this.openRegister = this.openRegister.bind(this);
 
   }
 
@@ -29,9 +31,14 @@ export default class Header extends React.Component {
     this.setState({showLogin: true});
   }
 
+  openRegister() {
+  	this.setState({showRegister: true});
+  }
+
   render() {
     return (
       <div>
+        <RegisterView opened={this.state.showRegister}/>
         <LoginView opened={this.state.showLogin}/>
         <Navbar fixedTop inverse id="header">
           <Navbar.Header>
@@ -44,7 +51,7 @@ export default class Header extends React.Component {
           </Navbar.Header>
           <Nav>
             <NavItem id="ButtonSignInSignUp">
-              <Button bsStyle="primary">Sign up</Button>
+              <Button bsStyle="primary" onClick={this.openRegister}>Sign up</Button>
               <Button bsStyle="info" onClick={this.openLogin}>Sign in</Button>
             </NavItem>
           </Nav>

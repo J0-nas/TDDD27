@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import {Form, Modal, Button, FormControl, FormGroup, Col, ControlLabel, ButtonGroup} from 'react-bootstrap';
+import {Form, Modal, Button, FormControl, FormGroup} from 'react-bootstrap';
 
 export default class LoginView extends React.Component {
   constructor(){
