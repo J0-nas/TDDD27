@@ -24,7 +24,7 @@ export default class Header extends React.Component {
 
     this.openLogin = this.openLogin.bind(this);
     this.openRegister = this.openRegister.bind(this);
-
+    this.closeHandler = this.closeHandler.bind(this);
   }
 
   openLogin() {
@@ -35,11 +35,18 @@ export default class Header extends React.Component {
   	this.setState({showRegister: true});
   }
 
+  closeHandler() {
+    this.setState({
+      showLogin: false,
+      showRegister: false
+    });
+  }
+
   render() {
     return (
       <div>
-        <RegisterView opened={this.state.showRegister}/>
-        <LoginView opened={this.state.showLogin}/>
+        <RegisterView registerOpened={this.state.showRegister} closeHandler={this.closeHandler}/>
+        <LoginView loginOpened={this.state.showLogin} closeHandler={this.closeHandler}/>
         <Navbar fixedTop inverse id="header">
           <Navbar.Header>
             <Navbar.Brand id="Logo" className="hidden-xs">

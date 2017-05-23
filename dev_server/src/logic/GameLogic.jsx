@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import ServerConnection from './ServerConnection.jsx';
+import GameServerConnection from './GameServerConnection.jsx';
 import GameView from './../views/GameView.jsx';
 import AudioPlayer from './AudioPlayer.jsx';
 import {toTAElement, checkInput, checkIfSolved} from './SolveLogic.jsx';
@@ -54,7 +54,7 @@ export default class GameLogic extends React.Component {
     this.loadNewSong = this.loadNewSong.bind(this);
     this.songBreak = this.songBreak.bind(this);
 
-    this.serverConnection = new ServerConnection();
+    this.serverConnection = new GameServerConnection();
     this.audioPlayer = new AudioPlayer(this.onSongEnd);
 
     //console.log(this.audioPlayer.addHandle);

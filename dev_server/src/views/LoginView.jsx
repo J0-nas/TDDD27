@@ -3,6 +3,9 @@ import ReactDOM from 'react-dom';
 
 import {Form, Modal, Button, FormControl, FormGroup} from 'react-bootstrap';
 
+import UtilityServerConnection from './../logic/UtilityServerConnection.jsx';
+import ResponseStatusCodes from './../logic/ResponseStatusCodes.jsx';
+
 export default class LoginView extends React.Component {
   constructor(){
     super();
@@ -11,16 +14,19 @@ export default class LoginView extends React.Component {
       showModal: false,
       passwd: ""
     }
+    this.serverConnection = new UtilityServerConnection();
 
     this.close = this.close.bind(this);
     this.login = this.login.bind(this);
 
     this.getValidationState = this.getValidationState.bind(this);
-    this.handlePASSWDChange = this.handlePASSWDChange.bind(this);
+    this.handlePasswdChange = this.handlePasswdChange.bind(this);
+    this.handleResp = this.handleResp.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({showModal: nextProps.opened});
+    this.setState({showModal: nextProps.loginOpened});
+    console.log("login recieved", nextProps);
   }
 
   close() {
@@ -29,14 +35,30 @@ export default class LoginView extends React.Component {
     usernameInput.value = "";
     passwdInput.value = "";
     this.setState({showModal: false});
+    this.props.closeHandler();
+  }
+
+  handleResp(dict) {
+    if (Number(dict['status']) == ResponseStatusCodes.operationSuccess) {
+      //logged in
+      this.close()
+    } else {
+      console.log(Number(dict['status']), ResponseStatusCodes.operationSuccess, dict['value']);
+    }
   }
 
   login() {
-    const usernameInput = ReactDOM.findDOMNode(this.refs.usernameInput);
-    const passwdInput = ReactDOM.findDOMNode(this.refs.passwdInput);
-    const username = usernameInput.value;
-    const passwd = passwdInput.value;
-    console.log(username, passwd);
+    const username = ReactDOM.findDOMNode(this.refs.usernameInput).value;
+    const passwd = ReactDOM.findDOMNode(this.refs.passwdInput).value;
+
+    if (
+      (username.length == 0) ||
+      (passwd.length < 6)) {
+      return;
+    }
+
+    const resp = this.serverConnection.loginRequest(username, passwd);
+    resp.then(this.handleResp, x => console.log("could not parse json", x));
   }
 
   getValidationState() {
@@ -50,7 +72,7 @@ export default class LoginView extends React.Component {
     }
   }
 
-  handlePASSWDChange(e) {
+  handlePasswdChange(e) {
     this.setState({passwd: e.target.value});
   }
 
@@ -68,7 +90,7 @@ export default class LoginView extends React.Component {
             </FormGroup>
 
             <FormGroup controlId="formHorizontalPassword" validationState = {this.getValidationState()}>
-                <FormControl type="password" placeholder="Password" ref="passwdInput" onChange={this.handlePASSWDChange}/>
+                <FormControl type="password" placeholder="Password" ref="passwdInput" onChange={this.handlePasswdChange}/>
                 <FormControl.Feedback/>
             </FormGroup>
 
