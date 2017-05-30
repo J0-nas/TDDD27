@@ -2,11 +2,16 @@ defmodule Mousika.UserSocket do
   use Phoenix.Socket
 
   ## Channels
-  # channel "room:*", Mousika.RoomChannel
+  channel "game:*", Mousika.GameChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket
   # transport :longpoll, Phoenix.Transports.LongPoll
+
+
+  def broadcast_to_standings(msg) do
+    Phoenix.Endpoint.broadcast("game:standings", "new_msg", msg)
+  end
 
   # Socket params are passed from the client and can
   # be used to verify and authenticate a user. After

@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.2.4 (2017-5-15)
+
+* Enhancements
+  * [phoenix.new] Support Erlang 20 in `phoenix.new` archive
+
+## 1.2.3 (2017-3-14)
+
+* Enhancements
+  * [Plug] Use latest plug crypto to harden Phoenix.Token
 
 ## 1.2.2 (2017-3-14)
 

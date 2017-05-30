@@ -2,6 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import GameServerConnection from './GameServerConnection.jsx';
+import SocketConnection from './SocketConnection.jsx';
+import SocketChannels from './SocketChannels.jsx';
+
 import GameView from './../views/GameView.jsx';
 import AudioPlayer from './AudioPlayer.jsx';
 import {toTAElement, checkInput, checkIfSolved} from './SolveLogic.jsx';
@@ -53,8 +56,10 @@ export default class GameLogic extends React.Component {
     this.loadFirstSong = this.loadFirstSong.bind(this);
     this.loadNewSong = this.loadNewSong.bind(this);
     this.songBreak = this.songBreak.bind(this);
+    this.receive_standings = this.receive_standings.bind(this);
 
     this.serverConnection = new GameServerConnection();
+    this.socketConnection = new SocketConnection(this.receive_standings);
     this.audioPlayer = new AudioPlayer(this.onSongEnd);
 
     //console.log(this.audioPlayer.addHandle);
@@ -66,6 +71,8 @@ export default class GameLogic extends React.Component {
         this.serverConnection.getCurrentGameState()
         .then(this.loadFirstSong)
     );
+    this.socketConnection.connect();
+    this.socketConnection.join_channel(SocketChannels.standingsChannel);
     //this.loadNewSong();
     //this.startSong();
   }
@@ -277,6 +284,10 @@ export default class GameLogic extends React.Component {
     }
     this.setState({currentSong: currentSongState});
     console.log("loaded new song...");
+  }
+
+  receive_standings(standings) {
+    console.log("GL received standings: ", standings)
   }
 
   render() {
