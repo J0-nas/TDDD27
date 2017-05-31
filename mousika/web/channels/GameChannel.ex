@@ -15,6 +15,10 @@ defmodule Mousika.GameChannel do
     {:noreply, socket}
   end
 
+  def broadcast_to_standings(msg) do
+    Mousika.Endpoint.broadcast("game:standings", "new_msg", %{msg: msg})
+  end
+
   def terminate(_reason, socket) do
     {:ok, socket}
   end

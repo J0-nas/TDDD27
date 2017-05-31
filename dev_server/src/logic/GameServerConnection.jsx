@@ -21,55 +21,54 @@ export default class GameServerConnection extends ServerConnection {
     this.handleAsyncGCGS_Response = this.handleAsyncGCGS_Response.bind(this);
   }
 
-  //componentDidMount() {}
-   pullSong() {
-    console.log("Pull state", this.state.game);
+  pullSong() {
     var gs = this.state.game[this.state.currentSongNumber % 10];
     this.state.currentSongNumber += 1;
+    console.log("Pull state: ", gs, " ", this.state.currentSongNumber, ". round");
+    if (this.state.currentSongNumber == 10) {
+      getCurrentGameState();
+      this.state.currentSongNumber = 0;
+    }
     return {url: gs.songUrl, artist: gs.artist, title: gs.title, record: this.state.dummy.record, songStart: 0}
   }
 
-   getTimeStamp() {
+  getTimeStamp() {
     return this.state.timeStamp;
   }
 
-   handleAsyncGCGS_Response(response) {
-    //console.log("resp", response);
+  handleAsyncGCGS_Response(response) {
     if (response.status == 200) {
       return response.json().then(this.fetchAsyncGCGS_ResponseBody);
     } else {
-      console.log("Request error ", response);
+      console.log("GCGS - Request error ", response);
       return Promise.reject(response);
     }
   }
 
-   fetchAsyncGCGS_ResponseBody(blob) {
-    console.log("blob", blob);
+  fetchAsyncGCGS_ResponseBody(blob) {
+    //console.log("blob", blob);
     this.state.game = blob.currentGame;
     this.state.currentSongNumber = blob.currentSong;
     this.state.timeStamp = blob.timeStamp;
-    console.log("Response set to state:", this.state);
+    //console.log("Response set to state:", this.state);
 
     return Promise.resolve(true);
   }
 
-   asyncGetCurrentGameState() {
+  asyncGetCurrentGameState() {
     var myHeaders = new Headers();
     myHeaders.append("Access-Control-Allow-Origin", "*");
-
     var myInit = {
       method: 'GET',
       headers: myHeaders
     };
 
     var myRequest = new Request(this.baseUrl + '/currentGame', myInit);
-
     return fetch(myRequest).then(this.handleAsyncGCGS_Response);
   }
 
-   getCurrentGameState() {
+  getCurrentGameState() {
     var r = this.asyncGetCurrentGameState();
-
     console.log("Requested new game songs...");
     return r;
   }
@@ -79,7 +78,7 @@ export default class GameServerConnection extends ServerConnection {
       console.log("403 Request rejected: ", response);
       return Promise.reject(response);
     } else if (response.status == 200) {
-      response.json().then(x => console.log(" js resp:", x))
+      response.json().then(x => console.log("Post resp json:", x))
       //return Promise.resolve(response);
     } else {
       return Promise.reject(response);
@@ -101,8 +100,7 @@ export default class GameServerConnection extends ServerConnection {
     };
     var myRequest = new Request(this.baseUrl + '/artistSolved', myInit);
 
-    return fetch(myRequest).then(this.handlePostRequest)
-      .then(x => console.log(x));
+    return fetch(myRequest).then(this.handlePostRequest).then(x => console.log(x));
   }
 
   postTitleSolved(id, time) {
@@ -120,7 +118,6 @@ export default class GameServerConnection extends ServerConnection {
     };
     var myRequest = new Request(this.baseUrl + '/titleSolved', myInit);
 
-    return fetch(myRequest).then(this.handlePostRequest)
-      .then(x => console.log(x));
-    }
+    return fetch(myRequest).then(this.handlePostRequest).then(x => console.log(x));
+  }
 }

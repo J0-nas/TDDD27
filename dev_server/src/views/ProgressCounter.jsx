@@ -26,7 +26,7 @@ export default class ProgressCounter extends React.Component {
     this.setState({counter: 30-time});
     this.setState({interval: -time});
     this.timer = setInterval(() => this.tick(), 100);
-    console.log("Counter started, ", this.state.counter);
+    //console.log("Counter started, ", this.state.counter);
   }
 
   tick() {

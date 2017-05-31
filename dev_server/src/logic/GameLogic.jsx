@@ -48,7 +48,7 @@ export default class GameLogic extends React.Component {
       }
     }
 
-    this.sleep = this.sleep.bind(this);
+    //this.sleep = this.sleep.bind(this);
     this.startSong = this.startSong.bind(this);
     this.onSongEnd = this.onSongEnd.bind(this);
     this.processInput = this.processInput.bind(this);
@@ -61,9 +61,6 @@ export default class GameLogic extends React.Component {
     this.serverConnection = new GameServerConnection();
     this.socketConnection = new SocketConnection(this.receive_standings);
     this.audioPlayer = new AudioPlayer(this.onSongEnd);
-
-    //console.log(this.audioPlayer.addHandle);
-    //console.log(this.audioPlayer);
   }
 
   componentDidMount() {
@@ -71,10 +68,9 @@ export default class GameLogic extends React.Component {
         this.serverConnection.getCurrentGameState()
         .then(this.loadFirstSong)
     );
+
     this.socketConnection.connect();
     this.socketConnection.join_channel(SocketChannels.standingsChannel);
-    //this.loadNewSong();
-    //this.startSong();
   }
 
   initViewConnection(vC) {
@@ -87,19 +83,19 @@ export default class GameLogic extends React.Component {
     return;
   }
 
-  sleep(ms) {
+  /*sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
-  }
+  }*/
 
   /*
    * Starts a new Song. Expects current the server side information in this.state.artist/url/title/record
    */
   startSong() {
     if (this.state.currentSong.started) {
-      console.log("song had already started")
+      console.log("song had already started");
       return;
     } else {
-      console.log("Starting new song...")
+      console.log("Starting ", this.state.round, ". round");
     }
 
     //Many songs of Napster have the alternativ name or collaboration/album in the name of
@@ -118,18 +114,16 @@ export default class GameLogic extends React.Component {
       simpleTitle = simpleTitle.replace(/(feat(.)*)/g, '');
     }
 
-    //var aArray = this.state.currentSong.artist.split(/[ ,]+/g).map(toTAElement);
-    //var tArray = this.state.currentSong.title.split(/[ ,]+/g).map(toTAElement);
     var aArray = simpleArtist.split(/[ ,]+/g).filter(w => w != "").map(toTAElement);
     var tArray = simpleTitle.split(/[ ,]+/g).filter(w => w != "").map(toTAElement);
 
-    var oldCSState = this.state.currentSong;
-    oldCSState.artistElementArray = aArray;
-    oldCSState.titleElementArray = tArray;
-    oldCSState.startTime = Date.now();
+    var newCSState = this.state.currentSong;
+    newCSState.artistElementArray = aArray;
+    newCSState.titleElementArray = tArray;
+    newCSState.startTime = Date.now();
 
-    oldCSState.started = true;
-    this.setState({currentSong: oldCSState});
+    newCSState.started = true;
+    this.setState({currentSong: newCSState});
 
     var newArtistLabel = this.buildLabelString(this.state.currentSong.artistElementArray);
     var newTitleLabel = this.buildLabelString(this.state.currentSong.titleElementArray);
@@ -137,14 +131,14 @@ export default class GameLogic extends React.Component {
     //update the labels using the viewConnection
     this.viewConnection.updateATLabels(newArtistLabel, newTitleLabel);
 
-    this.audioPlayer.playSongFrom(this.state.currentSong.url, oldCSState.songStart);
+    this.audioPlayer.playSongFrom(this.state.currentSong.url, newCSState.songStart);
     this.setState( {cssClassNameBar: "filling-bar"} );
     this.setState( {cssClassNameCounter: "filling-text"} );
     this.setState( {cssClassNameInput: "nix"} );
   }
 
   onSongEnd() {
-    console.log("Song Ended");
+    console.log("Round ", this.state.round, " ended");
     var currentSongState = this.state.currentSong;
     currentSongState.active = false;
 
@@ -170,33 +164,33 @@ export default class GameLogic extends React.Component {
   }
 
   processInput(input) {
-      this.setState( {cssClassNameInput: "nix"} )
+    this.setState( {cssClassNameInput: "nix"} );
     if (!this.state.currentSong.active) {
       return;
     }
-    console.log("process input")
+    console.log("Process input: ", input);
     var t_c = false;
     var a_c = false;
-    var check = checkInput(input, this.state.currentSong.artistElementArray);
-    if (check[0]) {
+    var check_a = checkInput(input, this.state.currentSong.artistElementArray);
+    if (check_a[0]) {
       a_c = true;
       var oldState = this.state.currentSong;
-      oldState.artistElementArray = check[1];
+      oldState.artistElementArray = check_a[1];
       this.setState({currentSong: oldState});
     }
-    var check = checkInput(input, this.state.currentSong.titleElementArray);
-    if (check[0]) {
+    var check_t = checkInput(input, this.state.currentSong.titleElementArray);
+    if (check_t[0]) {
       t_c = true;
       var oldState = this.state.currentSong;
-      oldState.titleElementArray = check[1];
+      oldState.titleElementArray = check_t[1];
       this.setState({currentSong: oldState});
     }
 
-    var a_s = checkIfSolved(this.state.currentSong.artistElementArray);
-    var t_s = checkIfSolved(this.state.currentSong.titleElementArray);
+    var a_s = checkIfSolved(check_a[1]);
+    var t_s = checkIfSolved(check_t[1]);
     const time = Date.now() - this.state.currentSong.startTime;
     if (a_s && t_s) {
-      console.log("Song was solved in: " + time + " send time to server")
+      console.log("Song was solved in: " + time + "ms. Send time to server.");
     }
     if (a_s) {
       this.serverConnection.postArtistSolved("dummyID", time);
@@ -205,8 +199,8 @@ export default class GameLogic extends React.Component {
       this.serverConnection.postTitleSolved("dummyID", time);
     }
     if (t_c || a_c) {
-      var newArtistLabel = this.buildLabelString(this.state.currentSong.artistElementArray);
-      var newTitleLabel = this.buildLabelString(this.state.currentSong.titleElementArray);
+      var newArtistLabel = this.buildLabelString(check_a[1]);
+      var newTitleLabel = this.buildLabelString(check_t[1]);
       this.viewConnection.updateATLabels(newArtistLabel, newTitleLabel);
       this.setState( {cssClassNameInput: "filling-correct"} )
     } else {
@@ -283,11 +277,11 @@ export default class GameLogic extends React.Component {
       titleElementArray: []
     }
     this.setState({currentSong: currentSongState});
-    console.log("loaded new song...");
+    //console.log("loaded new song...");
   }
 
   receive_standings(standings) {
-    console.log("GL received standings: ", standings)
+    console.log("GameLogic received standings: ", standings)
   }
 
   render() {

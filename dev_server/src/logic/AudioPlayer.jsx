@@ -10,7 +10,6 @@ export default class AudioPlayer extends React.Component{
     this.audio = new Audio();
     this.audio.onended = onEnded;
 
-    //this.init = this.init.bind(this);
     this.setVolume = this.setVolume.bind(this);
     this.pushStart = this.pushStart.bind(this);
     this.addHandle = this.addHandle.bind(this);

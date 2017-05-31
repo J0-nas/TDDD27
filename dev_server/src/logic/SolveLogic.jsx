@@ -51,7 +51,7 @@ function toTAElement(s) {
   This function will alter the copy of the state and return the new state.
  */
 function checkInput(input, taArray) {
-  console.log("SL checking input")
+  console.log("SL checking input: ", input)
   const inputWords = input.split(" ");
   var d = 0;
   var allowedTypos = 0;
@@ -72,7 +72,7 @@ function checkInput(input, taArray) {
         d = levenshteinDistance(inputWords[i], ta.word);
         if (d - allowedTypos <= 0) {
           //Success changes
-          console.log("solved ", ta.word, "with ", inputWords[i], " d", d, " at", allowedTypos);
+          console.log("Solved ", ta.word, "with ", inputWords[i], " distance", d, " at", allowedTypos);
           ta.hasBeenSolved = true;
           ta_s = true;
           continue;
@@ -88,6 +88,7 @@ function checkInput(input, taArray) {
           d = levenshteinDistance(inputWords[i], s);
           if (d - allowedTypos <= 0) {
             //Success changes
+            console.log("Solved ", s, "with ", inputWords[i], " distance", d, " at", allowedTypos);
             ta.hasBeenSolved = true;
             ta_s = true;
             break;

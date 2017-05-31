@@ -9,10 +9,6 @@ defmodule Mousika.UserSocket do
   # transport :longpoll, Phoenix.Transports.LongPoll
 
 
-  def broadcast_to_standings(msg) do
-    Phoenix.Endpoint.broadcast("game:standings", "new_msg", msg)
-  end
-
   # Socket params are passed from the client and can
   # be used to verify and authenticate a user. After
   # verification, you can put default assigns into

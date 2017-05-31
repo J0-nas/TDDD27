@@ -20,26 +20,6 @@ export default class Page extends React.Component {
     }
   }
 
-  componentDidMount() {
-    /*var gv = this.state.GameView;
-    var gl = this.state.GameLogic;
-    console.log(gl);
-    gl.initViewConnection({
-      updateATLabels: gv.updateATLabels
-    });
-    gv.initGLConnection({
-      processInput: gl.processInput
-    });
-
-    var sb = this.state.ScoreBoard;
-    this.setState({
-      content: sb,
-      GameLogic: gl,
-      GameView: gv
-    });*/
-
-  }
-
   render() {
     var s = {
         width: "100%",
@@ -60,16 +40,5 @@ export default class Page extends React.Component {
         <Footer/>
       </div>
     );
-    /*
-    var s = {
-      backgroundImage: 'url(' + background + ')',
-      backgroundSize: "cover",
-      backgroundRepeat: "no-repeat"
-    }
-    console.log(background);
-    //console.log(s, this.props.bg)
-    console.log(background.split("\n").length)
-    console.log("ds \n sdg".match(/'\n'/))
-    */
   }
 }

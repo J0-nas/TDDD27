@@ -43,7 +43,7 @@ defmodule GameLogic do
 
     IO.inspect ts
     IO.inspect cs
-    Mousika.UserSocket.broadcast_to_standings("Server started new song.")
+    Mousika.GameChannel.broadcast_to_standings("Server started new song.")
     #push ts, (cs) to clients
     Process.sleep(1000*32)
     main(:loop)
