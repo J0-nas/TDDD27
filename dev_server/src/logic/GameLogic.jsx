@@ -20,6 +20,8 @@ export default class GameLogic extends React.Component {
       breakDuration: 2,
       breakDurationSongs: 2,
       breakDurationGame: 4,
+      artistSolved: false,
+      titleSolved: false,
       currentSong: {
         active: true,
         started: true,
@@ -65,9 +67,11 @@ export default class GameLogic extends React.Component {
 
   componentDidMount() {
     Promise.resolve(
-        this.serverConnection.getCurrentGameState()
-        .then(this.loadFirstSong)
+        this.serverConnection.asyncGetCurrentGameState()
+        .then(this.loadFirstSong, x => console.log("Could not load first song."))
     );
+
+    this.serverConnection.asyncGetNextGameState().then(x=> console.log("Loaded next Game"), x=> console.log("Could not load next Game: ", x));
 
     this.socketConnection.connect();
     this.socketConnection.join_channel(SocketChannels.standingsChannel);
@@ -82,11 +86,6 @@ export default class GameLogic extends React.Component {
     this.serverConnection = cS;
     return;
   }
-
-  /*sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-  }*/
-
   /*
    * Starts a new Song. Expects current the server side information in this.state.artist/url/title/record
    */
@@ -164,6 +163,10 @@ export default class GameLogic extends React.Component {
   }
 
   processInput(input) {
+    if (!this.state.currentSong.active) {
+      return;
+    }
+
     this.setState( {cssClassNameInput: "nix"} );
     if (!this.state.currentSong.active) {
       return;
@@ -171,19 +174,17 @@ export default class GameLogic extends React.Component {
     console.log("Process input: ", input);
     var t_c = false;
     var a_c = false;
+
+    var nextState = this.state.currentSong;
     var check_a = checkInput(input, this.state.currentSong.artistElementArray);
     if (check_a[0]) {
       a_c = true;
-      var oldState = this.state.currentSong;
-      oldState.artistElementArray = check_a[1];
-      this.setState({currentSong: oldState});
+      nextState.artistElementArray = check_a[1];
     }
     var check_t = checkInput(input, this.state.currentSong.titleElementArray);
     if (check_t[0]) {
       t_c = true;
-      var oldState = this.state.currentSong;
-      oldState.titleElementArray = check_t[1];
-      this.setState({currentSong: oldState});
+      nextState.titleElementArray = check_t[1];
     }
 
     var a_s = checkIfSolved(check_a[1]);
@@ -191,18 +192,24 @@ export default class GameLogic extends React.Component {
     const time = Date.now() - this.state.currentSong.startTime;
     if (a_s && t_s) {
       console.log("Song was solved in: " + time + "ms. Send time to server.");
+      nextState.active = false;
     }
-    if (a_s) {
+    if (a_s && (!this.state.artistSolved)) {
       this.serverConnection.postArtistSolved("dummyID", time);
+      this.setState({artistSolved: true});
     }
-    if (t_s) {
+    if (t_s && (!this.state.artistSolved)) {
       this.serverConnection.postTitleSolved("dummyID", time);
+      this.setState({titleSolved: true});
     }
     if (t_c || a_c) {
       var newArtistLabel = this.buildLabelString(check_a[1]);
       var newTitleLabel = this.buildLabelString(check_t[1]);
       this.viewConnection.updateATLabels(newArtistLabel, newTitleLabel);
-      this.setState( {cssClassNameInput: "filling-correct"} )
+      this.setState( {
+        cssClassNameInput: "filling-correct",
+        currentSong: nextState
+      } );
     } else {
         if (this.state.cssClassNameInput == "filling-error-even") {
             this.setState( {cssClassNameInput: "filling-error-odd"} )
@@ -227,9 +234,8 @@ export default class GameLogic extends React.Component {
     var songState = this.state.currentSong;
     var songStart = this.serverConnection.getTimeStamp();
     const date = Date.now();
-    //console.log("date ", date);
     const diff = date - songStart;
-    //console.log("diff: ", diff)
+
     if (diff < 30*1000) {
       songState.songStart = diff/1000;
       this.setState({currentSong: songState});
@@ -276,7 +282,12 @@ export default class GameLogic extends React.Component {
       artistElementArray: [],
       titleElementArray: []
     }
-    this.setState({currentSong: currentSongState});
+    this.setState({
+      artistSolved: false,
+      titleSolved: false,
+      currentSong: currentSongState,
+      round: nextSong.round
+    });
     //console.log("loaded new song...");
   }
 

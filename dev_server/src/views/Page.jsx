@@ -8,9 +8,6 @@ import Footer from './Footer.jsx';
 import GameLogic from './../logic/GameLogic.jsx'
 import Standings from './Standings.jsx'
 
-import Background from './../images/background.jpg'; //relative path to image
-
-
 export default class Page extends React.Component {
   constructor() {
     super();

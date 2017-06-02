@@ -23,6 +23,7 @@ defmodule Mousika.Router do
     post "/logout", UserController, :logout
     get "/hello", HelloController, :index
     get "/currentGame", CurrentGameController, :index
+    get "/nextGame", NextGameController, :index
     post "/artistSolved", SolvedController, :artist
     post "/titleSolved", SolvedController, :title
     get "/*path", PageController, :index

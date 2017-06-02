@@ -2,7 +2,7 @@ defmodule Mousika.GameChannel do
   use Phoenix.Channel
 
   def join("game:standings", message, socket) do
-    IO.inspect message
+    #IO.inspect message
     {:ok, socket}
   end
 

@@ -18,9 +18,8 @@ defmodule GameLogic do
   end
 
   def main(:start) do
-    IO.puts "Main of GameLogic"
+    IO.puts "GameLogic started"
     r = DatabaseState.initDBConnection(:default)
-    IO.inspect r
     Process.sleep(1000)
     songs = Krotos.getGameSongs()
     GameState.putNextGame(songs)
@@ -29,6 +28,7 @@ defmodule GameLogic do
   end
 
   def main(:loop) do
+    begin_timer = :os.system_time(:millisecond)
     cs = GameState.increaseCurrentSong()
     if cs == 0 do
       nextGame = GameState.getNextGame()
@@ -41,11 +41,12 @@ defmodule GameLogic do
     ts = :os.system_time(:millisecond)
     GameState.putTimeStamp(ts)
 
-    IO.inspect ts
-    IO.inspect cs
+    #IO.inspect ts
+    IO.puts("Round " <> to_string(cs) <> " starts.")
     Mousika.GameChannel.broadcast_to_standings("Server started new song.")
     #push ts, (cs) to clients
-    Process.sleep(1000*32)
+    diff = :os.system_time(:millisecond) - begin_timer
+    Process.sleep(1000*32 - diff)
     main(:loop)
   end
 

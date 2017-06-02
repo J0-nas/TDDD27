@@ -36,6 +36,7 @@ defmodule GameState do
 
   defmodule Store do
     def start_link(:ok) do
+      IO.puts("Started GameState.Store")
       Agent.start_link(fn -> %{
         :currentGame => [],
         :nextGame => [],
