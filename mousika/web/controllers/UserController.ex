@@ -18,6 +18,6 @@ defmodule Mousika.UserController do
   end
 
   def logout(conn) do
-
+    conn
   end
 end

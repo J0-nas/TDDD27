@@ -19,7 +19,7 @@ defmodule GameLogic do
 
   def main(:start) do
     IO.puts "GameLogic started"
-    r = DatabaseState.initDBConnection(:default)
+    _ = DatabaseState.initDBConnection(:default)
     Process.sleep(1000)
     songs = Krotos.getGameSongs()
     GameState.putNextGame(songs)
@@ -53,5 +53,39 @@ defmodule GameLogic do
   def setNextGame() do
     nextGame = Krotos.getGameSongs()
     GameState.putNextGame(nextGame)
+  end
+
+  def handleSolvedArtist(username, time) do
+    standings = GameState.getStandings()
+    newScore =
+      case Map.get(standings, username) do
+        {points, _, t_s, _} ->
+          case t_s do
+            true -> {points+3, true, true, time}
+            false -> {points+1, true, false, 0}
+          end
+        nil -> {1, true, false, 0}
+      end
+    standings = Map.put(standings, username, newScore)
+    GameState.putStandings(standings)
+    msg = Poison.encode(%{username => newScore})
+    Mousika.GameChannel.broadcast_to_standings(msg)
+  end
+
+  def handleSolvedTitle(username, time) do
+    standings = GameState.getStandings()
+    newScore =
+      case Map.get(standings, username) do
+        {points, a_s, _, _} ->
+          case a_s do
+            true -> {points+3, true, true, time}
+            false -> {points+1, false, true, 0}
+          end
+        nil -> {1, false, true, 0}
+      end
+    standings = Map.put(standings, username, newScore)
+    GameState.putStandings(standings)
+    msg = Poison.encode(%{username => newScore})
+    Mousika.GameChannel.broadcast_to_standings(msg)
   end
 end

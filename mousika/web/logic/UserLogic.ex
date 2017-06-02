@@ -15,8 +15,8 @@ defmodule UserLogic do
   end
 
   def login(body) do
-    IO.puts("body:")
-    IO.inspect(body)
+    #IO.puts("body:")
+    #IO.inspect(body)
     username = body["username"]
     password = body["password"]
 
@@ -34,7 +34,7 @@ defmodule UserLogic do
               {:ok, cred} ->
                 check_password(password, cred)
               {:nix, m} -> {:nix, m}
-              {:error, err} -> {:error, ResponseGenerator.gen_json(%{:status => -1, :value => "Internal Database error"})}
+              {:error, err} -> {:error, ResponseGenerator.gen_json(%{:status => -1, :value => "Internal Database error: " <> err})}
             end
           {:error, msg} -> {:error, ResponseGenerator.gen_json(%{:status => -1, :value => msg})}
         end
@@ -55,7 +55,7 @@ defmodule UserLogic do
           case Hermes.create_user(p, username, email, Comeonin.Bcrypt.hashpwsalt(password)) do
             {:ok, msg} -> {:ok, ResponseGenerator.gen_json(%{:status => 1, :value => msg})}
             {:nix, msg} -> {:nix, ResponseGenerator.gen_json(%{:status => 2, :value => msg})}
-            {:error, err} -> {:error, ResponseGenerator.gen_json(%{:status => -1, :value => "Internal Database error"})}
+            {:error, err} -> {:error, ResponseGenerator.gen_json(%{:status => -1, :value => "Internal Database error: " <> err})}
           end
         {:error, msg} -> {:error, ResponseGenerator.gen_json(%{:status => -1, :value => msg})}
       end

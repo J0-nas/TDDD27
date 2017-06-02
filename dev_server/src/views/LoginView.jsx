@@ -12,6 +12,7 @@ export default class LoginView extends React.Component {
 
     this.state = {
       showModal: false,
+      username: "",
       passwd: ""
     }
     this.serverConnection = new UtilityServerConnection();
@@ -41,7 +42,8 @@ export default class LoginView extends React.Component {
   handleResp(dict) {
     if (Number(dict['status']) == ResponseStatusCodes.operationSuccess) {
       //logged in
-      this.close()
+      localStorage.setItem("username", this.state.username);
+      this.close();
     } else {
       console.log(Number(dict['status']), ResponseStatusCodes.operationSuccess, dict['value']);
     }
@@ -50,7 +52,7 @@ export default class LoginView extends React.Component {
   login() {
     const username = ReactDOM.findDOMNode(this.refs.usernameInput).value;
     const passwd = ReactDOM.findDOMNode(this.refs.passwdInput).value;
-
+    this.setState({username: username});
     if (
       (username.length == 0) ||
       (passwd.length < 6)) {

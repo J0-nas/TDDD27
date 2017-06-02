@@ -194,12 +194,12 @@ export default class GameLogic extends React.Component {
       console.log("Song was solved in: " + time + "ms. Send time to server.");
       nextState.active = false;
     }
-    if (a_s && (!this.state.artistSolved)) {
-      this.serverConnection.postArtistSolved("dummyID", time);
+    if (a_s && (!this.state.artistSolved) && (localStorage.getItem("username") != null)) {
+      this.serverConnection.postArtistSolved(localStorage.getItem("username"), time);
       this.setState({artistSolved: true});
     }
-    if (t_s && (!this.state.artistSolved)) {
-      this.serverConnection.postTitleSolved("dummyID", time);
+    if (t_s && (!this.state.titleSolved) && (localStorage.getItem("username") != null)) {
+      this.serverConnection.postTitleSolved(localStorage.getItem("username"), time);
       this.setState({titleSolved: true});
     }
     if (t_c || a_c) {

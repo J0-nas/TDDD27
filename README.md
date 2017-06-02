@@ -1,5 +1,11 @@
 # TDDD27 - Mousika
 
+The client side files are in the folder **dev_server**, the server is implemented in **mousika**. The napster api bridge can be found at https://github.com/J0-nas/Krotos, the database wrapper at https://github.com/DoubleTheP/Hermes 
+
+
+
+## Introduction
+
 Mousika is a music trivia quiz similar to https://www.thesongclash.com/de/quiz and other games.
 
 It's standard game mode is to guess the artist and title of 10 songs played consecutively (30 second  preview - obtained from the free napster API). Due to its nature it should be used with a keyboard (desktop PC/notebook). The players hear the same song at the same time and collect points based on how fast they solve the artist and title. A player can join the game at any point and is in sync with the song currently played.
@@ -7,8 +13,6 @@ It's standard game mode is to guess the artist and title of 10 songs played cons
 Besides the 10 round game, each song has a record - minimum time a player needed to solve it - such that players can try to break the existing record.
 
 The website includes an optional player profile, a live chat and optional (may have) features.
-
-
 
 ------
 
@@ -68,9 +72,7 @@ To develop/run the react website, install the following packages/tools:
 
 ###### Install on Linux Mint:
 
-​		https://gist.github.com/sirkkalap/e87cd580a47b180a7d32	
-
-#### Openshift Centrale
+​	https://gist.github.com/sirkkalap/e87cd580a47b180a7d32	
 
 #### BackEnd
 
@@ -81,7 +83,7 @@ To develop/run the react website, install the following packages/tools:
 
 ###### Elexir Help Sites
 
-​		http://elixirschool.com
+​	http://elixirschool.com
 
 ###### Install Phoenix
 

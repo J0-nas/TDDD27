@@ -4,14 +4,28 @@ defmodule Mousika.SolvedController do
   def artist(conn, params) do
     IO.puts("artist solved")
     #IO.inspect(conn)
-    {_, s} = Poison.encode(%{msg: "Artist solved"})
-    send_resp(conn, 200, s)
+    case {params["username"], params["time"]} do
+      {nil, nil} -> send_resp(conn, 400, "Parameter missing")
+      {_, nil} -> send_resp(conn, 400, "Parameter missing")
+      {nil, _} -> send_resp(conn, 400, "Parameter missing")
+      {username, time} ->
+        GameLogic.handleSolvedArtist(username, time)
+        {_, s} = Poison.encode(%{msg: "Artist solved"})
+        send_resp(conn, 200, s)
+    end
   end
 
   def title(conn, params) do
     IO.puts("title solved")
     #IO.inspect(conn)
-    {_, s} = Poison.encode(%{msg: "Title solved"})
-    send_resp(conn, 200, s)
+    case {params["username"], params["time"]} do
+      {nil, nil} -> send_resp(conn, 400, "Parameter missing")
+      {_, nil} -> send_resp(conn, 400, "Parameter missing")
+      {nil, _} -> send_resp(conn, 400, "Parameter missing")
+      {username, time} ->
+        GameLogic.handleSolvedTitle(username, time)
+        {_, s} = Poison.encode(%{msg: "Artist solved"})
+        send_resp(conn, 200, s)
+    end
   end
 end

@@ -34,6 +34,14 @@ defmodule GameState do
     GameState.Store.put(:timeStamp, ts)
   end
 
+  def getStandings() do
+    GameState.Store.get(:standings)
+  end
+
+  def putStandings(newStandings) do
+    GameState.Store.put(:standings, newStandings)
+  end
+
   defmodule Store do
     def start_link(:ok) do
       IO.puts("Started GameState.Store")
@@ -41,7 +49,8 @@ defmodule GameState do
         :currentGame => [],
         :nextGame => [],
         :currentSong => -1,
-        :timeStamp => -1
+        :timeStamp => -1,
+        :standings => %{}
         } end, name: :GameStateStore)
     end
 

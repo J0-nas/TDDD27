@@ -27,9 +27,6 @@ export default class GameServerConnection extends ServerConnection {
   }
 
   pullSong() {
-    //reset counter if last song was the last song of the game
-    //console.log("Pull song start:", this.state.currentSongNumber);
-
     var gs = this.state.game[this.state.currentSongNumber-1];
     const round = this.state.currentSongNumber;
 
@@ -38,8 +35,6 @@ export default class GameServerConnection extends ServerConnection {
     if (this.state.currentSongNumber == 11) {
       this.prepareNextGame();
     }
-    //console.log("Pull song end:", this.state.currentSongNumber);
-    console.log("gs:", gs);
     return {url: gs.songUrl, artist: gs.artist, title: gs.title, record: this.state.dummy.record, round: round}
   }
 
@@ -132,7 +127,7 @@ export default class GameServerConnection extends ServerConnection {
     myHeaders.append("Access-Control-Allow-Origin", "*");
 
     var body = new FormData();
-    body.append("id", id);
+    body.append("username", id);
     body.append("time", time);
 
     var myInit = {
@@ -150,7 +145,7 @@ export default class GameServerConnection extends ServerConnection {
     myHeaders.append("Access-Control-Allow-Origin", "*");
 
     var body = new FormData();
-    body.append("id", id);
+    body.append("username", id);
     body.append("time", time);
 
     var myInit = {

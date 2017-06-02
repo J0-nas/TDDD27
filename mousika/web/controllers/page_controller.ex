@@ -3,8 +3,8 @@ defmodule Mousika.PageController do
   use Mousika.Web, :controller
 
   @static_file File.read!("priv/static/index.html")
-  @index "/index.html"
-  @f_name (to_string System.cwd) <> "/priv/static/index.html"
+  #@index "/index.html"
+  #@f_name (to_string System.cwd) <> "/priv/static/index.html"
 
   def index(conn, _params) do
     #IO.puts System.cwd()
