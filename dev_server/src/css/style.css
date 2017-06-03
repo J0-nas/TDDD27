@@ -1,7 +1,8 @@
 body {
     font-family: 'Helvecia', sans-serif;
     font-size: 14pt;
-    background-image: url("https://images.unsplash.com/photo-1456305951335-bb8134aeab8a");
+    /*background-image: url("https://images.unsplash.com/photo-1456305951335-bb8134aeab8a");*/
+    background-color: #005B87;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center bottom;
@@ -36,7 +37,7 @@ body {
 /*
  *
  * Glass Effekt
- * 
+ *
  */
 
 .glass {
@@ -56,7 +57,7 @@ body {
     z-index: -1;
     width: 100%;
     height: 100%;
-    background-image: url("https://images.unsplash.com/photo-1456305951335-bb8134aeab8a");
+    /*background-image: url("https://images.unsplash.com/photo-1456305951335-bb8134aeab8a");*/
     background-position: center bottom;
     background-attachment: fixed;
     background-size: cover;
@@ -312,7 +313,7 @@ button, button:focus, button:active{
 
 #ButtonSignInSignUp > button{
 	margin-left: 11px !important;
-	margin-right: 11px !important;	
+	margin-right: 11px !important;
 }
 
 #header {
@@ -379,7 +380,7 @@ button, button:focus, button:active{
 
 #Record {
     font-size: 15px;
-    color: #0f660f;
+    color: rgb(0, 91, 135);
     float: left;
     padding-left: 10px;
     text-align: left;
@@ -411,7 +412,7 @@ button, button:focus, button:active{
 	border: 0px solid #ddd;
 }
 
-/* 
+/*
  *
  * Window Sizes
  *
@@ -713,7 +714,7 @@ button, button:focus, button:active{
 
     /*
      * Footer
-     */ 
+     */
     #footer {
         width: 54px;
         background-color: #808080;

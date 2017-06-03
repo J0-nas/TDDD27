@@ -93,9 +93,10 @@ export default class GameLogic extends React.Component {
     if (this.state.currentSong.started) {
       console.log("song had already started");
       return;
-    } else {
-      console.log("Starting ", this.state.round, ". round");
     }
+    console.log("Starting ", this.state.round, ". round");
+
+    this.props.resetSolvedFromStandings();
 
     //Many songs of Napster have the alternativ name or collaboration/album in the name of
     //artist or title. We remove them to make the game more simple
@@ -106,11 +107,11 @@ export default class GameLogic extends React.Component {
     simpleTitle = simpleTitle.replace(/(\((.)*\))/g, '');
 
     if (!simpleArtist.includes("feath")) {
-      simpleArtist = simpleArtist.replace(/(feat(.)*)/g, '');
+      simpleArtist = simpleArtist.replace(/([fF]eat(.)*)/g, '');
     }
 
     if (!simpleTitle.includes("feath")) {
-      simpleTitle = simpleTitle.replace(/(feat(.)*)/g, '');
+      simpleTitle = simpleTitle.replace(/([fF]eat(.)*)/g, '');
     }
 
     var aArray = simpleArtist.split(/[ ,]+/g).filter(w => w != "").map(toTAElement);
@@ -292,7 +293,17 @@ export default class GameLogic extends React.Component {
   }
 
   receive_standings(standings) {
-    console.log("GameLogic received standings: ", standings)
+    const event = standings.event;
+    const value = standings.value;
+    if((event  == null) || (value == null)) {
+      console.log("Socket received standing: Either event of value is null");
+      return;
+    }
+    if (event == "NewScore") {
+      console.log("GL calling callback with ", value)
+      this.props.standingsCallback(value);
+    }
+    console.log("GameLogic received standings: ", value)
   }
 
   render() {

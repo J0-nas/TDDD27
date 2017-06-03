@@ -34,6 +34,17 @@ defmodule GameState do
     GameState.Store.put(:timeStamp, ts)
   end
 
+  def resetSolved() do
+    standings = GameState.Store.get(:standings)
+    #IO.inspect standings
+    standings = Enum.into(
+      Enum.map(standings, fn {k, {points, _, _, _}} -> {k, {points, false, false, 0}} end),
+      %{}
+    )
+    GameState.Store.put(:standings, standings)
+    #IO.inspect GameState.Store.get(:standings)
+  end
+
   def getStandings() do
     GameState.Store.get(:standings)
   end

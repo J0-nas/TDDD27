@@ -29,6 +29,7 @@ defmodule GameLogic do
 
   def main(:loop) do
     begin_timer = :os.system_time(:millisecond)
+    GameState.resetSolved()
     cs = GameState.increaseCurrentSong()
     if cs == 0 do
       nextGame = GameState.getNextGame()
@@ -43,7 +44,7 @@ defmodule GameLogic do
 
     #IO.inspect ts
     IO.puts("Round " <> to_string(cs) <> " starts.")
-    Mousika.GameChannel.broadcast_to_standings("Server started new song.")
+    #Mousika.GameChannel.broadcast_to_standings("Server started new song.")
     #push ts, (cs) to clients
     diff = :os.system_time(:millisecond) - begin_timer
     Process.sleep(1000*32 - diff)
@@ -68,12 +69,17 @@ defmodule GameLogic do
       end
     standings = Map.put(standings, username, newScore)
     GameState.putStandings(standings)
-    msg = Poison.encode(%{username => newScore})
-    Mousika.GameChannel.broadcast_to_standings(msg)
+    {points, a_s, t_s, time} = newScore
+    case Poison.encode(%{event: "NewScore" , value: %{username: username, points: points, artistSolved: a_s, titleSolved: t_s, time: time}}) do
+      {:ok, msg} ->
+         Mousika.GameChannel.broadcast_to_standings(msg)
+      {:error, err} -> IO.inspect err
+    end
   end
 
   def handleSolvedTitle(username, time) do
     standings = GameState.getStandings()
+    #IO.inspect(standings)
     newScore =
       case Map.get(standings, username) do
         {points, a_s, _, _} ->
@@ -85,7 +91,12 @@ defmodule GameLogic do
       end
     standings = Map.put(standings, username, newScore)
     GameState.putStandings(standings)
-    msg = Poison.encode(%{username => newScore})
-    Mousika.GameChannel.broadcast_to_standings(msg)
+    #IO.inspect(GameState.getStandings())
+    {points, a_s, t_s, time} = newScore
+    case Poison.encode(%{event: "NewScore" , value: %{username: username, points: points, artistSolved: a_s, titleSolved: t_s, time: time}}) do
+      {:ok, msg} ->
+         Mousika.GameChannel.broadcast_to_standings(msg)
+      {:error, err} -> IO.inspect err
+    end
   end
 end

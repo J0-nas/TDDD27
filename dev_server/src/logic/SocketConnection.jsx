@@ -18,7 +18,7 @@ export default class SocketConnection extends ServerConnection {
 
   connect() {
     this.socket = new Socket(this.socket_url, {
-      logger: (kind, msg, data) => console.log(kind, msg, data)
+      //logger: (kind, msg, data) => console.log(kind, msg, data)
     });
     this.socket.connect();
     this.socket_created = true;
@@ -27,7 +27,7 @@ export default class SocketConnection extends ServerConnection {
   join_channel(channel_name) {
     if (!(channel_name in this.channel_dict)) {
       var channel = this.socket.channel(channel_name, {});
-      channel.on("new_msg", msg => console.log("Got message from socket", msg));
+      channel.on("new_msg", msg => { console.log("Got message from socket", msg); this.receive_standings_msg(msg) } );
       channel.join()
         .receive("ok", ({messages}) => {
           console.log("catching up", messages);
@@ -50,7 +50,7 @@ export default class SocketConnection extends ServerConnection {
     }
     if (!(channel_name in this.channel_dict)) {
       var channel = this.socket.channel(channel_name, {});
-      channel.on("new_msg", msg => console.log("Got message from socket", msg));
+      channel.on("new_msg", msg => { console.log("Got message from socket", msg); this.receive_standings_msg(msg) } );
       channel.join()
         .receive("ok", ({messages}) => {
           console.log("catching up", messages);
@@ -77,6 +77,7 @@ export default class SocketConnection extends ServerConnection {
   }
 
   receive_standings_msg(msg) {
-    this.standingsCallback(msg);
+    const json = JSON.parse(msg.msg);
+    this.standingsCallback(json);
   }
 }

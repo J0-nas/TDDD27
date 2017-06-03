@@ -45,6 +45,7 @@ export default class SolveInput extends React.Component {
             style={s} placeholder="Enter Title and Artist"
             onChange={this.handleChange}
             autoComplete="off"
+            autoFocus={true}
             ref="inputField"/>
         </FormGroup>
       </form>

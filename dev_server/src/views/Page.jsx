@@ -11,10 +11,28 @@ import Standings from './Standings.jsx'
 export default class Page extends React.Component {
   constructor() {
     super();
-
     this.state = {
-      content: <Standings/>
+      newScoreHandler: null,
+      resetSolvedHandler: null
     }
+    this.standingsCallback = this.standingsCallback.bind(this);
+    this.resetSolved = this.resetSolved.bind(this);
+    this.initStandings = this.initStandings.bind(this);
+  }
+
+  standingsCallback(value) {
+    this.state.newScoreHandler(value);
+  }
+
+  resetSolved() {
+    this.state.resetSolvedHandler();
+  }
+
+  initStandings(newScoreHandler, resetSolvedHandler) {
+    this.setState({
+      newScoreHandler: newScoreHandler,
+      resetSolvedHandler: resetSolvedHandler
+    });
   }
 
   render() {
@@ -27,10 +45,10 @@ export default class Page extends React.Component {
         <Grid className="mainContainer" >
           <Row className="show-grid">
             <Col sm={12} md={6}>
-              <GameLogic/>
+              <GameLogic standingsCallback = { this.standingsCallback } resetSolvedFromStandings = { this.resetSolved } />
             </Col>
             <Col id="Standings" className="glass" sm={12} md={6}>
-              {this.state.content}
+              <Standings init = { this.initStandings } />
             </Col>
           </Row>
         </Grid>
