@@ -1,7 +1,7 @@
 {application,distillery,
              [{registered,[]},
               {description,"Build releases of your Mix projects with ease!\n"},
-              {vsn,"1.3.5"},
+              {vsn,"1.4.0"},
               {modules,['Elixir.Distillery.IO','Elixir.Mix.Releases.App',
                         'Elixir.Mix.Releases.Appup',
                         'Elixir.Mix.Releases.Archiver',

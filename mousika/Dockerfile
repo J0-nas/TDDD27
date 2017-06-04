@@ -20,7 +20,7 @@ RUN ls -lh /app/bin
 
 RUN \
   apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0xcbcb082a1bb943db && \
-  echo "deb http://mariadb.mirror.iweb.com/repo/10.0/ubuntu `lsb_release -cs` main" > /etc/apt/sources.list.d/mariadb.list && \
+  # echo "deb http://mariadb.mirror.iweb.com/repo/10.0/ubuntu `lsb_release -cs` main" > /etc/apt/sources.list.d/mariadb.list && \
   apt-get update && \
   DEBIAN_FRONTEND=noninteractive apt-get install -y mariadb-server && \
   rm -rf /var/lib/apt/lists/* && \
@@ -35,5 +35,12 @@ RUN \
 VOLUME ["/etc/mysql", "/var/lib/mysql"]
 
 EXPOSE 3306
+
+# RUN mysqld_safe
+CMD /etc/init.d/mysql start
+#RUN cat /etc/mysql/my.cnf
+# CMD service mysql restart
+COPY database.sql /app
+CMD mysql -uroot -p < /app/database.sql
 
 CMD ["/app/bin/mousika", "foreground"]

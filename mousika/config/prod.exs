@@ -14,7 +14,7 @@ use Mix.Config
 # {:system, "PORT"}
 config :mousika, Mousika.Endpoint,
   http: [port: {:system, "PORT"}],
-  url: [host: "example.com", port: 80],
+  url: [host: "mousika.herokuapp.com", port: 80],
   cache_static_manifest: "priv/static/manifest.json"
 
 # Do not print debug messages in production

@@ -19,7 +19,7 @@ defmodule Mousika.Mixfile do
   def application do
     [mod: {Mousika, []},
      applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :mariaex, :httpoison
+                    :phoenix_ecto, :mariaex, :httpoison, :hermes, :krotos, :comeonin
                     ]
     ]
   end

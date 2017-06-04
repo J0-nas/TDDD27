@@ -1,7 +1,7 @@
 {application,phoenix,
              [{registered,[]},
               {description,"Productive. Reliable. Fast. A productive web framework that\ndoes not compromise speed and maintainability.\n"},
-              {vsn,"1.2.3"},
+              {vsn,"1.2.4"},
               {modules,['Elixir.Mix.Phoenix',
                         'Elixir.Mix.Tasks.Compile.Phoenix',
                         'Elixir.Mix.Tasks.Phoenix.Digest',
