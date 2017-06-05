@@ -1,0 +1,79 @@
+### Screencast:
+
+
+
+1. Welcome to our screencast of our project for the course TDDD27 - Advanced Web Programming - at the liu. My name is Jonas and my name is Philip. The project is called Mousika. It is a multiplayer - music trivia quiz similar to thesongclash.
+
+   ~ Songclash ~
+
+   Each player is played the same 30s snippet of a song, for which the players have to guess the artist and title. The player compete by collecting points - over 10 rounds - based on how many artists/titles they can solve and how fast they are enterd. The game is synchonized among all players such that player can join the game at any time.
+
+
+
+
+
+
+
+
+
+1. Our Project structure can be devided into three parts: 3rd party software, backend and frontend. 
+
+   Originally we wanted to use the SPOTIFY API as our third party software. We discovered that it is not allowed to be used for games, therefore we decided to use the NAPSTER API instead. 
+
+   For the server we decided to use the elixir framework phoenix. Elixir is a functional language and phoenix is very performant compared to other frameworks. Furthermore Elixir is safe in means of good error handling, has very good socket support and nice concurrency support. 
+
+   On the client, we wrote our application in react, which couples design and functionality/logic in single react classes. We combined react with bootstrap for the design and the fetch-api for asynchronous requests to the server. 
+
+   Similar to the phoenix framework, react was something new for us. Therefore we decided to use MariaDB for our database as we were already familiar with SQL.
+
+
+
+
+
+
+
+1. Managing state in functional languages is not a trivial problem. In elixir we can use a concurrency feature to spawn an agent that is a process which holds a state. For our game the state is a map of relevant information such as the all the songs of a game, or the current standings of the players.
+
+To start our state we define a function that starts an agent and registers it on the atom :GameStateStore. An atom is a named value that is unique within the program - similar to an Enumeration. 
+
+The state is changes via messages that are function calls to the agent, we use the functions get/update. Since we register the Agent under an atom we don't need to memorize its process id - we can use the atom as identifier.
+
+Based on the get and update function we get or change the values of the state map using wrapper functions declared in our Module GameState.
+
+4. ~ Show GameLogic.jsx ~
+
+When the GameLogic determined that an input solved the artist and/or the title the username and time it took to solve are sent to the server using a http post request.
+
+~ Router ~
+
+The server server routes the request to the solvedController module and the artist/title function depending which route was taken.
+
+ ~ SolvedController ~
+
+When for example the artist is solved the Controller checks if both parameters are present in the request 	- using pattern matching.
+
+If a parameter is missing we return a response with the 400 error code. When the parameters are present we call another function.
+
+~ Game Logc ~
+
+The function handles the changing of the standings state using our previously mentioned GameStateStore agent. Following the changing of the state the new standings are sent to all client using a socket broadcast of a predefined json stuctured message containing the standings.
+
+
+
+5. ~ SockerConnection ~
+
+When the sockets of the clients receive a new message the message is parsed to a json and forwarded to the GameLogic using a previously set callback function.
+
+~ GameLogic ~
+
+The GameLogic checks the message for validity and if successfull forwards the information to the Page using another callback function declared in the props of the GameLogic
+
+~ Page ~
+
+The Page also forwards the information. This time to the the final receiver - the standings class. The Page uses a function of the standings class saved in its state to trigger the handling of new standings.
+
+~ Standings ~
+
+When the handleNewScore function is invoked it checks if the username belonging to the score is already included in the standings - which are save in the state. If the username is included the entry is replaced. Otherwise it is added.
+
+To trigger a new rendering of the standings table we recompute the rendered rows that are also save as a state in the class

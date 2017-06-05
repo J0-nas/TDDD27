@@ -2,7 +2,7 @@
 
 The client side files are in the folder **dev_server**, the server is implemented in **mousika**. The napster api bridge can be found at https://github.com/J0-nas/Krotos, the database wrapper at https://github.com/DoubleTheP/Hermes 
 
-
+The Screencast can be found at https://www.youtube.com/watch?v=7jUNPcqUxUo
 
 ## Introduction
 
